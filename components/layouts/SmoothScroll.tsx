@@ -34,12 +34,22 @@ export default function SmoothScroll() {
     if (window.matchMedia("(pointer: coarse)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    /*
+      Mode `lerp` (interpolation continue) plutôt que `duration` (tween par
+      tick). Avec un tween, un changement brusque de direction (bas → haut)
+      doit d'abord laisser le tween en cours se finir, ce qui donne une
+      sensation de saccade / "le site bug". Le lerp, lui, recalcule chaque
+      frame et change instantanément de cible quand on inverse le scroll.
+
+      lerp = 0.08 → plus lent / plus inertiel que la valeur par défaut (0.1).
+      wheelMultiplier réduit la course par tick de molette, ce qui contribue
+      aussi à un scroll plus posé.
+    */
     const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.08,
       smoothWheel: true,
-      wheelMultiplier: 0.85,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 0.9,
+      syncTouch: false,
     });
 
     window.__lenis = lenis;
