@@ -8,12 +8,15 @@ import "./services-anim.css";
 import "./approche-anim.css";
 import "./intro-anim.css";
 import "./section-transition-anim.css";
+import "./cursor.css";
 import ScrollResetOnLoad from "@/components/layouts/ScrollResetOnLoad";
 import Intro from "@/components/layouts/Intro";
 import SectionTransition from "@/components/layouts/SectionTransition";
 import HomePendingSectionTransition from "@/components/layouts/HomePendingSectionTransition";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
+import SmoothScroll from "@/components/layouts/SmoothScroll";
+import Cursor from "@/components/layouts/Cursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +45,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
+        <SmoothScroll />
+        <Cursor />
         <ScrollResetOnLoad />
         <Intro />
         <SectionTransition />

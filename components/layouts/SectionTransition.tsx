@@ -50,16 +50,25 @@ export function scrollToSectionAnchor(targetId: string): void {
 
   const top = Math.max(0, getDocumentTop(el) - SECTION_TOP_VIEWPORT_PX);
   /*
-   On scrolle TOUS les candidats : selon le navigateur et le mode quirks,
-   le scrolling root peut être `window`, `documentElement` ou `body`.
-   Ça garantit que le scroll arrive même quand body/html ont un overflow non-visible.
+   Si Lenis est actif, on l'utilise pour le saut sec : sinon Lenis
+   continuerait d'animer le scroll vers la position d'avant-rideau et
+   réécraserait le saut programmatique.
+
+   En fallback (mobile / reduced-motion / Lenis indisponible), on scrolle
+   TOUS les candidats : selon le navigateur, le scrolling root peut être
+   `window`, `documentElement` ou `body`.
   */
-  window.scrollTo({ left: 0, top, behavior: "auto" });
-  if (document.scrollingElement) {
-    document.scrollingElement.scrollTop = top;
+  const lenis = typeof window !== "undefined" ? window.__lenis : undefined;
+  if (lenis) {
+    lenis.scrollTo(top, { immediate: true, force: true, lock: true });
+  } else {
+    window.scrollTo({ left: 0, top, behavior: "auto" });
+    if (document.scrollingElement) {
+      document.scrollingElement.scrollTop = top;
+    }
+    document.documentElement.scrollTop = top;
+    document.body.scrollTop = top;
   }
-  document.documentElement.scrollTop = top;
-  document.body.scrollTop = top;
 
   try {
     const { pathname, search } = window.location;
