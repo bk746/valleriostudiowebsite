@@ -117,7 +117,7 @@ export function HeroValuePropClient({
       data-nav-theme="dark"
       className={
         bebasClassName +
-        " hero-stage sticky top-0 z-10 flex h-[100dvh] w-full flex-col overflow-hidden" +
+        " hero-stage sticky top-0 z-10 flex h-[100svh] w-full flex-col overflow-hidden" +
         " bg-[#343d33] text-[#FDF6EC]" +
         " sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]" +
         (revealed ? " is-revealed" : "")

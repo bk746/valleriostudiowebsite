@@ -94,7 +94,7 @@ export default function Services() {
       className={
         bebas.className +
         " relative z-20 grid w-full grid-rows-[auto_auto_auto] overflow-hidden" +
-        " sm:sticky sm:top-0 sm:h-dvh sm:grid-rows-[auto_auto_1fr]" +
+        " sm:sticky sm:top-0 sm:h-svh sm:grid-rows-[auto_auto_1fr]" +
         " bg-[#FDF6EC] text-black" +
         " sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]" +
         (revealed ? " is-revealed" : "")

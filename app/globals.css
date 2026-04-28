@@ -34,9 +34,33 @@ body {
 */
 html {
   overflow-x: clip;
+  /* Coupe le rebond iOS qui contribue au flottement du swipe quand on
+     atteint les bords ou qu'on inverse rapidement la direction. */
+  overscroll-behavior-y: none;
 }
 
 body {
   overflow-x: clip;
+  overscroll-behavior-y: none;
+  /* Indique au compositor de ne s'occuper que du pan vertical : Safari iOS
+     évite alors d'attendre les listeners pour décider quoi faire du touch. */
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Lissage des polices + meilleur rendu sur écrans mobiles */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* La piste horizontale Realisations en mobile : scroll natif + momentum iOS. */
+.realisations-track-mobile {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.realisations-track-mobile::-webkit-scrollbar {
+  display: none;
 }
 

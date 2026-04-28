@@ -38,9 +38,27 @@ export default function Realisations() {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [maxShift, setMaxShift] = useState(0);
   const [shift, setShift] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Détection mobile (pointeur grossier) — détermine quel mode de défilement
+  // utiliser. Sur mobile : scroll horizontal natif avec scroll-snap (zéro JS
+  // au scroll vertical). Sur desktop : pin vertical + translate horizontal.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia("(pointer: coarse)");
+    const apply = () => setIsMobile(mql.matches);
+    apply();
+    mql.addEventListener("change", apply);
+    return () => mql.removeEventListener("change", apply);
+  }, []);
 
   // Mesure la distance horizontale à parcourir pour faire défiler toutes les cartes.
+  // Inutile en mobile (scroll natif).
   useEffect(() => {
+    if (isMobile) {
+      setMaxShift(0);
+      return;
+    }
     let raf = 0;
     const measure = () => {
       cancelAnimationFrame(raf);
@@ -61,13 +79,19 @@ export default function Realisations() {
       ro.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, []);
+  }, [isMobile]);
 
   // Pilote le translate horizontal du track selon la progression du scroll vertical.
   // La section est en sticky-inner : la fenêtre reste pinned tant qu'on n'a pas
   // parcouru tout maxShift en scroll, le track glisse alors vers la gauche.
+  // Désactivé en mobile pour laisser le scroll horizontal natif faire le travail
+  // (zéro listener scroll vertical = zéro jank au swipe).
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (isMobile) {
+      setShift(0);
+      return;
+    }
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
@@ -95,12 +119,17 @@ export default function Realisations() {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [maxShift]);
+  }, [maxShift, isMobile]);
 
-  // Hauteur totale = viewport + maxShift (durée du défilement horizontal)
+  // Hauteur totale (desktop) = viewport + maxShift (durée du défilement horizontal)
   // + 100dvh de buffer : pendant ce buffer, la section reste pinned avec la dernière
   // carte affichée pendant que la section CTA suivante remonte par-dessus.
-  const minHeight = maxShift > 0 ? `calc(200dvh + ${maxShift}px)` : "100dvh";
+  // Mobile : auto (la section a la hauteur naturelle de son contenu).
+  const minHeight = isMobile
+    ? "auto"
+    : maxShift > 0
+      ? `calc(200dvh + ${maxShift}px)`
+      : "100dvh";
 
   return (
     <section
@@ -110,7 +139,14 @@ export default function Realisations() {
       style={{ minHeight }}
       aria-label="Réalisations"
     >
-      <div className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden text-[#0C4323]">
+      <div
+        className={
+          "flex w-full flex-col text-[#0C4323]" +
+          (isMobile
+            ? " py-12"
+            : " sticky top-0 h-[100svh] overflow-hidden")
+        }
+      >
         {/* ── HEADER ───────────────────────────────────────── */}
         <header
           className={`${bebas.className} px-5 pt-24 sm:px-8 sm:pt-28 md:px-12 md:pt-32`}
@@ -127,47 +163,41 @@ export default function Realisations() {
         </header>
 
         {/* ── TRACK HORIZONTAL ─────────────────────────────── */}
-        <div className="relative flex-1 overflow-hidden">
+        {isMobile ? (
           <div
-            ref={trackRef}
-            className="flex h-full items-stretch gap-[3vw] px-5 py-6 will-change-transform sm:gap-[2.5vw] sm:px-[4vw] sm:py-10 md:py-12"
-            style={{ transform: `translate3d(${shift}px, 0, 0)` }}
+            className="realisations-track-mobile flex w-full snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-5 py-8"
+            style={{ scrollPaddingLeft: "1.25rem" }}
           >
             {PROJECTS.map((p) => (
               <article
                 key={p.index}
-                className="relative flex h-full w-[86vw] shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] sm:w-[88vw] sm:rounded-3xl sm:p-12 md:p-16"
+                className="relative flex aspect-[3/4] w-[80vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC]"
               >
-                {/* Top : compteur */}
                 <div className="flex items-start justify-between gap-4">
                   <span
-                    className={`${bebas.className} text-[0.85rem] uppercase tracking-[0.22em] opacity-70 sm:text-[1.05rem]`}
+                    className={`${bebas.className} text-[0.85rem] uppercase tracking-[0.22em] opacity-70`}
                   >
                     {p.index} / {String(PROJECTS.length).padStart(2, "0")}
                   </span>
-                  <span className="hidden font-sans text-[0.65rem] font-medium uppercase tracking-[0.22em] opacity-60 sm:inline-block sm:text-[0.7rem]">
-                    Étude de cas
-                  </span>
                 </div>
 
-                {/* Bottom : titre + statut + watermark */}
-                <div className="flex items-end justify-between gap-4 sm:gap-8">
+                <div className="flex items-end justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <h3
-                      className={`${bebas.className} m-0 text-[clamp(2rem,6.4vw,6.5rem)] uppercase leading-[0.92] tracking-[-0.005em] sm:leading-[0.88]`}
+                      className={`${bebas.className} m-0 text-[clamp(2rem,11vw,4rem)] uppercase leading-[0.92] tracking-[-0.005em]`}
                     >
                       {p.title}
                     </h3>
-                    <p className="mt-4 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80 sm:mt-5 sm:gap-3 sm:text-[0.85rem] sm:tracking-[0.22em]">
+                    <p className="mt-3 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80">
                       {p.status}
-                      <span aria-hidden className="text-sm sm:text-base">
+                      <span aria-hidden className="text-sm">
                         →
                       </span>
                     </p>
                   </div>
                   <span
                     aria-hidden
-                    className={`${bebas.className} pointer-events-none select-none text-[clamp(5rem,18vw,18rem)] leading-none opacity-[0.06]`}
+                    className={`${bebas.className} pointer-events-none select-none text-[clamp(5rem,28vw,12rem)] leading-none opacity-[0.06]`}
                   >
                     {p.index}
                   </span>
@@ -175,7 +205,55 @@ export default function Realisations() {
               </article>
             ))}
           </div>
-        </div>
+        ) : (
+          <div className="relative flex-1 overflow-hidden">
+            <div
+              ref={trackRef}
+              className="flex h-full items-stretch gap-[3vw] px-5 py-6 will-change-transform sm:gap-[2.5vw] sm:px-[4vw] sm:py-10 md:py-12"
+              style={{ transform: `translate3d(${shift}px, 0, 0)` }}
+            >
+              {PROJECTS.map((p) => (
+                <article
+                  key={p.index}
+                  className="relative flex h-full w-[86vw] shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] sm:w-[88vw] sm:rounded-3xl sm:p-12 md:p-16"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <span
+                      className={`${bebas.className} text-[0.85rem] uppercase tracking-[0.22em] opacity-70 sm:text-[1.05rem]`}
+                    >
+                      {p.index} / {String(PROJECTS.length).padStart(2, "0")}
+                    </span>
+                    <span className="hidden font-sans text-[0.65rem] font-medium uppercase tracking-[0.22em] opacity-60 sm:inline-block sm:text-[0.7rem]">
+                      Étude de cas
+                    </span>
+                  </div>
+
+                  <div className="flex items-end justify-between gap-4 sm:gap-8">
+                    <div className="flex-1 min-w-0">
+                      <h3
+                        className={`${bebas.className} m-0 text-[clamp(2rem,6.4vw,6.5rem)] uppercase leading-[0.92] tracking-[-0.005em] sm:leading-[0.88]`}
+                      >
+                        {p.title}
+                      </h3>
+                      <p className="mt-4 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80 sm:mt-5 sm:gap-3 sm:text-[0.85rem] sm:tracking-[0.22em]">
+                        {p.status}
+                        <span aria-hidden className="text-sm sm:text-base">
+                          →
+                        </span>
+                      </p>
+                    </div>
+                    <span
+                      aria-hidden
+                      className={`${bebas.className} pointer-events-none select-none text-[clamp(5rem,18vw,18rem)] leading-none opacity-[0.06]`}
+                    >
+                      {p.index}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

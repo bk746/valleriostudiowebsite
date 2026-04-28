@@ -53,7 +53,7 @@ export default function Footer() {
   return (
     <footer
       data-nav-theme="dark"
-      className="relative z-[70] flex min-h-[100dvh] w-full flex-col overflow-hidden bg-[#343d33] text-[#FDF6EC] shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:h-[100dvh] md:min-h-[640px]"
+      className="relative z-[70] flex min-h-[100svh] w-full flex-col overflow-hidden bg-[#343d33] text-[#FDF6EC] shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:h-[100svh] md:min-h-[640px]"
       aria-label="Pied de page"
     >
       <div className="flex flex-1 flex-col px-5 pb-6 pt-16 sm:px-10 sm:pt-24 md:px-14 md:pt-28">

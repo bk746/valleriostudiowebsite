@@ -12,7 +12,7 @@ const HERO_TITLE = "Vallerio Studio";
 export default function Hero() {
   return (
     <section
-      className={`${bebas.className} sticky top-0 z-0 flex h-[100dvh] flex-col bg-[#FDF6EC] px-5 pb-6 pt-0 sm:px-8 md:px-12`}
+      className={`${bebas.className} sticky top-0 z-0 flex h-[100svh] flex-col bg-[#FDF6EC] px-5 pb-6 pt-0 sm:px-8 md:px-12`}
     >
       <div className="flex flex-1 flex-col items-center justify-center gap-5 -translate-y-6 sm:gap-7 sm:-translate-y-12">
         <h1

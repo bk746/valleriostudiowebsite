@@ -111,10 +111,14 @@ export default function Approche() {
   const [lineProgress, setLineProgress] = useState(0);
   const [revealed, setRevealed] = useState<boolean[]>(() => STEPS.map(() => false));
 
-  // Tracé continu de la ligne centrale (suit le milieu du viewport)
+  // Tracé continu de la ligne centrale (suit le milieu du viewport).
+  // Désactivé sur mobile : `getBoundingClientRect()` à chaque frame de scroll
+  // est l'un des plus gros contributeurs au jank au swipe. Sur mobile la
+  // ligne reste donc pleine (rendu identique à `prefers-reduced-motion`).
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    if (reduce || coarse) {
       setLineProgress(1);
       return;
     }

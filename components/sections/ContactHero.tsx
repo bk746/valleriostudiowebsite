@@ -19,7 +19,7 @@ const TITLE = "Contact";
 export default function ContactHero() {
   return (
     <section
-      className={`${bebas.className} relative flex min-h-[100dvh] w-full flex-col bg-[#FDF6EC] px-5 pb-6 pt-28 text-[#0C4323] sm:px-12 sm:pb-7 sm:pt-40 md:pt-48`}
+      className={`${bebas.className} relative flex min-h-[100svh] w-full flex-col bg-[#FDF6EC] px-5 pb-6 pt-28 text-[#0C4323] sm:px-12 sm:pb-7 sm:pt-40 md:pt-48`}
       aria-label="Contact — hero"
     >
       <div className="flex flex-1 flex-col items-center justify-center gap-5 sm:gap-7">
