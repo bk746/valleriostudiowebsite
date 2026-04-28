@@ -11,7 +11,7 @@ export default function Cta() {
   return (
     <section
       data-nav-theme="dark"
-      className="sticky top-0 z-50 -mt-[100dvh] flex h-[100dvh] w-full flex-col overflow-hidden bg-[#343d33] px-5 text-[#FDF6EC] shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] sm:px-10 md:px-12"
+      className="sticky top-0 z-50 -mt-[100dvh] flex h-[100dvh] w-full flex-col overflow-hidden bg-[#343d33] px-5 text-[#FDF6EC] sm:px-10 sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:px-12"
       aria-label="Discutons de votre projet"
     >
       {/* ── Bloc central ─────────────────────────────────── */}

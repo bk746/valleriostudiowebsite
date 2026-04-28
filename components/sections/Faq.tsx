@@ -57,7 +57,7 @@ export default function Faq() {
   return (
     <section
       id="faq"
-      className="relative z-[60] w-full bg-[#FDF6EC] px-5 pb-20 pt-20 text-[#0C4323] shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] sm:px-8 sm:pb-28 sm:pt-28 md:px-12 md:pb-32 md:pt-32"
+      className="relative z-[60] w-full bg-[#FDF6EC] px-5 pb-20 pt-20 text-[#0C4323] sm:px-8 sm:pb-28 sm:pt-28 sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:px-12 md:pb-32 md:pt-32"
       aria-label="Questions fréquentes"
     >
       <div className="grid grid-cols-1 gap-8 sm:gap-12 md:grid-cols-12 md:gap-16">

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 import logo from "@/src/images/vallerio-logo-noir.svg";
@@ -24,6 +25,7 @@ const linkBase =
 const navItemClass = "shrink-0";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const [onDark, setOnDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,6 +33,18 @@ export default function Navbar() {
   useEffect(() => {
     let lastY = window.scrollY;
     let raf = 0;
+
+    /*
+      On cache la liste des sections au montage et on la rafraîchit lors d'un
+      changement de route (`pathname`). Auparavant `querySelectorAll`
+      s'exécutait à chaque frame de scroll, ce qui coûtait cher sur mobile
+      (Safari iOS surtout) et provoquait du jank au swipe.
+    */
+    let sections = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        "main section, body > section, body > footer"
+      )
+    );
 
     const update = () => {
       raf = 0;
@@ -43,14 +57,11 @@ export default function Navbar() {
 
       lastY = y;
 
-      const all = document.querySelectorAll<HTMLElement>(
-        "main section, body > section, body > footer"
-      );
       let topMost: HTMLElement | null = null;
-      for (let i = all.length - 1; i >= 0; i--) {
-        const rect = all[i].getBoundingClientRect();
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const rect = sections[i].getBoundingClientRect();
         if (rect.top <= NAV_HEIGHT && rect.bottom > NAV_HEIGHT) {
-          topMost = all[i];
+          topMost = sections[i];
           break;
         }
       }
@@ -62,15 +73,24 @@ export default function Navbar() {
       raf = window.requestAnimationFrame(update);
     };
 
+    const onResize = () => {
+      sections = Array.from(
+        document.querySelectorAll<HTMLElement>(
+          "main section, body > section, body > footer"
+        )
+      );
+      onScroll();
+    };
+
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
       if (raf) window.cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [pathname]);
 
   // Verrouille le scroll quand le menu mobile est ouvert
   useEffect(() => {

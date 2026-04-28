@@ -119,7 +119,7 @@ export function HeroValuePropClient({
         bebasClassName +
         " hero-stage sticky top-0 z-10 flex h-[100dvh] w-full flex-col overflow-hidden" +
         " bg-[#343d33] text-[#FDF6EC]" +
-        " shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]" +
+        " sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]" +
         (revealed ? " is-revealed" : "")
       }
       aria-label="Manifeste — votre site, votre meilleur commercial"

@@ -176,7 +176,7 @@ export default function Approche() {
 
   return (
     <section
-      className="relative z-30 w-full overflow-hidden bg-[#FDF6EC] text-[#0C4323] shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]"
+      className="relative z-30 w-full overflow-hidden bg-[#FDF6EC] text-[#0C4323] sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]"
       aria-label="Notre approche"
     >
       {/* ── HEADER ───────────────────────────────────────── */}
