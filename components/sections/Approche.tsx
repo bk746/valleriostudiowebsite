@@ -109,16 +109,30 @@ export default function Approche() {
   const friseRef = useRef<HTMLDivElement | null>(null);
   const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [lineProgress, setLineProgress] = useState(0);
+  const [friseHeight, setFriseHeight] = useState(0);
   const [revealed, setRevealed] = useState<boolean[]>(() => STEPS.map(() => false));
 
-  // Tracé continu de la ligne centrale (suit le milieu du viewport).
-  // Désactivé sur mobile : `getBoundingClientRect()` à chaque frame de scroll
-  // est l'un des plus gros contributeurs au jank au swipe. Sur mobile la
-  // ligne reste donc pleine (rendu identique à `prefers-reduced-motion`).
+  // Mesure la hauteur de la frise pour pouvoir positionner le curseur en
+  // translate3d (GPU composited) plutôt qu'en `top: %` (forcerait un layout).
   useEffect(() => {
+    const el = friseRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setFriseHeight(entry.contentRect.height);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Tracé continu de la ligne centrale (suit le milieu du viewport).
+  // Le rendu est fait via `transform: scaleY` (GPU composited) plutôt qu'un
+  // `height: %` — ça évite tout repaint pendant le scroll, donc aucun coût
+  // mesurable même sur mobile. On garde un seul listener scroll passif qui
+  // se contente d'écrire deux variables CSS via rAF.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    if (reduce || coarse) {
+    if (reduce) {
       setLineProgress(1);
       return;
     }
@@ -210,16 +224,20 @@ export default function Approche() {
           className="pointer-events-none absolute top-0 h-full w-[2px] left-[1.25rem] sm:left-[2.25rem] md:left-1/2 md:-translate-x-1/2"
         >
           <span className="absolute inset-0 bg-[#0C4323] opacity-15" />
+          {/*
+            La barre remplie est rendue en `transform: scaleY` (GPU composited)
+            plutôt qu'en `height: %` (qui repeindrait à chaque tick de scroll).
+            origin top → la barre grandit du haut vers le bas comme une frise.
+          */}
           <span
-            className="absolute left-0 top-0 w-full bg-[#0C4323]"
-            style={{ height: `${lineProgress * 100}%` }}
+            className="absolute inset-0 origin-top bg-[#0C4323] will-change-transform"
+            style={{ transform: `scaleY(${lineProgress})` }}
           />
-          {/* Curseur qui descend */}
+          {/* Curseur qui descend — translate3d est aussi compositée GPU */}
           <span
-            className="absolute left-1/2 size-3 rounded-full bg-[#0C4323] ring-4 ring-[#FDF6EC]"
+            className="absolute left-1/2 top-0 size-3 rounded-full bg-[#0C4323] ring-4 ring-[#FDF6EC] will-change-transform"
             style={{
-              top: `${lineProgress * 100}%`,
-              transform: "translate(-50%, -50%)",
+              transform: `translate3d(-50%, ${friseHeight * lineProgress - 6}px, 0)`,
               opacity: lineProgress > 0.005 && lineProgress < 0.995 ? 1 : 0,
               transition: "opacity 0.4s ease",
             }}
