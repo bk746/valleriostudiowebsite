@@ -1,0 +1,41 @@
+/* Une passe : sortie à gauche, retour par la droite — déclenché par
+   .hero-letter__inner--play (sur vol d’une seule lettre, via le client). */
+
+@keyframes hero-letter-slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  32% {
+    transform: translate3d(-120%, 0, 0);
+  }
+  32.1% {
+    transform: translate3d(120%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-letter {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1;
+  user-select: none;
+}
+
+.hero-letter__inner {
+  display: inline-block;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.hero-letter__inner--play {
+  animation: hero-letter-slide 0.75s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-letter__inner--play {
+    animation: none !important;
+  }
+}

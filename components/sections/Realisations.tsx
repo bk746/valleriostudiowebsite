@@ -1,0 +1,182 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Bebas_Neue } from "next/font/google";
+
+const bebas = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+type Project = {
+  index: string;
+  title: string;
+  status: string;
+};
+
+const PROJECTS: ReadonlyArray<Project> = [
+  {
+    index: "01",
+    title: "Projet à venir",
+    status: "À découvrir bientôt",
+  },
+  {
+    index: "02",
+    title: "Projet à venir",
+    status: "À découvrir bientôt",
+  },
+  {
+    index: "03",
+    title: "Projet à venir",
+    status: "À découvrir bientôt",
+  },
+];
+
+export default function Realisations() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const [maxShift, setMaxShift] = useState(0);
+  const [shift, setShift] = useState(0);
+
+  // Mesure la distance horizontale à parcourir pour faire défiler toutes les cartes.
+  useEffect(() => {
+    let raf = 0;
+    const measure = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const track = trackRef.current;
+        if (!track) return;
+        const ms = Math.max(0, track.scrollWidth - window.innerWidth);
+        setMaxShift(ms);
+      });
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (trackRef.current) ro.observe(trackRef.current);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  // Pilote le translate horizontal du track selon la progression du scroll vertical.
+  // La section est en sticky-inner : la fenêtre reste pinned tant qu'on n'a pas
+  // parcouru tout maxShift en scroll, le track glisse alors vers la gauche.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setShift(0);
+      return;
+    }
+    if (maxShift === 0) return;
+
+    let raf = 0;
+    const compute = () => {
+      const sec = sectionRef.current;
+      if (!sec) return;
+      const scrolled = -sec.getBoundingClientRect().top;
+      const p = Math.max(0, Math.min(1, scrolled / maxShift));
+      setShift(-p * maxShift);
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(compute);
+    };
+
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [maxShift]);
+
+  // Hauteur totale = viewport + maxShift (durée du défilement horizontal)
+  // + 100dvh de buffer : pendant ce buffer, la section reste pinned avec la dernière
+  // carte affichée pendant que la section CTA suivante remonte par-dessus.
+  const minHeight = maxShift > 0 ? `calc(200dvh + ${maxShift}px)` : "100dvh";
+
+  return (
+    <section
+      id="realisations"
+      ref={sectionRef}
+      className="relative z-30 w-full bg-[#FDF6EC]"
+      style={{ minHeight }}
+      aria-label="Réalisations"
+    >
+      <div className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden text-[#0C4323]">
+        {/* ── HEADER ───────────────────────────────────────── */}
+        <header
+          className={`${bebas.className} px-5 pt-24 sm:px-8 sm:pt-28 md:px-12 md:pt-32`}
+        >
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3 sm:mb-4">
+            <h2 className="m-0 text-[clamp(2.4rem,7vw,7.5rem)] font-normal uppercase leading-[0.92] tracking-[-0.015em] sm:leading-[0.86]">
+              Réalisations
+            </h2>
+            <span className="hidden font-sans text-[0.6rem] font-medium uppercase tracking-[0.28em] opacity-60 sm:inline-block sm:text-[0.68rem]">
+              {PROJECTS.length} projets en préparation
+            </span>
+          </div>
+          <div className="h-[2px] bg-[#0C4323]" />
+        </header>
+
+        {/* ── TRACK HORIZONTAL ─────────────────────────────── */}
+        <div className="relative flex-1 overflow-hidden">
+          <div
+            ref={trackRef}
+            className="flex h-full items-stretch gap-[3vw] px-5 py-6 will-change-transform sm:gap-[2.5vw] sm:px-[4vw] sm:py-10 md:py-12"
+            style={{ transform: `translate3d(${shift}px, 0, 0)` }}
+          >
+            {PROJECTS.map((p) => (
+              <article
+                key={p.index}
+                className="relative flex h-full w-[86vw] shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] sm:w-[88vw] sm:rounded-3xl sm:p-12 md:p-16"
+              >
+                {/* Top : compteur */}
+                <div className="flex items-start justify-between gap-4">
+                  <span
+                    className={`${bebas.className} text-[0.85rem] uppercase tracking-[0.22em] opacity-70 sm:text-[1.05rem]`}
+                  >
+                    {p.index} / {String(PROJECTS.length).padStart(2, "0")}
+                  </span>
+                  <span className="hidden font-sans text-[0.65rem] font-medium uppercase tracking-[0.22em] opacity-60 sm:inline-block sm:text-[0.7rem]">
+                    Étude de cas
+                  </span>
+                </div>
+
+                {/* Bottom : titre + statut + watermark */}
+                <div className="flex items-end justify-between gap-4 sm:gap-8">
+                  <div className="flex-1 min-w-0">
+                    <h3
+                      className={`${bebas.className} m-0 text-[clamp(2rem,6.4vw,6.5rem)] uppercase leading-[0.92] tracking-[-0.005em] sm:leading-[0.88]`}
+                    >
+                      {p.title}
+                    </h3>
+                    <p className="mt-4 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80 sm:mt-5 sm:gap-3 sm:text-[0.85rem] sm:tracking-[0.22em]">
+                      {p.status}
+                      <span aria-hidden className="text-sm sm:text-base">
+                        →
+                      </span>
+                    </p>
+                  </div>
+                  <span
+                    aria-hidden
+                    className={`${bebas.className} pointer-events-none select-none text-[clamp(5rem,18vw,18rem)] leading-none opacity-[0.06]`}
+                  >
+                    {p.index}
+                  </span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

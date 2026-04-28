@@ -1,0 +1,80 @@
+/* Hero value-prop : reveal éditorial (mask + blur), parallax, grain */
+
+:root {
+  --hero-word-dur: 1.05s;
+  --hero-word-stagger: 0.07s;
+  --hero-word-ease: cubic-bezier(0.16, 1, 0.32, 1);
+}
+
+/* ── Mots : masque + lift + blur (Awwwards-style) ──────── */
+
+.hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Évite que les jambages italiques (j, p, q) ne soient coupés */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  line-height: inherit;
+}
+
+.hero-word__inner {
+  display: inline-block;
+  transform: translate3d(0, 110%, 0);
+  opacity: 0;
+  filter: blur(6px);
+  transition: none;
+  will-change: transform, opacity, filter;
+}
+
+.hero-words-paragraph--revealed .hero-word__inner {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    transform var(--hero-word-dur) var(--hero-word-ease),
+    opacity calc(var(--hero-word-dur) * 0.75) var(--hero-word-ease),
+    filter calc(var(--hero-word-dur) * 0.7) var(--hero-word-ease);
+  transition-delay: calc(var(--i) * var(--hero-word-stagger));
+}
+
+/* ── Parallax souris (sur chaque ligne) ────────────────── */
+
+.hero-line {
+  --depth: 1;
+  transform: translate3d(
+    calc(var(--mx, 0px) * var(--depth)),
+    calc(var(--my, 0px) * var(--depth)),
+    0
+  );
+  transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* ── Grain ambiant (présent dès le chargement) ─────────── */
+
+.hero-grain::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.99 0 0 0 0 0.96 0 0 0 0 0.83 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ── Reduced motion ────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-word__inner {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .hero-line {
+    transform: none !important;
+    transition: none !important;
+  }
+}

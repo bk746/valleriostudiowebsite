@@ -1,0 +1,26 @@
+/* Mouvement continu : timing 100 % linéaire (pas de ease = pas de pause
+   perceptible en haut / en bas). Boucle rapide = toujours en mouvement. */
+
+[data-hero-arrow] {
+  display: inline-flex;
+  will-change: transform;
+  animation: heroArrowNudge 1s linear 0s infinite;
+}
+
+@keyframes heroArrowNudge {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 6px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-arrow] {
+    animation: none !important;
+  }
+}

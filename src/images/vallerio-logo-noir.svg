@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Fond noir arrondi -->
+  <rect width="120" height="120" rx="14" fill="#1a1a18"/>
+
+  <!-- V en Cormorant Garamond Bold -->
+  <text
+    x="60"
+    y="84"
+    text-anchor="middle"
+    font-family="Cormorant Garamond, Georgia, serif"
+    font-weight="700"
+    font-size="82"
+    fill="#ffffff"
+    letter-spacing="-2"
+  >V</text>
+
+  <!-- Studio en Inter Light -->
+  <text
+    x="60"
+    y="108"
+    text-anchor="middle"
+    font-family="Inter, Arial, sans-serif"
+    font-weight="300"
+    font-size="9"
+    fill="#ffffff"
+    opacity="0.4"
+    letter-spacing="4"
+  >STUDIO</text>
+</svg>
