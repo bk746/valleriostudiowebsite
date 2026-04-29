@@ -11,7 +11,7 @@ export default function Cta() {
   return (
     <section
       data-nav-theme="dark"
-      className="sticky top-0 z-50 -mt-[100svh] flex h-[100svh] w-full flex-col overflow-hidden bg-[#343d33] px-5 text-[#FDF6EC] sm:px-10 sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:px-12"
+      className="cta-overlap sticky top-0 z-50 flex h-[100svh] w-full flex-col overflow-hidden bg-[#343d33] px-5 text-[#FDF6EC] sm:px-10 sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:px-12"
       aria-label="Discutons de votre projet"
     >
       {/* ── Bloc central ─────────────────────────────────── */}

@@ -64,3 +64,19 @@ body {
   display: none;
 }
 
+/*
+  La section CTA recouvre le buffer de 100svh en fin de Realisations sur
+  desktop (effet de bascule sticky). Sur mobile, Realisations n'a plus ce
+  buffer (scroll horizontal natif → hauteur naturelle), donc le `margin-top:
+  -100svh` ferait passer CTA *par-dessus* Realisations, la rendant invisible.
+  On neutralise le margin-top négatif quand le pointeur est tactile.
+*/
+.cta-overlap {
+  margin-top: -100svh;
+}
+@media (pointer: coarse) {
+  .cta-overlap {
+    margin-top: 0;
+  }
+}
+
