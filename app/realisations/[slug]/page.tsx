@@ -51,7 +51,7 @@ function InlineProjectFigure({
   priority?: boolean;
 }) {
   return (
-    <figure className={`${figureShell} my-10 sm:my-12`}>
+    <figure className={`${figureShell} my-14 sm:my-16 md:my-20`}>
       <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
         <Image
           src={slide.src}
@@ -77,23 +77,22 @@ export default async function RealisationPage({ params }: Props) {
   const heroSlide: GallerySlide = { src: r.image, alt: r.imageAlt };
 
   return (
-    <main className="min-h-svh bg-[#FDF6EC] pb-24 pt-28 text-[#0C4323] sm:pb-32 sm:pt-32 md:pt-36">
-      <div className="mx-auto max-w-4xl px-5 sm:px-8 md:px-12">
+    <main className="min-h-svh bg-[#FDF6EC] pb-28 pt-28 text-[#0C4323] sm:pb-40 sm:pt-32 md:pb-44 md:pt-40">
+      <div className="mx-auto max-w-4xl px-5 sm:px-10 md:px-14">
         <RealisationBackNav />
 
-        <header className="border-b-2 border-[#0C4323] pb-8 sm:pb-10">
-          <p
-            className={`${bebas.className} mb-2 text-[0.85rem] uppercase tracking-[0.28em] text-[#0C4323]/55 sm:text-[0.95rem]`}
-          >
-            {r.index} — {r.status}
-          </p>
+        <header className="border-b border-[#0C4323]/25 pb-10 sm:pb-14">
           <h1
             className={`${bebas.className} m-0 text-[clamp(2.5rem,10vw,5rem)] font-normal uppercase leading-[0.92] tracking-[-0.02em]`}
           >
             {r.title}
+            <span className="sr-only">
+              {" "}
+              — {r.status}
+            </span>
           </h1>
           {cs ? (
-            <p className={`${body} mt-5 max-w-[40rem] border-l-2 border-[#0C4323]/25 pl-4 sm:mt-6 sm:pl-5`}>
+            <p className={`${body} mt-6 max-w-[40rem] border-l-2 border-[#0C4323]/25 pl-4 sm:mt-8 sm:pl-5`}>
               {cs.summary}
             </p>
           ) : null}
@@ -103,21 +102,21 @@ export default async function RealisationPage({ params }: Props) {
 
         {cs ? (
           <>
-            <section className="mt-10 sm:mt-12">
+            <section className="mt-14 sm:mt-16 md:mt-20">
               <h2 className={sectionTitle}>Contexte & cibles</h2>
-              <p className={`${body} mt-3 max-w-[40rem]`}>{cs.context}</p>
+              <p className={`${body} mt-4 max-w-[40rem] sm:mt-5`}>{cs.context}</p>
             </section>
 
             <InlineProjectFigure slide={heroSlide} priority />
 
-            <div className="grid gap-6 sm:grid-cols-2 sm:gap-8">
-              <section className="rounded-2xl border border-[#0C4323]/12 bg-[#EDEAE4]/60 px-5 py-6 sm:px-6 sm:py-8">
+            <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 md:gap-12">
+              <section className="rounded-2xl border border-[#0C4323]/12 bg-[#EDEAE4]/60 px-5 py-7 sm:px-7 sm:py-9">
                 <h2 className={sectionTitle}>Problématique</h2>
-                <p className={`${body} mt-3`}>{cs.problem}</p>
+                <p className={`${body} mt-4 sm:mt-5`}>{cs.problem}</p>
               </section>
-              <section className="rounded-2xl border border-[#0C4323]/12 bg-white/50 px-5 py-6 sm:px-6 sm:py-8">
+              <section className="rounded-2xl border border-[#0C4323]/12 bg-white/50 px-5 py-7 sm:px-7 sm:py-9">
                 <h2 className={sectionTitle}>Solution retenue</h2>
-                <p className={`${body} mt-3`}>{cs.solution}</p>
+                <p className={`${body} mt-4 sm:mt-5`}>{cs.solution}</p>
               </section>
             </div>
 
@@ -125,19 +124,19 @@ export default async function RealisationPage({ params }: Props) {
               <InlineProjectFigure slide={extraGallery[0]} />
             ) : null}
 
-            <section className="rounded-2xl border border-[#0C4323]/10 bg-white/40 px-5 py-6 sm:px-7 sm:py-8">
+            <section className="rounded-2xl border border-[#0C4323]/10 bg-white/40 px-5 py-7 sm:px-8 sm:py-10">
               <h2 className={sectionTitle}>Démarche & priorités</h2>
-              <p className={`${body} mt-3`}>{cs.methodology}</p>
+              <p className={`${body} mt-4 sm:mt-5`}>{cs.methodology}</p>
             </section>
 
             {extraGallery[1] ? (
               <InlineProjectFigure slide={extraGallery[1]} />
             ) : null}
 
-            <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
+            <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
               <section>
                 <h2 className={sectionTitle}>Livrables</h2>
-                <ul className="mt-4 list-none space-y-2.5 p-0">
+                <ul className="mt-5 list-none space-y-3.5 p-0 sm:mt-6">
                   {cs.deliverables.map((item) => (
                     <li
                       key={item}
@@ -151,7 +150,7 @@ export default async function RealisationPage({ params }: Props) {
               </section>
               <section>
                 <h2 className={sectionTitle}>Périmètre technique</h2>
-                <ul className="mt-4 flex flex-wrap gap-2">
+                <ul className="mt-5 flex flex-wrap gap-2.5 sm:mt-6">
                   {cs.stack.map((tech) => (
                     <li key={tech}>
                       <span className="inline-block rounded-full border border-[#0C4323]/18 bg-[#FDF6EC] px-3 py-1.5 font-sans text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[#0C4323]/85">
@@ -171,9 +170,9 @@ export default async function RealisationPage({ params }: Props) {
               <InlineProjectFigure key={`${r.slug}-tail-${i}`} slide={slide} />
             ))}
 
-            <section className="border border-[#0C4323]/12 bg-[#0C4323]/[0.04] px-5 py-6 sm:rounded-2xl sm:px-7 sm:py-8">
+            <section className="border border-[#0C4323]/12 bg-[#0C4323]/[0.04] px-5 py-8 sm:rounded-2xl sm:px-8 sm:py-10">
               <h2 className={sectionTitle}>Bilan</h2>
-              <p className={`${body} mt-3 max-w-[40rem]`}>{cs.outcomes}</p>
+              <p className={`${body} mt-4 max-w-[40rem] sm:mt-5`}>{cs.outcomes}</p>
             </section>
           </>
         ) : null}

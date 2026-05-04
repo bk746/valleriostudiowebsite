@@ -4,7 +4,7 @@ import TransitionLink from "@/components/layouts/TransitionLink";
 
 export default function RealisationBackNav() {
   return (
-    <nav aria-label="Retour aux réalisations" className="mb-10 sm:mb-12">
+    <nav aria-label="Retour aux réalisations" className="mb-12 sm:mb-14 md:mb-16">
       <TransitionLink
         label="Réalisations"
         targetId="realisations"
