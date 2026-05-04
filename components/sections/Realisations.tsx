@@ -65,7 +65,7 @@ function VisualProjectFigure({
         sizes={sizes}
         priority={priority}
       />
-      <figcaption className="absolute inset-x-0 bottom-0 z-10 rounded-b-[1.05rem] border-t border-white/12 bg-[rgba(8,10,14,0.82)] px-3.5 pb-4 pt-4 text-left backdrop-blur-md sm:rounded-b-[1.55rem] sm:px-5 sm:pb-5 sm:pt-5">
+      <figcaption className="absolute bottom-3 left-3 z-10 w-fit max-w-[calc(100%-1.5rem)] rounded-xl border border-white/12 bg-[rgba(8,10,14,0.87)] px-3.5 py-3 text-left backdrop-blur-md sm:bottom-4 sm:left-4 sm:max-w-[min(22rem,calc(100%-2rem))] sm:px-5 sm:py-4">
         <h3
           className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-white`}
         >
