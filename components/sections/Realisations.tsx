@@ -18,6 +18,8 @@ type Project = {
   status: string;
   image?: StaticImageData;
   imageAlt?: string;
+  /** Cadre autour de la capture : crème (portfolio clair) ou bleu nuit (défaut). */
+  visualShell?: "dark" | "cream";
 };
 
 const PROJECTS: ReadonlyArray<Project> = [
@@ -27,6 +29,7 @@ const PROJECTS: ReadonlyArray<Project> = [
     status: "Vitrine web · livrée",
     image: realisation1,
     imageAlt: "Aperçu du site vitrine",
+    visualShell: "dark",
   },
   {
     index: "02",
@@ -34,6 +37,7 @@ const PROJECTS: ReadonlyArray<Project> = [
     status: "Site portfolio · livré",
     image: realisation2,
     imageAlt: "Aperçu du site portfolio",
+    visualShell: "cream",
   },
   {
     index: "03",
@@ -46,20 +50,29 @@ type ProjectWithImage = Project & {
   image: StaticImageData;
 };
 
-/** Carte « vitrine » : image maximale + légende sur bandeau bas (contraste garanti, pas de dégradé vert). */
+/** Carte « vitrine » : image maximale + légende sur pilule bas (contraste garanti). */
 function VisualProjectFigure({
   project,
   sizes,
   priority,
   bebasClassName,
+  shell = "dark",
 }: {
   project: ProjectWithImage;
   sizes: string;
   priority?: boolean;
   bebasClassName: string;
+  shell?: "dark" | "cream";
 }) {
+  const insetRing =
+    shell === "cream"
+      ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
+      : "shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)]";
+
   return (
-    <figure className="relative m-0 flex min-h-0 h-full w-full min-w-0 flex-1 overflow-hidden rounded-[1.1rem] shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)] sm:rounded-[1.6rem]">
+    <figure
+      className={`relative m-0 flex min-h-0 h-full w-full min-w-0 flex-1 overflow-hidden rounded-[1.1rem] sm:rounded-[1.6rem] ${insetRing}`}
+    >
       <Image
         src={project.image}
         alt={project.imageAlt ?? project.title}
@@ -219,13 +232,16 @@ export default function Realisations() {
           >
             {PROJECTS.map((p) => {
               const isVisualCard = Boolean(p.image);
+              const shell = p.visualShell === "cream" ? "cream" : "dark";
               return (
               <article
                 key={p.index}
                 className={
                   "relative flex min-h-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl " +
                   (isVisualCard
-                    ? "bg-[#1a222d] text-white shadow-[0_28px_70px_-28px_rgba(0,0,0,0.55)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
+                    ? shell === "cream"
+                      ? "bg-[#EDEAE4] text-[#141414] shadow-[0_28px_55px_-28px_rgba(0,0,0,0.14)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
+                      : "bg-[#1a222d] text-white shadow-[0_28px_70px_-28px_rgba(0,0,0,0.55)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
                     : "bg-[#156332] text-[#FDF6EC] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.42)] aspect-[3/4] w-[80vw] gap-3 p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.4)]")
                 }
               >
@@ -245,6 +261,7 @@ export default function Realisations() {
                     sizes="92vw"
                     priority={p.index === "01"}
                     bebasClassName={bebas.className}
+                    shell={shell}
                   />
                 ) : null}
 
@@ -284,14 +301,17 @@ export default function Realisations() {
             >
               {PROJECTS.map((p) => {
                 const isVisualCard = Boolean(p.image);
+                const shell = p.visualShell === "cream" ? "cream" : "dark";
                 return (
                 <article
                   key={p.index}
                   className={
-                    "relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden rounded-2xl shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] " +
+                    "relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden rounded-2xl " +
                     (isVisualCard
-                      ? "bg-[#1a222d] text-white w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
-                      : "bg-[#156332] text-[#FDF6EC] w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
+                      ? shell === "cream"
+                        ? "bg-[#EDEAE4] text-[#141414] shadow-[0_28px_56px_-28px_rgba(0,0,0,0.16)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
+                        : "bg-[#1a222d] text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
+                      : "bg-[#156332] text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
                   }
                 >
                   {!isVisualCard ? (
@@ -313,6 +333,7 @@ export default function Realisations() {
                       sizes="(max-width: 1280px) 88vw, 1100px"
                       priority={p.index === "01"}
                       bebasClassName={bebas.className}
+                      shell={shell}
                     />
                   ) : null}
 
