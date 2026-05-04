@@ -1,10 +1,10 @@
 import type { StaticImageData } from "next/image";
 import realisation1 from "@/src/images/réalisations1.png";
+import realisations2 from "@/src/images/réalisations2.png";
 import realisation3 from "@/src/images/réalisation3.png";
 import valerioShot1 from "@/src/images/valerio-realisation-1.png";
 import valerioShot2 from "@/src/images/valerio-realisation-2.png";
 import valerioShot3 from "@/src/images/valerio-realisation-3.png";
-import valerioShot4 from "@/src/images/valerio-realisation.png";
 
 export type CaseStudy = {
   problem: string;
@@ -50,9 +50,9 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     index: "02",
     title: "Portfolio éditorial",
     status: "Direction artistique · site livré",
-    image: valerioShot4,
+    image: realisations2,
     imageAlt:
-      "Aperçu principal du portfolio : direction éditoriale et mise en scène visuelle",
+      "Portfolio éditorial — plein écran montagne, typo serif et accroche « Les sommets du monde »",
     visualShell: "cream",
     extraGallery: [
       {
