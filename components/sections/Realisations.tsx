@@ -39,6 +39,50 @@ const PROJECTS: ReadonlyArray<Project> = [
   },
 ];
 
+type ProjectWithImage = Project & {
+  image: StaticImageData;
+};
+
+/** Carte « vitrine » : image maximale + légende en overlay (lisible, sans bandeau sous l’image). */
+function VisualProjectFigure({
+  project,
+  sizes,
+  priority,
+  bebasClassName,
+}: {
+  project: ProjectWithImage;
+  sizes: string;
+  priority?: boolean;
+  bebasClassName: string;
+}) {
+  return (
+    <figure className="relative m-0 flex min-h-0 h-full w-full min-w-0 flex-1 overflow-hidden rounded-[1.1rem] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:rounded-[1.6rem]">
+      <Image
+        src={project.image}
+        alt={project.imageAlt ?? project.title}
+        fill
+        className="object-cover object-top"
+        sizes={sizes}
+        priority={priority}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#041a0f]/94 via-[#0c4323]/28 to-transparent"
+        aria-hidden
+      />
+      <figcaption className="absolute inset-x-0 bottom-0 z-10 px-3.5 pb-3.5 pt-16 text-left sm:px-5 sm:pb-4 sm:pt-[4.5rem]">
+        <h3
+          className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-[#FDF6EC] drop-shadow-[0_1px_12px_rgba(0,0,0,0.35)]`}
+        >
+          {project.title}
+        </h3>
+        <p className="mt-1.5 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-[#FDF6EC]/88 sm:mt-2 sm:text-[0.64rem] sm:tracking-[0.22em]">
+          {project.status}
+        </p>
+      </figcaption>
+    </figure>
+  );
+}
+
 export default function Realisations() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -180,10 +224,10 @@ export default function Realisations() {
               <article
                 key={p.index}
                 className={
-                  "relative flex min-h-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-[#156332] text-[#FDF6EC] " +
+                  "relative flex min-h-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-[#156332] text-[#FDF6EC] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.42)] " +
                   (isVisualCard
-                    ? "h-[min(90svh,780px)] w-[92vw] gap-2 p-2 sm:h-full sm:min-h-0 sm:w-[88vw] sm:gap-3 sm:rounded-3xl sm:p-5 md:p-6"
-                    : "aspect-[3/4] w-[80vw] gap-3 p-6")
+                    ? "h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
+                    : "aspect-[3/4] w-[80vw] gap-3 p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.4)]")
                 }
               >
                 {!isVisualCard ? (
@@ -196,60 +240,38 @@ export default function Realisations() {
                   </div>
                 ) : null}
 
-                {p.image ? (
-                  <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-lg bg-black/10 sm:rounded-2xl">
-                    <Image
-                      src={p.image}
-                      alt={p.imageAlt ?? ""}
-                      fill
-                      className="object-cover object-top"
-                      sizes="(max-width: 640px) 92vw, 88vw"
-                      priority={p.index === "01"}
-                    />
-                  </div>
+                {isVisualCard && p.image ? (
+                  <VisualProjectFigure
+                    project={{ ...p, image: p.image }}
+                    sizes="92vw"
+                    priority={p.index === "01"}
+                    bebasClassName={bebas.className}
+                  />
                 ) : null}
 
-                <div
-                  className={
-                    isVisualCard
-                      ? "shrink-0"
-                      : "mt-auto flex items-end justify-between gap-4"
-                  }
-                >
-                  <div className="flex-1 min-w-0">
-                    <h3
-                      className={`${bebas.className} m-0 uppercase leading-[0.95] tracking-[-0.01em] ${
-                        isVisualCard
-                          ? "text-[clamp(1.05rem,3.8vw,2rem)]"
-                          : "text-[clamp(2rem,11vw,4rem)]"
-                      }`}
-                    >
-                      {p.title}
-                    </h3>
-                    <p
-                      className={
-                        isVisualCard
-                          ? "mt-1 font-sans text-[0.58rem] font-medium uppercase leading-tight tracking-[0.16em] opacity-70"
-                          : "mt-3 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80"
-                      }
-                    >
-                      {p.status}
-                      {!isVisualCard ? (
+                {!isVisualCard ? (
+                  <div className="mt-auto flex items-end justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3
+                        className={`${bebas.className} m-0 text-[clamp(2rem,11vw,4rem)] uppercase leading-[0.95] tracking-[-0.01em]`}
+                      >
+                        {p.title}
+                      </h3>
+                      <p className="mt-3 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80">
+                        {p.status}
                         <span aria-hidden className="text-sm">
                           →
                         </span>
-                      ) : null}
-                    </p>
-                  </div>
-                  {!isVisualCard ? (
+                      </p>
+                    </div>
                     <span
                       aria-hidden
                       className={`${bebas.className} pointer-events-none select-none text-[clamp(5rem,28vw,12rem)] leading-none opacity-[0.06]`}
                     >
                       {p.index}
                     </span>
-                  ) : null}
-                </div>
+                  </div>
+                ) : null}
               </article>
             );
             })}
@@ -269,7 +291,7 @@ export default function Realisations() {
                   className={
                     "relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden rounded-2xl bg-[#156332] text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] " +
                     (isVisualCard
-                      ? "w-[86vw] gap-2 p-3 sm:w-[88vw] sm:gap-3 sm:rounded-3xl sm:p-5 md:p-6"
+                      ? "w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
                       : "w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
                   }
                 >
@@ -286,60 +308,38 @@ export default function Realisations() {
                     </div>
                   ) : null}
 
-                  {p.image ? (
-                    <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-xl bg-black/10 sm:rounded-2xl">
-                      <Image
-                        src={p.image}
-                        alt={p.imageAlt ?? ""}
-                        fill
-                        className="object-cover object-top"
-                        sizes="(max-width: 1280px) 88vw, 1100px"
-                        priority={p.index === "01"}
-                      />
-                    </div>
+                  {isVisualCard && p.image ? (
+                    <VisualProjectFigure
+                      project={{ ...p, image: p.image }}
+                      sizes="(max-width: 1280px) 88vw, 1100px"
+                      priority={p.index === "01"}
+                      bebasClassName={bebas.className}
+                    />
                   ) : null}
 
-                  <div
-                    className={
-                      isVisualCard
-                        ? "shrink-0"
-                        : "mt-auto flex items-end justify-between gap-4 sm:gap-8"
-                    }
-                  >
-                    <div className="flex-1 min-w-0">
-                      <h3
-                        className={`${bebas.className} m-0 uppercase tracking-[-0.01em] sm:leading-[0.88] ${
-                          isVisualCard
-                            ? "text-[clamp(1.15rem,2.8vw,2.35rem)] leading-[0.95]"
-                            : "leading-[0.92] text-[clamp(2rem,6.4vw,6.5rem)]"
-                        }`}
-                      >
-                        {p.title}
-                      </h3>
-                      <p
-                        className={
-                          isVisualCard
-                            ? "mt-1 font-sans text-[0.6rem] font-medium uppercase leading-tight tracking-[0.18em] opacity-70 sm:text-[0.62rem]"
-                            : "mt-4 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80 sm:mt-5 sm:gap-3 sm:text-[0.85rem] sm:tracking-[0.22em]"
-                        }
-                      >
-                        {p.status}
-                        {!isVisualCard ? (
+                  {!isVisualCard ? (
+                    <div className="mt-auto flex items-end justify-between gap-4 sm:gap-8">
+                      <div className="flex-1 min-w-0">
+                        <h3
+                          className={`${bebas.className} m-0 text-[clamp(2rem,6.4vw,6.5rem)] uppercase leading-[0.92] tracking-[-0.005em] sm:leading-[0.88]`}
+                        >
+                          {p.title}
+                        </h3>
+                        <p className="mt-4 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80 sm:mt-5 sm:gap-3 sm:text-[0.85rem] sm:tracking-[0.22em]">
+                          {p.status}
                           <span aria-hidden className="text-sm sm:text-base">
                             →
                           </span>
-                        ) : null}
-                      </p>
-                    </div>
-                    {!isVisualCard ? (
+                        </p>
+                      </div>
                       <span
                         aria-hidden
                         className={`${bebas.className} pointer-events-none select-none text-[clamp(5rem,18vw,18rem)] leading-none opacity-[0.06]`}
                       >
                         {p.index}
                       </span>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                 </article>
               );
               })}
