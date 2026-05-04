@@ -25,13 +25,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const r = getRealisationBySlug(slug);
   if (!r) return { title: "Réalisation — Vallerio Studio" };
+  const desc = r.caseStudy
+    ? `${r.caseStudy.summary.slice(0, 155)}${r.caseStudy.summary.length > 155 ? "…" : ""}`
+    : r.status;
   return {
     title: `${r.title} — Réalisations · Vallerio Studio`,
-    description: r.caseStudy
-      ? `${r.status}. ${r.caseStudy.problem.slice(0, 120)}…`
-      : r.status,
+    description: desc,
   };
 }
+
+const sectionTitle =
+  "m-0 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[#0C4323]/65";
+const body =
+  "m-0 font-sans text-[0.95rem] leading-[1.65] text-[#0C4323] sm:text-[1.02rem] sm:leading-[1.7]";
 
 export default async function RealisationPage({ params }: Props) {
   const { slug } = await params;
@@ -39,6 +45,7 @@ export default async function RealisationPage({ params }: Props) {
   if (!r) notFound();
 
   const extraGallery = getRealisationExtraGallery(r);
+  const cs = r.caseStudy;
 
   return (
     <main className="min-h-svh bg-[#FDF6EC] pb-24 pt-28 text-[#0C4323] sm:pb-32 sm:pt-32 md:pt-36">
@@ -69,48 +76,96 @@ export default async function RealisationPage({ params }: Props) {
           >
             {r.title}
           </h1>
+          {cs ? (
+            <p className={`${body} mt-5 max-w-[40rem] border-l-2 border-[#0C4323]/25 pl-4 sm:mt-6 sm:pl-5`}>
+              {cs.summary}
+            </p>
+          ) : null}
         </header>
 
-        {r.caseStudy ? (
-          <div className="mt-10 grid gap-6 sm:mt-12 sm:grid-cols-2 sm:gap-8">
-            <section className="rounded-2xl border border-[#0C4323]/12 bg-[#EDEAE4]/60 px-5 py-6 sm:px-6 sm:py-8">
-              <h2 className="m-0 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[#0C4323]/65">
-                Problématique
-              </h2>
-              <p className="mt-3 m-0 font-sans text-[0.95rem] leading-relaxed text-[#0C4323] sm:text-[1.02rem]">
-                {r.caseStudy.problem}
-              </p>
+        {cs ? (
+          <>
+            <section className="mt-10 sm:mt-12">
+              <h2 className={sectionTitle}>Contexte & cibles</h2>
+              <p className={`${body} mt-3 max-w-[40rem]`}>{cs.context}</p>
             </section>
-            <section className="rounded-2xl border border-[#0C4323]/12 bg-white/50 px-5 py-6 sm:px-6 sm:py-8">
-              <h2 className="m-0 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[#0C4323]/65">
-                Réponse
-              </h2>
-              <p className="mt-3 m-0 font-sans text-[0.95rem] leading-relaxed text-[#0C4323] sm:text-[1.02rem]">
-                {r.caseStudy.solution}
-              </p>
+
+            <div className="mt-10 grid gap-6 sm:mt-12 sm:grid-cols-2 sm:gap-8">
+              <section className="rounded-2xl border border-[#0C4323]/12 bg-[#EDEAE4]/60 px-5 py-6 sm:px-6 sm:py-8">
+                <h2 className={sectionTitle}>Problématique</h2>
+                <p className={`${body} mt-3`}>{cs.problem}</p>
+              </section>
+              <section className="rounded-2xl border border-[#0C4323]/12 bg-white/50 px-5 py-6 sm:px-6 sm:py-8">
+                <h2 className={sectionTitle}>Solution retenue</h2>
+                <p className={`${body} mt-3`}>{cs.solution}</p>
+              </section>
+            </div>
+
+            <section className="mt-10 rounded-2xl border border-[#0C4323]/10 bg-white/40 px-5 py-6 sm:mt-12 sm:px-7 sm:py-8">
+              <h2 className={sectionTitle}>Démarche & priorités</h2>
+              <p className={`${body} mt-3`}>{cs.methodology}</p>
             </section>
-          </div>
+
+            <div className="mt-10 grid gap-8 sm:mt-12 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
+              <section>
+                <h2 className={sectionTitle}>Livrables</h2>
+                <ul className="mt-4 list-none space-y-2.5 p-0">
+                  {cs.deliverables.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-3 font-sans text-[0.92rem] leading-relaxed text-[#0C4323] sm:text-[0.98rem]"
+                    >
+                      <span className="mt-[0.35em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#0C4323]/45" aria-hidden />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+              <section>
+                <h2 className={sectionTitle}>Périmètre technique</h2>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {cs.stack.map((tech) => (
+                    <li key={tech}>
+                      <span className="inline-block rounded-full border border-[#0C4323]/18 bg-[#FDF6EC] px-3 py-1.5 font-sans text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[#0C4323]/85">
+                        {tech}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+
+            <section className="mt-10 border border-[#0C4323]/12 bg-[#0C4323]/[0.04] px-5 py-6 sm:mt-12 sm:rounded-2xl sm:px-7 sm:py-8">
+              <h2 className={sectionTitle}>Bilan</h2>
+              <p className={`${body} mt-3 max-w-[40rem]`}>{cs.outcomes}</p>
+            </section>
+          </>
         ) : null}
 
         {extraGallery.length > 0 ? (
-          <div className="mt-12 space-y-6 sm:mt-14 sm:space-y-8">
-            {extraGallery.map((slide, i) => (
-              <figure
-                key={`${r.slug}-extra-${i}`}
-                className="relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:rounded-3xl"
-              >
-                <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
-                  <Image
-                    src={slide.src}
-                    alt={slide.alt}
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 896px) 100vw, 896px"
-                  />
-                </div>
-                <figcaption className="sr-only">{slide.alt}</figcaption>
-              </figure>
-            ))}
+          <div className="mt-14 sm:mt-16">
+            <h2 className={`${sectionTitle} mb-6 sm:mb-8`}>
+              Compléments visuels
+            </h2>
+            <div className="space-y-6 sm:space-y-8">
+              {extraGallery.map((slide, i) => (
+                <figure
+                  key={`${r.slug}-extra-${i}`}
+                  className="relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:rounded-3xl"
+                >
+                  <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
+                    <Image
+                      src={slide.src}
+                      alt={slide.alt}
+                      fill
+                      className="object-cover object-top"
+                      sizes="(max-width: 896px) 100vw, 896px"
+                    />
+                  </div>
+                  <figcaption className="sr-only">{slide.alt}</figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
         ) : null}
       </div>
