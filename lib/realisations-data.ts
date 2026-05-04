@@ -50,10 +50,15 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     index: "02",
     title: "Portfolio éditorial",
     status: "Direction artistique · site livré",
-    image: valerioShot1,
-    imageAlt: "Accueil du portfolio : plein écran photo et navigation minimaliste",
+    image: valerioShot4,
+    imageAlt:
+      "Aperçu principal du portfolio : direction éditoriale et mise en scène visuelle",
     visualShell: "cream",
     extraGallery: [
+      {
+        src: valerioShot1,
+        alt: "Accueil du portfolio : plein écran photo et navigation minimaliste",
+      },
       {
         src: valerioShot2,
         alt: "Vue projet : mise en page éditoriale et typographie serif",
@@ -61,10 +66,6 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
       {
         src: valerioShot3,
         alt: "Détail d'une section projet et hiérarchie visuelle",
-      },
-      {
-        src: valerioShot4,
-        alt: "Vue complémentaire du portfolio",
       },
     ],
     caseStudy: {
@@ -95,9 +96,9 @@ export function getRealisationBySlug(slug: string): Realisation | undefined {
   return REALISATIONS.find((r) => r.slug === slug);
 }
 
-export function getRealisationGallery(r: Realisation): ReadonlyArray<GallerySlide> {
-  if (!r.extraGallery?.length) {
-    return [{ src: r.image, alt: r.imageAlt }];
-  }
-  return [{ src: r.image, alt: r.imageAlt }, ...r.extraGallery];
+/** Images sous l’étude de cas : uniquement les vues supplémentaires si présentes. */
+export function getRealisationExtraGallery(
+  r: Realisation,
+): ReadonlyArray<GallerySlide> {
+  return r.extraGallery ?? [];
 }

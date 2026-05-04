@@ -6,7 +6,7 @@ import RealisationBackNav from "@/components/realisations/RealisationBackNav";
 import {
   REALISATIONS,
   getRealisationBySlug,
-  getRealisationGallery,
+  getRealisationExtraGallery,
 } from "@/lib/realisations-data";
 
 const bebas = Bebas_Neue({
@@ -38,12 +38,25 @@ export default async function RealisationPage({ params }: Props) {
   const r = getRealisationBySlug(slug);
   if (!r) notFound();
 
-  const gallery = getRealisationGallery(r);
+  const extraGallery = getRealisationExtraGallery(r);
 
   return (
     <main className="min-h-svh bg-[#FDF6EC] pb-24 pt-28 text-[#0C4323] sm:pb-32 sm:pt-32 md:pt-36">
       <div className="mx-auto max-w-4xl px-5 sm:px-8 md:px-12">
         <RealisationBackNav />
+
+        <figure className="relative m-0 mb-8 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:mb-10 sm:rounded-3xl">
+          <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
+            <Image
+              src={r.image}
+              alt={r.imageAlt}
+              fill
+              className="object-cover object-top"
+              sizes="(max-width: 896px) 100vw, 896px"
+              priority
+            />
+          </div>
+        </figure>
 
         <header className="border-b-2 border-[#0C4323] pb-8 sm:pb-10">
           <p
@@ -79,26 +92,27 @@ export default async function RealisationPage({ params }: Props) {
           </div>
         ) : null}
 
-        <div className="mt-12 space-y-6 sm:mt-14 sm:space-y-8">
-          {gallery.map((slide, i) => (
-            <figure
-              key={`${r.slug}-${i}`}
-              className="relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:rounded-3xl"
-            >
-              <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 896px) 100vw, 896px"
-                  priority={i === 0}
-                />
-              </div>
-              <figcaption className="sr-only">{slide.alt}</figcaption>
-            </figure>
-          ))}
-        </div>
+        {extraGallery.length > 0 ? (
+          <div className="mt-12 space-y-6 sm:mt-14 sm:space-y-8">
+            {extraGallery.map((slide, i) => (
+              <figure
+                key={`${r.slug}-extra-${i}`}
+                className="relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:rounded-3xl"
+              >
+                <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
+                  <Image
+                    src={slide.src}
+                    alt={slide.alt}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 896px) 100vw, 896px"
+                  />
+                </div>
+                <figcaption className="sr-only">{slide.alt}</figcaption>
+              </figure>
+            ))}
+          </div>
+        ) : null}
       </div>
     </main>
   );
