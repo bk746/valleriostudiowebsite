@@ -19,8 +19,8 @@ type Project = {
   status: string;
   image?: StaticImageData;
   imageAlt?: string;
-  /** Cadre autour de la capture : crème (portfolio clair) ou bleu nuit (défaut). */
-  visualShell?: "dark" | "cream";
+  /** Cadre autour de la capture : `dark` (bleu nuit), `cream` (portfolio clair), `warm` (crème + orange type TERRANOVA). */
+  visualShell?: "dark" | "cream" | "warm";
 };
 
 const PROJECTS: ReadonlyArray<Project> = [
@@ -46,13 +46,17 @@ const PROJECTS: ReadonlyArray<Project> = [
     status: "Vitrine web · livrée",
     image: realisation3,
     imageAlt: "Aperçu du site vitrine",
-    visualShell: "dark",
+    visualShell: "warm",
   },
 ];
 
 type ProjectWithImage = Project & {
   image: StaticImageData;
 };
+
+function resolveVisualShell(p: Project): "dark" | "cream" | "warm" {
+  return p.visualShell ?? "dark";
+}
 
 /** Carte « vitrine » : image maximale + légende sur pilule bas (contraste garanti). */
 function VisualProjectFigure({
@@ -66,12 +70,14 @@ function VisualProjectFigure({
   sizes: string;
   priority?: boolean;
   bebasClassName: string;
-  shell?: "dark" | "cream";
+  shell?: "dark" | "cream" | "warm";
 }) {
   const insetRing =
     shell === "cream"
       ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
-      : "shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)]";
+      : shell === "warm"
+        ? "shadow-[inset_0_0_0_1px_rgba(242,101,34,0.52)]"
+        : "shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)]";
 
   return (
     <figure
@@ -236,7 +242,7 @@ export default function Realisations() {
           >
             {PROJECTS.map((p) => {
               const isVisualCard = Boolean(p.image);
-              const shell = p.visualShell === "cream" ? "cream" : "dark";
+              const shell = resolveVisualShell(p);
               return (
               <article
                 key={p.index}
@@ -245,7 +251,9 @@ export default function Realisations() {
                   (isVisualCard
                     ? shell === "cream"
                       ? "bg-[#EDEAE4] text-[#141414] shadow-[0_28px_55px_-28px_rgba(0,0,0,0.14)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
-                      : "bg-[#1a222d] text-white shadow-[0_28px_70px_-28px_rgba(0,0,0,0.55)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
+                      : shell === "warm"
+                        ? "bg-[#EBE9E1] text-[#1c1917] shadow-[0_28px_52px_-28px_rgba(242,101,34,0.14)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
+                        : "bg-[#1a222d] text-white shadow-[0_28px_70px_-28px_rgba(0,0,0,0.55)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
                     : "bg-[#156332] text-[#FDF6EC] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.42)] aspect-[3/4] w-[80vw] gap-3 p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.4)]")
                 }
               >
@@ -305,7 +313,7 @@ export default function Realisations() {
             >
               {PROJECTS.map((p) => {
                 const isVisualCard = Boolean(p.image);
-                const shell = p.visualShell === "cream" ? "cream" : "dark";
+                const shell = resolveVisualShell(p);
                 return (
                 <article
                   key={p.index}
@@ -314,7 +322,9 @@ export default function Realisations() {
                     (isVisualCard
                       ? shell === "cream"
                         ? "bg-[#EDEAE4] text-[#141414] shadow-[0_28px_56px_-28px_rgba(0,0,0,0.16)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
-                        : "bg-[#1a222d] text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
+                        : shell === "warm"
+                          ? "bg-[#EBE9E1] text-[#1c1917] shadow-[0_28px_54px_-28px_rgba(242,101,34,0.16)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
+                          : "bg-[#1a222d] text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
                       : "bg-[#156332] text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
                   }
                 >
