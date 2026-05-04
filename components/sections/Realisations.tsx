@@ -4,8 +4,11 @@ import Image, { type StaticImageData } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 import realisation1 from "@/src/images/réalisations1.png";
-import realisation2 from "@/src/images/réalisations2.png";
 import realisation3 from "@/src/images/réalisation3.png";
+import valerioShot1 from "@/src/images/valerio-realisation-1.png";
+import valerioShot2 from "@/src/images/valerio-realisation-2.png";
+import valerioShot3 from "@/src/images/valerio-realisation-3.png";
+import valerioShot4 from "@/src/images/valerio-realisation.png";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -13,13 +16,25 @@ const bebas = Bebas_Neue({
   display: "swap",
 });
 
+type ProjectGallerySlide = {
+  src: StaticImageData;
+  alt: string;
+};
+
 type Project = {
   index: string;
   title: string;
   status: string;
   image?: StaticImageData;
+  /** Plusieurs vues : carrousel horizontal dans la carte (prioritaire sur `image`). */
+  gallery?: ReadonlyArray<ProjectGallerySlide>;
   imageAlt?: string;
-  /** Cadre autour de la capture : `dark` (bleu nuit), `cream` (portfolio clair), `warm` (crème + orange type TERRANOVA). */
+  /** Court récit UX / conception pour la légende (optionnel). */
+  caseStudy?: {
+    problem: string;
+    solution: string;
+  };
+  /** Cadre autour de la capture : `dark` (bleu nuit), `cream` (portfolio clair), `warm` (orange clair, sans ombre). */
   visualShell?: "dark" | "cream" | "warm";
 };
 
@@ -34,11 +49,33 @@ const PROJECTS: ReadonlyArray<Project> = [
   },
   {
     index: "02",
-    title: "Portfolio",
-    status: "Site portfolio · livré",
-    image: realisation2,
-    imageAlt: "Aperçu du site portfolio",
+    title: "Portfolio éditorial",
+    status: "Direction artistique · site livré",
     visualShell: "cream",
+    gallery: [
+      {
+        src: valerioShot1,
+        alt: "Accueil du portfolio : plein écran photo et navigation minimaliste",
+      },
+      {
+        src: valerioShot2,
+        alt: "Vue projet : mise en page éditoriale et typographie serif",
+      },
+      {
+        src: valerioShot3,
+        alt: "Détail d'une section projet et hiérarchie visuelle",
+      },
+      {
+        src: valerioShot4,
+        alt: "Vue complémentaire du portfolio",
+      },
+    ],
+    caseStudy: {
+      problem:
+        "Le travail était éparpillé entre PDF, réseaux et anciennes maquettes : peu lisible pour des marques premium, pas de fil narratif clair.",
+      solution:
+        "Parcours plein écran, grilles aérées et UI quasi invisible pour laisser l’image porter le discours — rythme pensé comme un magazine de luxe.",
+    },
   },
   {
     index: "03",
@@ -54,8 +91,57 @@ type ProjectWithImage = Project & {
   image: StaticImageData;
 };
 
+type ProjectWithGallery = Project & {
+  gallery: ReadonlyArray<ProjectGallerySlide>;
+};
+
 function resolveVisualShell(p: Project): "dark" | "cream" | "warm" {
   return p.visualShell ?? "dark";
+}
+
+function hasGallery(p: Project): p is ProjectWithGallery {
+  return Boolean(p.gallery && p.gallery.length > 0);
+}
+
+function VisualProjectCaption({
+  title,
+  status,
+  caseStudy,
+  bebasClassName,
+}: {
+  title: string;
+  status: string;
+  caseStudy?: Project["caseStudy"];
+  bebasClassName: string;
+}) {
+  return (
+    <figcaption className="absolute bottom-3 left-3 z-10 w-fit max-w-[calc(100%-1.5rem)] rounded-xl border border-white/12 bg-[rgba(8,10,14,0.87)] px-3.5 py-3 text-left backdrop-blur-md sm:bottom-4 sm:left-4 sm:max-w-[min(32rem,calc(100%-2rem))] sm:px-5 sm:py-4">
+      <h3
+        className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-white`}
+      >
+        {title}
+      </h3>
+      <p className="mt-1 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-white/92 sm:mt-1.5 sm:text-[0.64rem] sm:tracking-[0.22em]">
+        {status}
+      </p>
+      {caseStudy ? (
+        <div className="mt-2.5 border-t border-white/14 pt-2.5 sm:mt-3 sm:pt-3">
+          <p className="m-0 font-sans text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-white/55">
+            Problématique
+          </p>
+          <p className="mt-1 m-0 max-w-[26rem] font-sans text-[0.62rem] font-normal leading-snug tracking-[0.02em] text-white/88 sm:text-[0.66rem] sm:leading-relaxed">
+            {caseStudy.problem}
+          </p>
+          <p className="mt-2.5 m-0 font-sans text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-white/55 sm:mt-3">
+            Réponse
+          </p>
+          <p className="mt-1 m-0 max-w-[26rem] font-sans text-[0.62rem] font-normal leading-snug tracking-[0.02em] text-white/88 sm:text-[0.66rem] sm:leading-relaxed">
+            {caseStudy.solution}
+          </p>
+        </div>
+      ) : null}
+    </figcaption>
+  );
 }
 
 /** Carte « vitrine » : image maximale + légende sur pilule bas (contraste garanti). */
@@ -76,7 +162,7 @@ function VisualProjectFigure({
     shell === "cream"
       ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
       : shell === "warm"
-        ? "shadow-[inset_0_0_0_1px_rgba(242,101,34,0.52)]"
+        ? ""
         : "shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)]";
 
   return (
@@ -91,16 +177,74 @@ function VisualProjectFigure({
         sizes={sizes}
         priority={priority}
       />
-      <figcaption className="absolute bottom-3 left-3 z-10 w-fit max-w-[calc(100%-1.5rem)] rounded-xl border border-white/12 bg-[rgba(8,10,14,0.87)] px-3.5 py-3 text-left backdrop-blur-md sm:bottom-4 sm:left-4 sm:max-w-[min(22rem,calc(100%-2rem))] sm:px-5 sm:py-4">
-        <h3
-          className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-white`}
-        >
-          {project.title}
-        </h3>
-        <p className="mt-1 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-white/92 sm:mt-1.5 sm:text-[0.64rem] sm:tracking-[0.22em]">
-          {project.status}
-        </p>
-      </figcaption>
+      <VisualProjectCaption
+        title={project.title}
+        status={project.status}
+        caseStudy={project.caseStudy}
+        bebasClassName={bebasClassName}
+      />
+    </figure>
+  );
+}
+
+/** Galerie horizontale (snap) : plusieurs captures pour une même étude de cas. */
+function VisualProjectGalleryFigure({
+  project,
+  sizes,
+  bebasClassName,
+  shell = "cream",
+}: {
+  project: ProjectWithGallery;
+  sizes: string;
+  bebasClassName: string;
+  shell?: "dark" | "cream" | "warm";
+}) {
+  const insetRing =
+    shell === "cream"
+      ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
+      : shell === "warm"
+        ? ""
+        : "shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)]";
+
+  return (
+    <figure
+      className={`relative m-0 flex min-h-0 h-full w-full min-w-0 flex-1 flex-col overflow-hidden rounded-[1.1rem] sm:rounded-[1.6rem] ${insetRing}`}
+    >
+      <div
+        className="relative min-h-0 flex-1 overflow-y-hidden overflow-x-auto scroll-smooth snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        tabIndex={0}
+        aria-label="Vues du projet — faire défiler horizontalement"
+      >
+        <div className="flex h-full w-full">
+          {project.gallery.map((slide, i) => (
+            <div
+              key={`slide-${i}`}
+              className="relative h-full min-h-[200px] w-full min-w-full shrink-0 snap-center"
+            >
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                className="object-cover object-top"
+                sizes={sizes}
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <span
+        className="pointer-events-none absolute right-3 top-14 z-[9] font-sans text-[0.5rem] font-medium uppercase tracking-[0.28em] text-white/40 sm:bottom-[6.25rem] sm:top-auto sm:text-[0.55rem]"
+        aria-hidden
+      >
+        Faire défiler →
+      </span>
+      <VisualProjectCaption
+        title={project.title}
+        status={project.status}
+        caseStudy={project.caseStudy}
+        bebasClassName={bebasClassName}
+      />
     </figure>
   );
 }
@@ -203,6 +347,9 @@ export default function Realisations() {
       ? `calc(200dvh + ${maxShift}px)`
       : "100dvh";
 
+  const isVisualCard = (p: Project) =>
+    Boolean(p.image) || hasGallery(p);
+
   return (
     <section
       id="realisations"
@@ -228,7 +375,7 @@ export default function Realisations() {
               Réalisations
             </h2>
             <span className="hidden font-sans text-[0.6rem] font-medium uppercase tracking-[0.28em] opacity-60 sm:inline-block sm:text-[0.68rem]">
-              {PROJECTS.length} projets en préparation
+              Projets sélectionnés
             </span>
           </div>
           <div className="h-[2px] bg-[#0C4323]" />
@@ -241,23 +388,23 @@ export default function Realisations() {
             style={{ scrollPaddingLeft: "1.25rem" }}
           >
             {PROJECTS.map((p) => {
-              const isVisualCard = Boolean(p.image);
+              const visual = isVisualCard(p);
               const shell = resolveVisualShell(p);
               return (
               <article
                 key={p.index}
                 className={
                   "relative flex min-h-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl " +
-                  (isVisualCard
+                  (visual
                     ? shell === "cream"
                       ? "bg-[#EDEAE4] text-[#141414] shadow-[0_28px_55px_-28px_rgba(0,0,0,0.14)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
                       : shell === "warm"
-                        ? "bg-[#EBE9E1] text-[#1c1917] shadow-[0_28px_52px_-28px_rgba(242,101,34,0.14)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
+                        ? "bg-[#FFE8D4] text-[#3d1f12] shadow-none h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
                         : "bg-[#1a222d] text-white shadow-[0_28px_70px_-28px_rgba(0,0,0,0.55)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
                     : "bg-[#156332] text-[#FDF6EC] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.42)] aspect-[3/4] w-[80vw] gap-3 p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.4)]")
                 }
               >
-                {!isVisualCard ? (
+                {!visual ? (
                   <div className="flex items-start justify-between gap-4">
                     <span
                       className={`${bebas.className} text-[0.85rem] uppercase tracking-[0.22em] opacity-70`}
@@ -267,7 +414,15 @@ export default function Realisations() {
                   </div>
                 ) : null}
 
-                {isVisualCard && p.image ? (
+                {visual && hasGallery(p) ? (
+                  <VisualProjectGalleryFigure
+                    project={p}
+                    sizes="92vw"
+                    bebasClassName={bebas.className}
+                    shell={shell}
+                  />
+                ) : null}
+                {visual && p.image && !hasGallery(p) ? (
                   <VisualProjectFigure
                     project={{ ...p, image: p.image }}
                     sizes="92vw"
@@ -277,7 +432,7 @@ export default function Realisations() {
                   />
                 ) : null}
 
-                {!isVisualCard ? (
+                {!visual ? (
                   <div className="mt-auto flex items-end justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <h3
@@ -312,23 +467,23 @@ export default function Realisations() {
               style={{ transform: `translate3d(${shift}px, 0, 0)` }}
             >
               {PROJECTS.map((p) => {
-                const isVisualCard = Boolean(p.image);
+                const visual = isVisualCard(p);
                 const shell = resolveVisualShell(p);
                 return (
                 <article
                   key={p.index}
                   className={
                     "relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden rounded-2xl " +
-                    (isVisualCard
+                    (visual
                       ? shell === "cream"
                         ? "bg-[#EDEAE4] text-[#141414] shadow-[0_28px_56px_-28px_rgba(0,0,0,0.16)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
                         : shell === "warm"
-                          ? "bg-[#EBE9E1] text-[#1c1917] shadow-[0_28px_54px_-28px_rgba(242,101,34,0.16)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
+                          ? "bg-[#FFE8D4] text-[#3d1f12] shadow-none w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
                           : "bg-[#1a222d] text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)] w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
                       : "bg-[#156332] text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
                   }
                 >
-                  {!isVisualCard ? (
+                  {!visual ? (
                     <div className="flex items-start justify-between gap-4">
                       <span
                         className={`${bebas.className} text-[0.85rem] uppercase tracking-[0.22em] opacity-70 sm:text-[1.05rem]`}
@@ -341,7 +496,15 @@ export default function Realisations() {
                     </div>
                   ) : null}
 
-                  {isVisualCard && p.image ? (
+                  {visual && hasGallery(p) ? (
+                    <VisualProjectGalleryFigure
+                      project={p}
+                      sizes="(max-width: 1280px) 88vw, 1100px"
+                      bebasClassName={bebas.className}
+                      shell={shell}
+                    />
+                  ) : null}
+                  {visual && p.image && !hasGallery(p) ? (
                     <VisualProjectFigure
                       project={{ ...p, image: p.image }}
                       sizes="(max-width: 1280px) 88vw, 1100px"
@@ -351,7 +514,7 @@ export default function Realisations() {
                     />
                   ) : null}
 
-                  {!isVisualCard ? (
+                  {!visual ? (
                     <div className="mt-auto flex items-end justify-between gap-4 sm:gap-8">
                       <div className="flex-1 min-w-0">
                         <h3
