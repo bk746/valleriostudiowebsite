@@ -4,6 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 import realisation1 from "@/src/images/réalisations1.png";
+import realisation2 from "@/src/images/réalisations2.png";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -29,8 +30,10 @@ const PROJECTS: ReadonlyArray<Project> = [
   },
   {
     index: "02",
-    title: "Projet à venir",
-    status: "À découvrir bientôt",
+    title: "Portfolio",
+    status: "Site portfolio · livré",
+    image: realisation2,
+    imageAlt: "Aperçu du site portfolio",
   },
   {
     index: "03",
