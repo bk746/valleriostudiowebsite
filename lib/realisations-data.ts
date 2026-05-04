@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import vitrineNuitCarte from "@/src/images/vitrine-nuit-carte.png";
 import vitrineNuitHero from "@/src/images/vitrine-nuit-hero.png";
 import vitrineNuit01 from "@/src/images/vitrine-nuit-01.png";
 import vitrineNuit02 from "@/src/images/vitrine-nuit-02.png";
@@ -51,11 +52,15 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     index: "01",
     title: "Site vitrine",
     status: "Vitrine web · livrée",
-    image: vitrineNuitHero,
+    image: vitrineNuitCarte,
     imageAlt:
-      "Page d’accueil de la vitrine : fond sombre, accroche et mise en avant des expertises",
+      "Aperçu principal de la vitrine (réalisation 1) : mise en page sur fond sombre",
     visualShell: "dark",
     extraGallery: [
+      {
+        src: vitrineNuitHero,
+        alt: "Variante ou vue plein écran de la page d’accueil vitrine",
+      },
       {
         src: vitrineNuit01,
         alt: "Section présentation ou hero secondaire de la vitrine",
