@@ -1,7 +1,9 @@
 "use client";
 
+import Image, { type StaticImageData } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
+import realisation1 from "@/src/images/réalisations1.png";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -13,13 +15,17 @@ type Project = {
   index: string;
   title: string;
   status: string;
+  image?: StaticImageData;
+  imageAlt?: string;
 };
 
 const PROJECTS: ReadonlyArray<Project> = [
   {
     index: "01",
-    title: "Projet à venir",
-    status: "À découvrir bientôt",
+    title: "Site vitrine",
+    status: "Vitrine web · livrée",
+    image: realisation1,
+    imageAlt: "Aperçu du site vitrine",
   },
   {
     index: "02",
@@ -171,7 +177,7 @@ export default function Realisations() {
             {PROJECTS.map((p) => (
               <article
                 key={p.index}
-                className="relative flex aspect-[3/4] w-[80vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC]"
+                className="relative flex aspect-[3/4] w-[80vw] min-h-0 shrink-0 snap-start flex-col gap-3 overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <span
@@ -181,7 +187,20 @@ export default function Realisations() {
                   </span>
                 </div>
 
-                <div className="flex items-end justify-between gap-4">
+                {p.image ? (
+                  <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-xl bg-black/15">
+                    <Image
+                      src={p.image}
+                      alt={p.imageAlt ?? ""}
+                      fill
+                      className="object-cover object-top"
+                      sizes="80vw"
+                      priority={p.index === "01"}
+                    />
+                  </div>
+                ) : null}
+
+                <div className="mt-auto flex items-end justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <h3
                       className={`${bebas.className} m-0 text-[clamp(2rem,11vw,4rem)] uppercase leading-[0.92] tracking-[-0.005em]`}
@@ -215,7 +234,7 @@ export default function Realisations() {
               {PROJECTS.map((p) => (
                 <article
                   key={p.index}
-                  className="relative flex h-full w-[86vw] shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] sm:w-[88vw] sm:rounded-3xl sm:p-12 md:p-16"
+                  className="relative flex h-full min-h-0 w-[86vw] shrink-0 flex-col gap-4 overflow-hidden rounded-2xl bg-[#156332] p-6 text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <span
@@ -228,7 +247,20 @@ export default function Realisations() {
                     </span>
                   </div>
 
-                  <div className="flex items-end justify-between gap-4 sm:gap-8">
+                  {p.image ? (
+                    <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-2xl bg-black/15 sm:rounded-3xl">
+                      <Image
+                        src={p.image}
+                        alt={p.imageAlt ?? ""}
+                        fill
+                        className="object-cover object-top"
+                        sizes="(max-width: 1280px) 88vw, 1100px"
+                        priority={p.index === "01"}
+                      />
+                    </div>
+                  ) : null}
+
+                  <div className="mt-auto flex items-end justify-between gap-4 sm:gap-8">
                     <div className="flex-1 min-w-0">
                       <h3
                         className={`${bebas.className} m-0 text-[clamp(2rem,6.4vw,6.5rem)] uppercase leading-[0.92] tracking-[-0.005em] sm:leading-[0.88]`}
