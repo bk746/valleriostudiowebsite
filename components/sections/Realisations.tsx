@@ -56,7 +56,7 @@ function VisualProjectFigure({
   bebasClassName: string;
 }) {
   return (
-    <figure className="relative m-0 flex min-h-0 h-full w-full min-w-0 flex-1 overflow-hidden rounded-[1.1rem] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:rounded-[1.6rem]">
+    <figure className="relative m-0 flex min-h-0 h-full w-full min-w-0 flex-1 overflow-hidden rounded-[1.1rem] shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)] sm:rounded-[1.6rem]">
       <Image
         src={project.image}
         alt={project.imageAlt ?? project.title}
@@ -67,11 +67,11 @@ function VisualProjectFigure({
       />
       <figcaption className="absolute inset-x-0 bottom-0 z-10 px-3.5 pb-3.5 pt-16 text-left sm:px-5 sm:pb-4 sm:pt-[4.5rem]">
         <h3
-          className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-[#FDF6EC] [text-shadow:_0_1px_2px_rgba(0,0,0,0.85),_0_4px_24px_rgba(0,0,0,0.45)]`}
+          className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-white [text-shadow:_0_1px_2px_rgba(0,0,0,0.85),_0_4px_24px_rgba(0,0,0,0.45)]`}
         >
           {project.title}
         </h3>
-        <p className="mt-1.5 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-[#FDF6EC] sm:mt-2 sm:text-[0.64rem] sm:tracking-[0.22em] [text-shadow:_0_1px_3px_rgba(0,0,0,0.85)]">
+        <p className="mt-1.5 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-white/90 sm:mt-2 sm:text-[0.64rem] sm:tracking-[0.22em] [text-shadow:_0_1px_3px_rgba(0,0,0,0.85)]">
           {project.status}
         </p>
       </figcaption>
@@ -220,10 +220,10 @@ export default function Realisations() {
               <article
                 key={p.index}
                 className={
-                  "relative flex min-h-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-[#156332] text-[#FDF6EC] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.42)] " +
+                  "relative flex min-h-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl " +
                   (isVisualCard
-                    ? "h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
-                    : "aspect-[3/4] w-[80vw] gap-3 p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.4)]")
+                    ? "bg-[#1a222d] text-white shadow-[0_28px_70px_-28px_rgba(0,0,0,0.55)] h-[min(92svh,840px)] w-[92vw] p-1.5 sm:rounded-3xl"
+                    : "bg-[#156332] text-[#FDF6EC] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.42)] aspect-[3/4] w-[80vw] gap-3 p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.4)]")
                 }
               >
                 {!isVisualCard ? (
@@ -285,10 +285,10 @@ export default function Realisations() {
                 <article
                   key={p.index}
                   className={
-                    "relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden rounded-2xl bg-[#156332] text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] " +
+                    "relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden rounded-2xl shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] " +
                     (isVisualCard
-                      ? "w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
-                      : "w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
+                      ? "bg-[#1a222d] text-white w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2"
+                      : "bg-[#156332] text-[#FDF6EC] w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
                   }
                 >
                   {!isVisualCard ? (
