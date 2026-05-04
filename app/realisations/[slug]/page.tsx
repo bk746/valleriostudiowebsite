@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import RealisationBackNav from "@/components/realisations/RealisationBackNav";
 import {
   REALISATIONS,
+  type GallerySlide,
   getRealisationBySlug,
   getRealisationExtraGallery,
 } from "@/lib/realisations-data";
@@ -39,6 +40,33 @@ const sectionTitle =
 const body =
   "m-0 font-sans text-[0.95rem] leading-[1.65] text-[#0C4323] sm:text-[1.02rem] sm:leading-[1.7]";
 
+const figureShell =
+  "relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:rounded-3xl";
+
+function InlineProjectFigure({
+  slide,
+  priority,
+}: {
+  slide: GallerySlide;
+  priority?: boolean;
+}) {
+  return (
+    <figure className={`${figureShell} my-10 sm:my-12`}>
+      <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
+        <Image
+          src={slide.src}
+          alt={slide.alt}
+          fill
+          className="object-cover object-top"
+          sizes="(max-width: 896px) 100vw, 896px"
+          priority={priority}
+        />
+      </div>
+      <figcaption className="sr-only">{slide.alt}</figcaption>
+    </figure>
+  );
+}
+
 export default async function RealisationPage({ params }: Props) {
   const { slug } = await params;
   const r = getRealisationBySlug(slug);
@@ -46,24 +74,12 @@ export default async function RealisationPage({ params }: Props) {
 
   const extraGallery = getRealisationExtraGallery(r);
   const cs = r.caseStudy;
+  const heroSlide: GallerySlide = { src: r.image, alt: r.imageAlt };
 
   return (
     <main className="min-h-svh bg-[#FDF6EC] pb-24 pt-28 text-[#0C4323] sm:pb-32 sm:pt-32 md:pt-36">
       <div className="mx-auto max-w-4xl px-5 sm:px-8 md:px-12">
         <RealisationBackNav />
-
-        <figure className="relative m-0 mb-8 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:mb-10 sm:rounded-3xl">
-          <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
-            <Image
-              src={r.image}
-              alt={r.imageAlt}
-              fill
-              className="object-cover object-top"
-              sizes="(max-width: 896px) 100vw, 896px"
-              priority
-            />
-          </div>
-        </figure>
 
         <header className="border-b-2 border-[#0C4323] pb-8 sm:pb-10">
           <p
@@ -83,6 +99,8 @@ export default async function RealisationPage({ params }: Props) {
           ) : null}
         </header>
 
+        {!cs ? <InlineProjectFigure slide={heroSlide} priority /> : null}
+
         {cs ? (
           <>
             <section className="mt-10 sm:mt-12">
@@ -90,7 +108,9 @@ export default async function RealisationPage({ params }: Props) {
               <p className={`${body} mt-3 max-w-[40rem]`}>{cs.context}</p>
             </section>
 
-            <div className="mt-10 grid gap-6 sm:mt-12 sm:grid-cols-2 sm:gap-8">
+            <InlineProjectFigure slide={heroSlide} priority />
+
+            <div className="grid gap-6 sm:grid-cols-2 sm:gap-8">
               <section className="rounded-2xl border border-[#0C4323]/12 bg-[#EDEAE4]/60 px-5 py-6 sm:px-6 sm:py-8">
                 <h2 className={sectionTitle}>Problématique</h2>
                 <p className={`${body} mt-3`}>{cs.problem}</p>
@@ -101,12 +121,20 @@ export default async function RealisationPage({ params }: Props) {
               </section>
             </div>
 
-            <section className="mt-10 rounded-2xl border border-[#0C4323]/10 bg-white/40 px-5 py-6 sm:mt-12 sm:px-7 sm:py-8">
+            {extraGallery[0] ? (
+              <InlineProjectFigure slide={extraGallery[0]} />
+            ) : null}
+
+            <section className="rounded-2xl border border-[#0C4323]/10 bg-white/40 px-5 py-6 sm:px-7 sm:py-8">
               <h2 className={sectionTitle}>Démarche & priorités</h2>
               <p className={`${body} mt-3`}>{cs.methodology}</p>
             </section>
 
-            <div className="mt-10 grid gap-8 sm:mt-12 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
+            {extraGallery[1] ? (
+              <InlineProjectFigure slide={extraGallery[1]} />
+            ) : null}
+
+            <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
               <section>
                 <h2 className={sectionTitle}>Livrables</h2>
                 <ul className="mt-4 list-none space-y-2.5 p-0">
@@ -135,38 +163,19 @@ export default async function RealisationPage({ params }: Props) {
               </section>
             </div>
 
-            <section className="mt-10 border border-[#0C4323]/12 bg-[#0C4323]/[0.04] px-5 py-6 sm:mt-12 sm:rounded-2xl sm:px-7 sm:py-8">
+            {extraGallery[2] ? (
+              <InlineProjectFigure slide={extraGallery[2]} />
+            ) : null}
+
+            {extraGallery.slice(3).map((slide, i) => (
+              <InlineProjectFigure key={`${r.slug}-tail-${i}`} slide={slide} />
+            ))}
+
+            <section className="border border-[#0C4323]/12 bg-[#0C4323]/[0.04] px-5 py-6 sm:rounded-2xl sm:px-7 sm:py-8">
               <h2 className={sectionTitle}>Bilan</h2>
               <p className={`${body} mt-3 max-w-[40rem]`}>{cs.outcomes}</p>
             </section>
           </>
-        ) : null}
-
-        {extraGallery.length > 0 ? (
-          <div className="mt-14 sm:mt-16">
-            <h2 className={`${sectionTitle} mb-6 sm:mb-8`}>
-              Compléments visuels
-            </h2>
-            <div className="space-y-6 sm:space-y-8">
-              {extraGallery.map((slide, i) => (
-                <figure
-                  key={`${r.slug}-extra-${i}`}
-                  className="relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_24px_60px_-28px_rgba(12,67,35,0.12)] sm:rounded-3xl"
-                >
-                  <div className="relative aspect-[16/10] w-full sm:aspect-[16/9]">
-                    <Image
-                      src={slide.src}
-                      alt={slide.alt}
-                      fill
-                      className="object-cover object-top"
-                      sizes="(max-width: 896px) 100vw, 896px"
-                    />
-                  </div>
-                  <figcaption className="sr-only">{slide.alt}</figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
         ) : null}
       </div>
     </main>
