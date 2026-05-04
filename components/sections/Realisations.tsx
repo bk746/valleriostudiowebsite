@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 import realisation1 from "@/src/images/réalisations1.png";
 import realisation2 from "@/src/images/réalisations2.png";
+import realisation3 from "@/src/images/réalisation3.png";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -41,8 +42,11 @@ const PROJECTS: ReadonlyArray<Project> = [
   },
   {
     index: "03",
-    title: "Projet à venir",
-    status: "À découvrir bientôt",
+    title: "Site vitrine",
+    status: "Vitrine web · livrée",
+    image: realisation3,
+    imageAlt: "Aperçu du site vitrine",
+    visualShell: "dark",
   },
 ];
 
