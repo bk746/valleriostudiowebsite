@@ -43,7 +43,7 @@ type ProjectWithImage = Project & {
   image: StaticImageData;
 };
 
-/** Carte « vitrine » : image maximale + légende en overlay (lisible via ombres neutres, sans dégradé). */
+/** Carte « vitrine » : image maximale + légende sur bandeau bas (contraste garanti, pas de dégradé vert). */
 function VisualProjectFigure({
   project,
   sizes,
@@ -65,13 +65,13 @@ function VisualProjectFigure({
         sizes={sizes}
         priority={priority}
       />
-      <figcaption className="absolute inset-x-0 bottom-0 z-10 px-3.5 pb-3.5 pt-16 text-left sm:px-5 sm:pb-4 sm:pt-[4.5rem]">
+      <figcaption className="absolute inset-x-0 bottom-0 z-10 rounded-b-[1.05rem] border-t border-white/12 bg-[rgba(8,10,14,0.82)] px-3.5 pb-4 pt-4 text-left backdrop-blur-md sm:rounded-b-[1.55rem] sm:px-5 sm:pb-5 sm:pt-5">
         <h3
-          className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-white [text-shadow:_0_1px_2px_rgba(0,0,0,0.85),_0_4px_24px_rgba(0,0,0,0.45)]`}
+          className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-white`}
         >
           {project.title}
         </h3>
-        <p className="mt-1.5 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-white/90 sm:mt-2 sm:text-[0.64rem] sm:tracking-[0.22em] [text-shadow:_0_1px_3px_rgba(0,0,0,0.85)]">
+        <p className="mt-1 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-white/92 sm:mt-1.5 sm:text-[0.64rem] sm:tracking-[0.22em]">
           {project.status}
         </p>
       </figcaption>
