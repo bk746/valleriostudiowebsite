@@ -182,7 +182,7 @@ export default function Realisations() {
                 className={
                   "relative flex min-h-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-[#156332] text-[#FDF6EC] " +
                   (isVisualCard
-                    ? "h-[min(78svh,640px)] w-[85vw] gap-3 p-4 sm:h-full sm:min-h-0 sm:w-[88vw] sm:gap-4 sm:rounded-3xl sm:p-10 md:p-12"
+                    ? "h-[min(90svh,780px)] w-[92vw] gap-2 p-2 sm:h-full sm:min-h-0 sm:w-[88vw] sm:gap-3 sm:rounded-3xl sm:p-5 md:p-6"
                     : "aspect-[3/4] w-[80vw] gap-3 p-6")
                 }
               >
@@ -197,13 +197,13 @@ export default function Realisations() {
                 ) : null}
 
                 {p.image ? (
-                  <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-xl bg-black/10 sm:rounded-2xl">
+                  <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-lg bg-black/10 sm:rounded-2xl">
                     <Image
                       src={p.image}
                       alt={p.imageAlt ?? ""}
                       fill
                       className="object-cover object-top"
-                      sizes="(max-width: 640px) 85vw, 88vw"
+                      sizes="(max-width: 640px) 92vw, 88vw"
                       priority={p.index === "01"}
                     />
                   </div>
@@ -218,9 +218,9 @@ export default function Realisations() {
                 >
                   <div className="flex-1 min-w-0">
                     <h3
-                      className={`${bebas.className} m-0 uppercase leading-[0.92] tracking-[-0.005em] ${
+                      className={`${bebas.className} m-0 uppercase leading-[0.95] tracking-[-0.01em] ${
                         isVisualCard
-                          ? "text-[clamp(1.35rem,5vw,2.75rem)]"
+                          ? "text-[clamp(1.05rem,3.8vw,2rem)]"
                           : "text-[clamp(2rem,11vw,4rem)]"
                       }`}
                     >
@@ -229,7 +229,7 @@ export default function Realisations() {
                     <p
                       className={
                         isVisualCard
-                          ? "mt-2 font-sans text-[0.65rem] font-medium uppercase tracking-[0.18em] opacity-75"
+                          ? "mt-1 font-sans text-[0.58rem] font-medium uppercase leading-tight tracking-[0.16em] opacity-70"
                           : "mt-3 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80"
                       }
                     >
@@ -269,7 +269,7 @@ export default function Realisations() {
                   className={
                     "relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden rounded-2xl bg-[#156332] text-[#FDF6EC] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] " +
                     (isVisualCard
-                      ? "w-[86vw] gap-4 p-5 sm:w-[88vw] sm:gap-5 sm:rounded-3xl sm:p-10 md:p-12"
+                      ? "w-[86vw] gap-2 p-3 sm:w-[88vw] sm:gap-3 sm:rounded-3xl sm:p-5 md:p-6"
                       : "w-[86vw] gap-4 p-6 sm:w-[88vw] sm:gap-6 sm:rounded-3xl sm:p-12 md:p-16")
                   }
                 >
@@ -287,7 +287,7 @@ export default function Realisations() {
                   ) : null}
 
                   {p.image ? (
-                    <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-2xl bg-black/10 sm:rounded-3xl">
+                    <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-xl bg-black/10 sm:rounded-2xl">
                       <Image
                         src={p.image}
                         alt={p.imageAlt ?? ""}
@@ -308,10 +308,10 @@ export default function Realisations() {
                   >
                     <div className="flex-1 min-w-0">
                       <h3
-                        className={`${bebas.className} m-0 uppercase leading-[0.92] tracking-[-0.005em] sm:leading-[0.88] ${
+                        className={`${bebas.className} m-0 uppercase tracking-[-0.01em] sm:leading-[0.88] ${
                           isVisualCard
-                            ? "text-[clamp(1.5rem,3.5vw,3.25rem)]"
-                            : "text-[clamp(2rem,6.4vw,6.5rem)]"
+                            ? "text-[clamp(1.15rem,2.8vw,2.35rem)] leading-[0.95]"
+                            : "leading-[0.92] text-[clamp(2rem,6.4vw,6.5rem)]"
                         }`}
                       >
                         {p.title}
@@ -319,7 +319,7 @@ export default function Realisations() {
                       <p
                         className={
                           isVisualCard
-                            ? "mt-2 font-sans text-[0.68rem] font-medium uppercase tracking-[0.2em] opacity-75 sm:text-[0.72rem]"
+                            ? "mt-1 font-sans text-[0.6rem] font-medium uppercase leading-tight tracking-[0.18em] opacity-70 sm:text-[0.62rem]"
                             : "mt-4 inline-flex flex-wrap items-center gap-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em] opacity-80 sm:mt-5 sm:gap-3 sm:text-[0.85rem] sm:tracking-[0.22em]"
                         }
                       >
