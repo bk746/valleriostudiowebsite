@@ -1,5 +1,10 @@
 import type { StaticImageData } from "next/image";
-import realisation1 from "@/src/images/réalisations1.png";
+import vitrineNuitHero from "@/src/images/vitrine-nuit-hero.png";
+import vitrineNuit01 from "@/src/images/vitrine-nuit-01.png";
+import vitrineNuit02 from "@/src/images/vitrine-nuit-02.png";
+import vitrineNuit03 from "@/src/images/vitrine-nuit-03.png";
+import vitrineNuit04 from "@/src/images/vitrine-nuit-04.png";
+import vitrineNuit05 from "@/src/images/vitrine-nuit-05.png";
 import realisations2 from "@/src/images/réalisations2.png";
 import realisation3 from "@/src/images/réalisation3.png";
 import valerioShot1 from "@/src/images/valerio-realisation-1.png";
@@ -46,34 +51,57 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     index: "01",
     title: "Site vitrine",
     status: "Vitrine web · livrée",
-    image: realisation1,
-    imageAlt: "Aperçu du site vitrine",
+    image: vitrineNuitHero,
+    imageAlt:
+      "Page d’accueil de la vitrine : fond sombre, accroche et mise en avant des expertises",
     visualShell: "dark",
+    extraGallery: [
+      {
+        src: vitrineNuit01,
+        alt: "Section présentation ou hero secondaire de la vitrine",
+      },
+      {
+        src: vitrineNuit02,
+        alt: "Bloc services ou offres, hiérarchie typographique sur fond nuit",
+      },
+      {
+        src: vitrineNuit03,
+        alt: "Détail de mise en page : cartes, repères visuels ou process",
+      },
+      {
+        src: vitrineNuit04,
+        alt: "Vue complémentaire du site : navigation ou pied de section",
+      },
+      {
+        src: vitrineNuit05,
+        alt: "Capture additionnelle : cohérence du thème sombre sur l’ensemble du parcours",
+      },
+    ],
     caseStudy: {
       summary:
-        "Refonte complète d’une vitrine B2B : hiérarchie de l’information clarifiée, identité visuelle assumée et parcours de conversion vers la prise de rendez-vous raccourci de manière mesurable.",
+        "Conception d’une vitrine « nuit » pour un positionnement premium : fond bleu-gris profond, contrastes maîtrisés et promesse lisible dès l’arrivée — pensée pour un décideur qui scanne la page en quelques secondes avant de prendre contact.",
       context:
-        "Entreprise de services avec une offre différenciante mais un site qui accumulait les pages redondantes et les messages contradictoires. Le trafic qualifié venait surtout du bouche-à-oreille ; il fallait un support web capable de rassurer un décideur pressé en moins d’une minute, sur desktop comme sur mobile.",
+        "Activité de services ou de création digitale avec besoin de crédibilité en ligne. Les échanges partent souvent de recommandations ; le site doit prolonger cette confiance et expliquer l’offre sans surcharge, y compris sur mobile où une partie du trafic arrive déjà.",
       problem:
-        "La précédente version mélangeait argumentaire commercial, actualités et formulaires peu visibles. Les visiteurs ne savaient pas par où commencer ; les CTA étaient noyés et le ton visuel ne reflétait ni le sérieux ni la modernité du positionnement prix.",
+        "Avant la refonte, la vitrine peinait à ordonner les messages : témoignages, offres et appels à l’action coexistaient sans ordre de lecture clair. Sur fond clair ou brouillon, l’identité forte ne ressortait pas ; le parcours vers la prise de rendez-vous ou le devis était trop long.",
       solution:
-        "Nous avons recentré la home sur trois promesses fortes, un bloc preuve social / références compact, puis un tunnel clair vers le contact. Le fond sombre structure le regard, les espaces blancs encadrent les CTA et la typographie garantit une lecture confortable sur de longs paragraphes techniques.",
+        "Nous avons calibré une ambiance sombre élégante — pas « gadget » — avec une hiérarchie explicite : accroche, preuves courtes, présentation des axes d’intervention puis CTA répété sans agressivité. Les blocs respirent, les dégradés et le vert signature servent le guidage du regard vers l’action.",
       methodology:
-        "Atelier cible et tri des contenus existants, arborescence validée sur maquettes statiques, puis itérations sur les transitions et les états hover pour préserver la cohérence sur tout le parcours. Priorité à l’accessibilité des contrastes et au temps de chargement perçu sur les sections hero.",
+        "Arborescence validée sur prototypes, puis affinage des contrastes WCAG sur textes longs et boutons. Nous avons priorisé la vitesse perçue (chargement des sections hero, images optimisées) et un comportement homogène entre breakpoints pour éviter les ruptures de grilles au passage mobile.",
       deliverables: [
-        "Architecture de contenu et wireframes de la vitrine",
-        "UI system (couleurs, typographies, composants réutilisables)",
-        "Intégration responsive et mise en production",
-        "Guide de mise à jour rapide pour l’équipe marketing",
+        "Maquettes desktop & mobile des pages clés de la vitrine",
+        "Bibliothèque de composants (titres, cartes, CTA, listes à puces)",
+        "Intégration responsive et recette navigateurs",
+        "Fiches de contenu type pour faciliter les mises à jour post-livraison",
       ],
       stack: [
         "Next.js",
         "TypeScript",
         "Tailwind CSS",
-        "Hébergement edge & pré-rendu statique",
+        "Images optimisées & déploiement statique / edge",
       ],
       outcomes:
-        "Un support aligné avec les objectifs commerciaux : moins de dispersion cognitive, message unique par écran et contact accessible depuis chaque section clé. Idéal pour alimenter les campagnes et les prises de parole LinkedIn sans refonte à chaque actualité.",
+        "Une présence en ligne à la hauteur du positionnement : lecture fluide du début à la fin, contact jamais loin, et captures d’écran utilisables telles quelles pour la prospection ou les réseaux — sans reprendre toute la chaîne graphique à chaque campagne.",
     },
   },
   {
