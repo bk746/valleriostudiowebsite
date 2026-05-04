@@ -107,44 +107,42 @@ const ILLUSTRATIONS: ReadonlyArray<ReactNode> = [
 
 export default function Approche() {
   const friseRef = useRef<HTMLDivElement | null>(null);
+  const barFillRef = useRef<HTMLSpanElement | null>(null);
+  const cursorRef = useRef<HTMLSpanElement | null>(null);
   const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [lineProgress, setLineProgress] = useState(0);
-  const [friseHeight, setFriseHeight] = useState(0);
   const [revealed, setRevealed] = useState<boolean[]>(() => STEPS.map(() => false));
 
-  // Mesure la hauteur de la frise pour pouvoir positionner le curseur en
-  // translate3d (GPU composited) plutôt qu'en `top: %` (forcerait un layout).
-  useEffect(() => {
-    const el = friseRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => {
-      setFriseHeight(entry.contentRect.height);
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
   // Tracé continu de la ligne centrale (suit le milieu du viewport).
-  // Le rendu est fait via `transform: scaleY` (GPU composited) plutôt qu'un
-  // `height: %` — ça évite tout repaint pendant le scroll, donc aucun coût
-  // mesurable même sur mobile. On garde un seul listener scroll passif qui
-  // se contente d'écrire deux variables CSS via rAF.
+  // Important : on n'utilise PAS de setState pendant le scroll — chaque tick
+  // déclencherait un re-render du composant (et de ses 5 SVG illustrations),
+  // ce qui produit des micro-blocages perceptibles comme "le scroll ne prend
+  // pas" / "la ligne saute". À la place on écrit directement le `transform`
+  // via les refs sur la barre et le curseur, depuis un seul `requestAnimationFrame`.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setLineProgress(1);
+      const bar = barFillRef.current;
+      const cur = cursorRef.current;
+      if (bar) bar.style.transform = "scaleY(1)";
+      if (cur) cur.style.opacity = "0";
       return;
     }
 
     let raf = 0;
     const compute = () => {
       const el = friseRef.current;
-      if (!el) return;
+      const bar = barFillRef.current;
+      const cur = cursorRef.current;
+      if (!el || !bar || !cur) return;
       const rect = el.getBoundingClientRect();
+      const h = rect.height;
+      if (h <= 0) return;
       const vh = window.innerHeight;
-      const p = (vh / 2 - rect.top) / rect.height;
-      setLineProgress(Math.max(0, Math.min(1, p)));
+      const p = Math.max(0, Math.min(1, (vh / 2 - rect.top) / h));
+      bar.style.transform = `scaleY(${p})`;
+      cur.style.transform = `translate3d(-50%, ${h * p - 6}px, 0)`;
+      cur.style.opacity = p > 0.005 && p < 0.995 ? "1" : "0";
     };
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -216,6 +214,7 @@ export default function Approche() {
         className="relative flex flex-col px-5 pb-32 pt-16 sm:px-12 sm:pb-48 sm:pt-32 md:grid md:grid-cols-2 md:px-20 md:pb-56 md:pt-40"
         style={{
           rowGap: "clamp(4.5rem, 14vw, 14rem)",
+          contain: "layout paint",
         }}
       >
         {/* Ligne centrale (desktop) / à gauche (mobile) */}
@@ -228,17 +227,21 @@ export default function Approche() {
             La barre remplie est rendue en `transform: scaleY` (GPU composited)
             plutôt qu'en `height: %` (qui repeindrait à chaque tick de scroll).
             origin top → la barre grandit du haut vers le bas comme une frise.
+            `transform` est appliqué via une ref (pas de setState) pour éviter
+            un re-render React à chaque pixel de scroll.
           */}
           <span
+            ref={barFillRef}
             className="absolute inset-0 origin-top bg-[#0C4323] will-change-transform"
-            style={{ transform: `scaleY(${lineProgress})` }}
+            style={{ transform: "scaleY(0)" }}
           />
           {/* Curseur qui descend — translate3d est aussi compositée GPU */}
           <span
+            ref={cursorRef}
             className="absolute left-1/2 top-0 size-3 rounded-full bg-[#0C4323] ring-4 ring-[#FDF6EC] will-change-transform"
             style={{
-              transform: `translate3d(-50%, ${friseHeight * lineProgress - 6}px, 0)`,
-              opacity: lineProgress > 0.005 && lineProgress < 0.995 ? 1 : 0,
+              transform: "translate3d(-50%, 0, 0)",
+              opacity: 0,
               transition: "opacity 0.4s ease",
             }}
           />
