@@ -7,7 +7,12 @@ import vitrineNuit03 from "@/src/images/vitrine-nuit-03.png";
 import vitrineNuit04 from "@/src/images/vitrine-nuit-04.png";
 import vitrineNuit05 from "@/src/images/vitrine-nuit-05.png";
 import realisations2 from "@/src/images/réalisations2.png";
-import realisation3 from "@/src/images/réalisation3.png";
+import vitrineChaleurCarte from "@/src/images/vitrine-chaleur-carte.png";
+import vitrineChaleurHero from "@/src/images/vitrine-chaleur-hero.png";
+import vitrineChaleur01 from "@/src/images/vitrine-chaleur-01.png";
+import vitrineChaleur02 from "@/src/images/vitrine-chaleur-02.png";
+import vitrineChaleur03 from "@/src/images/vitrine-chaleur-03.png";
+import vitrineChaleur04 from "@/src/images/vitrine-chaleur-04.png";
 import valerioShot1 from "@/src/images/valerio-realisation-1.png";
 import valerioShot2 from "@/src/images/valerio-realisation-2.png";
 import valerioShot3 from "@/src/images/valerio-realisation-3.png";
@@ -164,9 +169,32 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     index: "03",
     title: "Site vitrine",
     status: "Vitrine web · livrée",
-    image: realisation3,
-    imageAlt: "Aperçu du site vitrine",
+    image: vitrineChaleurCarte,
+    imageAlt:
+      "Vitrine chaleureuse : accueil avec tons crème et orange, hiérarchie claire",
     visualShell: "warm",
+    extraGallery: [
+      {
+        src: vitrineChaleurHero,
+        alt: "Hero plein écran : promesse et ambiance lumineuse du site",
+      },
+      {
+        src: vitrineChaleur01,
+        alt: "Section intermédiaire : mise en avant d’offre ou de bénéfices",
+      },
+      {
+        src: vitrineChaleur02,
+        alt: "Bloc contenu : textes, visuels et respiration entre les sections",
+      },
+      {
+        src: vitrineChaleur03,
+        alt: "Détail de mise en page : cartes, listes ou appels à l’action",
+      },
+      {
+        src: vitrineChaleur04,
+        alt: "Vue complémentaire : cohérence de la palette sur tout le parcours",
+      },
+    ],
     caseStudy: {
       summary:
         "Identité chaleureuse traduite dans une vitrine digitale : tons crème et orange, sections généreuses et mises en avant produit / offre pour un rendu à la fois humain et structuré.",

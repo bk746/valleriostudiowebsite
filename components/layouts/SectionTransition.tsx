@@ -60,7 +60,7 @@ export function scrollToSectionAnchor(targetId: string): void {
   */
   const lenis = typeof window !== "undefined" ? window.__lenis : undefined;
   if (lenis) {
-    lenis.scrollTo(top, { immediate: true, force: true, lock: true });
+    lenis.scrollTo(top, { immediate: true, force: true });
   } else {
     window.scrollTo({ left: 0, top, behavior: "auto" });
     if (document.scrollingElement) {

@@ -16,6 +16,7 @@ import HomePendingSectionTransition from "@/components/layouts/HomePendingSectio
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import SmoothScroll from "@/components/layouts/SmoothScroll";
+import ScrollRouteSync from "@/components/layouts/ScrollRouteSync";
 import Cursor from "@/components/layouts/Cursor";
 
 const geistSans = Geist({
@@ -46,6 +47,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
         <SmoothScroll />
+        <ScrollRouteSync />
         <Cursor />
         <ScrollResetOnLoad />
         <Intro />

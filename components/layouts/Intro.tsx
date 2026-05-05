@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Bebas_Neue, Cormorant_Garamond } from "next/font/google";
 import { HeroTitleLetters } from "@/components/sections/HeroTitleLetters";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -32,20 +33,17 @@ export default function Intro() {
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Verrouille le scroll pendant l'intro
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const cleanup = () => {
-      document.body.style.overflow = previousOverflow;
-    };
-
     if (reduce) {
       setCount(100);
       setPhase("gone");
-      cleanup();
       return;
     }
+
+    const releaseScroll = lockBodyScroll();
+
+    const cleanup = () => {
+      releaseScroll();
+    };
 
     let raf = 0;
     const startTime = performance.now();
@@ -91,7 +89,7 @@ export default function Intro() {
       if (exitTimeout) window.clearTimeout(exitTimeout);
       if (goneTimeout) window.clearTimeout(goneTimeout);
       window.removeEventListener("load", onLoad);
-      document.body.style.overflow = previousOverflow;
+      releaseScroll();
     };
   }, []);
 

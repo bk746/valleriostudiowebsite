@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
 import { notFound } from "next/navigation";
 import RealisationBackNav from "@/components/realisations/RealisationBackNav";
+import { NEXT_IMAGE_QUALITY_RASTER } from "@/lib/image-defaults";
 import {
   REALISATIONS,
   type GallerySlide,
@@ -11,6 +12,11 @@ import {
   getRealisationBySlug,
   getRealisationExtraGallery,
 } from "@/lib/realisations-data";
+
+const CASE_STUDY_IMAGE_SIZES_FULL =
+  "(max-width: 768px) 100vw, (max-width: 1280px) min(100vw, 1024px), 1280px";
+const CASE_STUDY_IMAGE_SIZES_HALF =
+  "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 720px";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -22,6 +28,8 @@ type Props = { params: Promise<{ slug: string }> };
 
 /** Styles par `visualShell` de la carte — même grille que la vitrine, ambiance alignée au projet. */
 type PageTheme = {
+  /** Couleur de texte « document » pour toute la colonne (neutralise `body { color }` en mode sombre système). */
+  surfaceText: string;
   main: string;
   eyebrow: string;
   eyebrowOnDark: string;
@@ -45,8 +53,9 @@ type PageTheme = {
 
 const PAGE_THEMES: Record<"default" | "cream" | "warm", PageTheme> = {
   default: {
+    surfaceText: "text-[#0C4323]",
     main:
-      "min-h-svh bg-[#FDF6EC] pb-32 pt-28 text-[#0C4323] sm:pb-44 sm:pt-32 md:pb-52 md:pt-40",
+      "min-h-svh bg-[#FDF6EC] pb-32 pt-28 sm:pb-44 sm:pt-32 md:pb-52 md:pt-40",
     eyebrow:
       "font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#0C4323]/55 sm:text-[0.7rem]",
     eyebrowOnDark:
@@ -57,7 +66,7 @@ const PAGE_THEMES: Record<"default" | "cream" | "warm", PageTheme> = {
     figure:
       "relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_28px_70px_-32px_rgba(12,67,35,0.18)] sm:rounded-3xl",
     chapo:
-      "mt-8 max-w-[44rem] font-sans text-[clamp(1.05rem,1.6vw,1.4rem)] leading-[1.55] text-[#0C4323]/82 sm:mt-10",
+      "mt-8 max-w-[44rem] font-sans text-[clamp(1.05rem,1.6vw,1.4rem)] leading-[1.55] text-[#0C4323]/90 sm:mt-10",
     num: `${bebas.className} text-[clamp(2rem,4.6vw,3.4rem)] leading-none text-[#156332]`,
     sectionH2:
       "m-0 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#0C4323]/65 sm:text-[0.8rem]",
@@ -78,8 +87,9 @@ const PAGE_THEMES: Record<"default" | "cream" | "warm", PageTheme> = {
     nextFocus: "focus-visible:bg-[#0C4323]/5",
   },
   cream: {
+    surfaceText: "text-[#1c1917]",
     main:
-      "min-h-svh bg-[#EDEAE4] pb-32 pt-28 text-[#1c1917] sm:pb-44 sm:pt-32 md:pb-52 md:pt-40",
+      "min-h-svh bg-[#EDEAE4] pb-32 pt-28 sm:pb-44 sm:pt-32 md:pb-52 md:pt-40",
     eyebrow:
       "font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#1c1917]/52 sm:text-[0.7rem]",
     eyebrowOnDark:
@@ -90,7 +100,7 @@ const PAGE_THEMES: Record<"default" | "cream" | "warm", PageTheme> = {
     figure:
       "relative m-0 overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.02] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.14)] sm:rounded-3xl",
     chapo:
-      "mt-8 max-w-[44rem] font-sans text-[clamp(1.05rem,1.6vw,1.4rem)] leading-[1.55] text-[#1c1917]/78 sm:mt-10",
+      "mt-8 max-w-[44rem] font-sans text-[clamp(1.05rem,1.6vw,1.4rem)] leading-[1.55] text-[#1c1917]/90 sm:mt-10",
     num: `${bebas.className} text-[clamp(2rem,4.6vw,3.4rem)] leading-none text-[#0C4323]`,
     sectionH2:
       "m-0 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#1c1917]/55 sm:text-[0.8rem]",
@@ -111,8 +121,9 @@ const PAGE_THEMES: Record<"default" | "cream" | "warm", PageTheme> = {
     nextFocus: "focus-visible:bg-black/5",
   },
   warm: {
+    surfaceText: "text-[#3d1f12]",
     main:
-      "min-h-svh bg-[#FFF4E8] pb-32 pt-28 text-[#3d1f12] sm:pb-44 sm:pt-32 md:pb-52 md:pt-40",
+      "min-h-svh bg-[#FFF4E8] pb-32 pt-28 sm:pb-44 sm:pt-32 md:pb-52 md:pt-40",
     eyebrow:
       "font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#5c3018]/55 sm:text-[0.7rem]",
     eyebrowOnDark:
@@ -123,7 +134,7 @@ const PAGE_THEMES: Record<"default" | "cream" | "warm", PageTheme> = {
     figure:
       "relative m-0 overflow-hidden rounded-2xl border border-[#e85d22]/15 bg-[#fff0e5] shadow-[0_28px_70px_-32px_rgba(230,90,25,0.15)] sm:rounded-3xl",
     chapo:
-      "mt-8 max-w-[44rem] font-sans text-[clamp(1.05rem,1.6vw,1.4rem)] leading-[1.55] text-[#5c3018]/82 sm:mt-10",
+      "mt-8 max-w-[44rem] font-sans text-[clamp(1.05rem,1.6vw,1.4rem)] leading-[1.55] text-[#422218]/92 sm:mt-10",
     num: `${bebas.className} text-[clamp(2rem,4.6vw,3.4rem)] leading-none text-[#c2410c]`,
     sectionH2:
       "m-0 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#5c3018]/60 sm:text-[0.8rem]",
@@ -149,6 +160,8 @@ function resolvePageTheme(r: Realisation): PageTheme {
   const shell = r.visualShell ?? "default";
   if (shell === "cream") return PAGE_THEMES.cream;
   if (shell === "warm") return PAGE_THEMES.warm;
+  /** `dark` sur la carte = ambiance type vitrine nuit, mais la page étude de cas reste en thème clair lisible. */
+  if (shell === "dark") return PAGE_THEMES.default;
   return PAGE_THEMES.default;
 }
 
@@ -173,10 +186,12 @@ function ProjectFigure({
   slide,
   priority,
   figureClass,
+  sizes = CASE_STUDY_IMAGE_SIZES_FULL,
 }: {
   slide: GallerySlide;
   priority?: boolean;
   figureClass: string;
+  sizes?: string;
 }) {
   return (
     <figure className={figureClass}>
@@ -186,7 +201,8 @@ function ProjectFigure({
           alt={slide.alt}
           fill
           className="object-cover object-top"
-          sizes="(max-width: 1024px) 100vw, 1024px"
+          sizes={sizes}
+          quality={NEXT_IMAGE_QUALITY_RASTER}
           priority={priority}
         />
       </div>
@@ -244,10 +260,12 @@ export default async function RealisationPage({ params }: Props) {
 
   return (
     <main className={t.main}>
-      <div className="mx-auto max-w-5xl px-5 sm:px-10 md:px-16">
+      <div
+        className={`mx-auto max-w-5xl px-5 sm:px-10 md:px-16 ${t.surfaceText}`}
+      >
         <RealisationBackNav />
 
-        <header className="mb-14 sm:mb-20 md:mb-24">
+        <header className="mt-2 mb-16 sm:mt-0 sm:mb-24 md:mb-28">
           <p className={`${t.eyebrow} mb-5 sm:mb-7`}>Étude de cas · {r.status}</p>
           <h1
             className={`${bebas.className} m-0 text-[clamp(2.6rem,9vw,6rem)] font-normal uppercase leading-[0.92] tracking-[-0.02em]`}
@@ -355,6 +373,11 @@ export default async function RealisationPage({ params }: Props) {
                     key={`${r.slug}-trail-${i}`}
                     slide={slide}
                     figureClass={t.figure}
+                    sizes={
+                      trailingImages.length >= 2
+                        ? CASE_STUDY_IMAGE_SIZES_HALF
+                        : CASE_STUDY_IMAGE_SIZES_FULL
+                    }
                   />
                 ))}
               </div>

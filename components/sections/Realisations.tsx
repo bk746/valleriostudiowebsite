@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
+import { NEXT_IMAGE_QUALITY_RASTER } from "@/lib/image-defaults";
 import type { Realisation } from "@/lib/realisations-data";
 import { REALISATIONS } from "@/lib/realisations-data";
 
@@ -74,6 +75,7 @@ function VisualProjectFigure({
         fill
         className="object-cover object-top motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-[1.02]"
         sizes={sizes}
+        quality={NEXT_IMAGE_QUALITY_RASTER}
         priority={priority}
       />
       <VisualProjectCaption
@@ -110,7 +112,6 @@ export default function Realisations() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [maxShift, setMaxShift] = useState(0);
-  const [shift, setShift] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -149,38 +150,55 @@ export default function Realisations() {
     };
   }, [isMobile]);
 
+  /**
+   * Effet parallaxe horizontal : on écrit le `transform` directement sur le
+   * DOM via la ref, sans `setState`. Cela évite des re-renders React à chaque
+   * frame de scroll (qui causaient des saccades visibles sur desktop).
+   */
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const track = trackRef.current;
+    if (!track) return;
+
     if (isMobile) {
-      setShift(0);
+      track.style.transform = "translate3d(0,0,0)";
       return;
     }
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setShift(0);
+    if (reduce || maxShift === 0) {
+      track.style.transform = "translate3d(0,0,0)";
       return;
     }
-    if (maxShift === 0) return;
 
     let raf = 0;
+    let lastShift = NaN;
     const compute = () => {
       const sec = sectionRef.current;
       if (!sec) return;
       const scrolled = -sec.getBoundingClientRect().top;
       const p = Math.max(0, Math.min(1, scrolled / maxShift));
-      setShift(-p * maxShift);
+      const shift = -p * maxShift;
+      if (shift !== lastShift) {
+        lastShift = shift;
+        track.style.transform = `translate3d(${shift.toFixed(2)}px,0,0)`;
+      }
     };
     const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(compute);
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        compute();
+      });
     };
 
     compute();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [maxShift, isMobile]);
 
@@ -194,7 +212,9 @@ export default function Realisations() {
     const shell = resolveVisualShell(p);
     const shellCls = cardShellClasses(shell, layout === "desktop");
     const sizes =
-      layout === "mobile" ? "92vw" : "(max-width: 1280px) 88vw, 1100px";
+      layout === "mobile"
+        ? "(max-width: 430px) 100vw, 92vw"
+        : "(max-width: 1536px) 90vw, 1400px";
 
     const inner = (
       <>
@@ -279,7 +299,7 @@ export default function Realisations() {
             <div
               ref={trackRef}
               className="flex h-full items-stretch gap-[3vw] px-5 py-6 will-change-transform sm:gap-[2.5vw] sm:px-[4vw] sm:py-10 md:py-12"
-              style={{ transform: `translate3d(${shift}px, 0, 0)` }}
+              style={{ transform: "translate3d(0,0,0)" }}
             >
               {REALISATIONS.map((p) => renderCard(p, "desktop"))}
             </div>

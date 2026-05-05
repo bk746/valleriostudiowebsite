@@ -42,8 +42,10 @@ html {
 body {
   overflow-x: clip;
   overscroll-behavior-y: none;
-  /* Indique au compositor de ne s'occuper que du pan vertical : Safari iOS
-     évite alors d'attendre les listeners pour décider quoi faire du touch. */
+  /* `pan-y` sur le body : Safari iOS décide tout de suite que le geste
+     vertical est natif (pas d’attente sur les listeners). Les zones
+     scrollables en X (ex. Réalisations mobile) lèvent ce verrou via leur
+     propre `touch-action: pan-x`. */
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
 }
@@ -58,6 +60,7 @@ body {
 .realisations-track-mobile {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
+  touch-action: pan-x;
   scrollbar-width: none;
 }
 .realisations-track-mobile::-webkit-scrollbar {

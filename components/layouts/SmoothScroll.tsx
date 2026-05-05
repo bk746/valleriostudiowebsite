@@ -50,6 +50,8 @@ export default function SmoothScroll() {
       smoothWheel: true,
       wheelMultiplier: 0.9,
       syncTouch: false,
+      /** Réduit les scrolls fantômes / inertie après lien interne (Next / ancres). */
+      stopInertiaOnNavigate: true,
     });
 
     window.__lenis = lenis;

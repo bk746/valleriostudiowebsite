@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 import logo from "@/src/images/vallerio-logo-noir.svg";
 import TransitionLink from "@/components/layouts/TransitionLink";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -92,14 +93,11 @@ export default function Navbar() {
     };
   }, [pathname]);
 
-  // Verrouille le scroll quand le menu mobile est ouvert
+  // Verrouille le scroll quand le menu mobile est ouvert (compteur — cohabite avec l’intro)
   useEffect(() => {
     if (!menuOpen) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
+    const release = lockBodyScroll();
+    return release;
   }, [menuOpen]);
 
   // Ferme le menu sur Escape
