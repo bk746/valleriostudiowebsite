@@ -23,7 +23,7 @@ type QA = {
 const FAQ_ITEMS: ReadonlyArray<QA> = [
   {
     q: "Combien de temps pour livrer un site ?",
-    a: "En moyenne 4 à 8 semaines selon la complexité du projet. On vous donne un planning précis dès le cadrage, et on tient les délais.",
+    a: "En moyenne 2 semaines selon la complexité du projet. On vous donne un planning précis dès le cadrage, et on tient les délais.",
   },
   {
     q: "Quel est le tarif d’un projet ?",
