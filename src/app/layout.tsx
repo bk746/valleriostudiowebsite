@@ -4,6 +4,7 @@ import SiteJsonLd from "@/components/layouts/SiteJsonLd";
 import { SITE_DEFAULT_TITLE, SITE_DESCRIPTION } from "@/lib/seo-copy";
 import { SITE_NAME, getSiteOrigin } from "@/lib/site";
 import { SITE_KEYWORDS } from "@/lib/site-keywords";
+import brandIcon from "@/src/images/vallerio-logo-noir.svg";
 import "./globals.css";
 import "./hero-arrow.css";
 import "./hero-letters.css";
@@ -63,6 +64,13 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE_DEFAULT_TITLE,
     description: SITE_DESCRIPTION,
+  },
+  icons: {
+    icon: [
+      { url: brandIcon.src, type: "image/svg+xml", sizes: "any" },
+    ],
+    shortcut: [{ url: brandIcon.src }],
+    apple: [{ url: brandIcon.src }],
   },
 };
 
