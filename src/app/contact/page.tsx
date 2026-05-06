@@ -3,9 +3,9 @@ import ContactHero from "@/components/sections/ContactHero";
 import ContactForm from "@/components/sections/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact — Vallerio Studio",
+  title: "Contact",
   description:
-    "Présentez-nous votre projet — on revient vers vous sous 24 heures.",
+    "Contactez Vallerio Studio à Annecy : parlez-nous de votre projet web ou digital. Réponse personnalisée sous 24 h.",
 };
 
 export default function ContactPage() {

@@ -127,12 +127,12 @@ export default function Intro() {
 
         {/* Centre — titre + tagline */}
         <div className="flex flex-col items-center text-center">
-          <h1
+          <p
             className="intro-title m-0 text-[clamp(2.6rem,15vw,13rem)] font-normal leading-[0.95] sm:leading-none"
             aria-label="Vallerio Studio"
           >
             <HeroTitleLetters text="Vallerio Studio" />
-          </h1>
+          </p>
           <p
             className={`${cormorant.className} intro-tag mt-5 text-[clamp(0.9rem,1.4vw,1.35rem)] italic opacity-80 sm:mt-7`}
           >

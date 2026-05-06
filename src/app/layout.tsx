@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import SiteJsonLd from "@/components/layouts/SiteJsonLd";
+import { SITE_DEFAULT_TITLE, SITE_DESCRIPTION } from "@/lib/seo-copy";
+import { SITE_NAME, getSiteOrigin } from "@/lib/site";
+import { SITE_KEYWORDS } from "@/lib/site-keywords";
 import "./globals.css";
 import "./hero-arrow.css";
 import "./hero-letters.css";
@@ -30,9 +34,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vallerio Studio — On conçoit des sites qui convertissent",
-  description:
-    "Studio digital basé à Annecy. On imagine, on conçoit et on développe des sites web qui transforment vos visiteurs en clients.",
+  metadataBase: new URL(getSiteOrigin()),
+  title: {
+    default: SITE_DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: getSiteOrigin() }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  keywords: [...SITE_KEYWORDS],
+  category: "digital_product_studio",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: "/",
+    siteName: SITE_NAME,
+    title: SITE_DEFAULT_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_DEFAULT_TITLE,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({
@@ -42,10 +73,11 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
+        <SiteJsonLd />
         <SmoothScroll />
         <ScrollRouteSync />
         <Cursor />

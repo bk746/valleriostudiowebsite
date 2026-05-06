@@ -172,12 +172,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const r = getRealisationBySlug(slug);
-  if (!r) return { title: "Réalisation — Vallerio Studio" };
+  if (!r) return { title: "Réalisation introuvable" };
   const desc = r.caseStudy
     ? `${r.caseStudy.summary.slice(0, 155)}${r.caseStudy.summary.length > 155 ? "…" : ""}`
     : r.status;
   return {
-    title: `${r.title} — Réalisations · Vallerio Studio`,
+    title: `${r.title} — Réalisation`,
     description: desc,
   };
 }
