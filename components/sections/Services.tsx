@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
 
 const bebas = Bebas_Neue({
@@ -16,6 +17,8 @@ type Service = {
   bg: string;
   fg: string;
   span: string;
+  /** Si défini, la carte devient un lien vers la page service dédiée. */
+  href?: string;
 };
 
 const SERVICES: ReadonlyArray<Service> = [
@@ -26,6 +29,7 @@ const SERVICES: ReadonlyArray<Service> = [
     bg: "#CFE9D6",
     fg: "#0C4323",
     span: "sm:col-span-6 md:col-span-7",
+    href: "/services/site-internet",
   },
   {
     title: ["Identité", "Visuelle"],
@@ -34,6 +38,7 @@ const SERVICES: ReadonlyArray<Service> = [
     bg: "#156332",
     fg: "#FDF6EC",
     span: "sm:col-span-6 md:col-span-5",
+    href: "/services/identite-visuelle",
   },
   {
     title: ["Maintenance"],
@@ -42,6 +47,7 @@ const SERVICES: ReadonlyArray<Service> = [
     bg: "#2D8C4E",
     fg: "#FDF6EC",
     span: "sm:col-span-6 md:col-span-5",
+    href: "/services/maintenance",
   },
   {
     title: ["Apps", "Saas"],
@@ -50,6 +56,7 @@ const SERVICES: ReadonlyArray<Service> = [
     bg: "#0C4323",
     fg: "#FDF6EC",
     span: "sm:col-span-6 md:col-span-7",
+    href: "/services/apps-saas",
   },
 ];
 
@@ -111,73 +118,104 @@ export default function Services() {
 
       {/* ── BENTO GRID ────────────────────────────────────── */}
       <div className="grid min-h-0 grid-cols-1 gap-3 px-3 pb-6 sm:grid-cols-12 sm:grid-rows-[1fr_1fr] sm:gap-3 sm:px-3 sm:pb-3 md:gap-4 md:px-4 md:pb-4">
-        {SERVICES.map((s, idx) => (
-          <article
-            key={s.title.join(" ")}
-            style={
-              {
-                background: s.bg,
-                color: s.fg,
-                "--i": idx,
-              } as CSSProperties & { "--i"?: number }
-            }
-            className={
-              s.span +
-              " services-card group relative flex min-h-[58vw] flex-col overflow-hidden rounded-2xl p-6" +
-              " sm:min-h-0 sm:rounded-none sm:p-7 md:p-9"
-            }
-          >
-            {/* Voile lumineux subtil au hover */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100"
-              style={{
-                background:
-                  "radial-gradient(120% 80% at 100% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0) 60%)",
-              }}
-            />
-
-            {/* TOP : label + flèche */}
-            <header className="relative z-10 flex items-start justify-between gap-2">
-              <span
-                className="font-sans text-[0.6rem] font-medium uppercase leading-tight tracking-[0.22em] sm:text-[0.62rem] sm:tracking-[0.24em]"
-                style={{ color: s.fg, opacity: 0.55 }}
-              >
-                {s.label}
-              </span>
+        {SERVICES.map((s, idx) => {
+          /*
+            La carte garde exactement le même rendu visuel ; seule sa
+            balise racine change selon qu'elle est cliquable ou non. On
+            préserve la classe `services-card` (anim reveal) et le
+            `group` (hover des sous-éléments) dans les deux cas.
+          */
+          const isLink = Boolean(s.href);
+          const cardClass =
+            s.span +
+            " services-card group relative flex min-h-[58vw] flex-col overflow-hidden rounded-2xl p-6" +
+            " sm:min-h-0 sm:rounded-none sm:p-7 md:p-9" +
+            (isLink
+              ? " cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC]"
+              : "");
+          const cardStyle = {
+            background: s.bg,
+            color: s.fg,
+            "--i": idx,
+          } as CSSProperties & { "--i"?: number };
+          const inner = (
+            <>
+              {/* Voile lumineux subtil au hover */}
               <span
                 aria-hidden
-                className="font-mono text-base transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5 group-hover:-translate-y-1.5 sm:text-lg"
-                style={{ color: s.fg, opacity: 0.85 }}
-              >
-                →
-              </span>
-            </header>
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100"
+                style={{
+                  background:
+                    "radial-gradient(120% 80% at 100% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0) 60%)",
+                }}
+              />
 
-            {/* BOTTOM : titre + description */}
-            <div className="relative z-10 mt-auto flex flex-col gap-3 sm:gap-4">
-              <h3
-                className={
-                  "m-0 text-[clamp(2.2rem,9vw,4.6rem)] font-normal leading-[0.92] tracking-[-0.015em]" +
-                  " transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1 sm:leading-[0.9]"
-                }
-              >
-                {s.title.map((line, i) => (
-                  <span key={i} className="block">
-                    {line}
-                  </span>
-                ))}
-              </h3>
+              {/* TOP : label + flèche */}
+              <header className="relative z-10 flex items-start justify-between gap-2">
+                <span
+                  className="font-sans text-[0.6rem] font-medium uppercase leading-tight tracking-[0.22em] sm:text-[0.62rem] sm:tracking-[0.24em]"
+                  style={{ color: s.fg, opacity: 0.55 }}
+                >
+                  {s.label}
+                </span>
+                <span
+                  aria-hidden
+                  className="font-mono text-base transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5 group-hover:-translate-y-1.5 sm:text-lg"
+                  style={{ color: s.fg, opacity: 0.85 }}
+                >
+                  →
+                </span>
+              </header>
 
-              <p
-                className="m-0 max-w-[26rem] font-sans text-[0.85rem] font-normal normal-case leading-relaxed opacity-70 transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-90 sm:hidden sm:text-[0.78rem] sm:opacity-65 lg:block"
-                style={{ color: s.fg }}
+              {/* BOTTOM : titre + description */}
+              <div className="relative z-10 mt-auto flex flex-col gap-3 sm:gap-4">
+                <h3
+                  className={
+                    "m-0 text-[clamp(2.2rem,9vw,4.6rem)] font-normal leading-[0.92] tracking-[-0.015em]" +
+                    " transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1 sm:leading-[0.9]"
+                  }
+                >
+                  {s.title.map((line, i) => (
+                    <span key={i} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </h3>
+
+                <p
+                  className="m-0 max-w-[26rem] font-sans text-[0.85rem] font-normal normal-case leading-relaxed opacity-70 transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-90 sm:hidden sm:text-[0.78rem] sm:opacity-65 lg:block"
+                  style={{ color: s.fg }}
+                >
+                  {s.desc}
+                </p>
+              </div>
+            </>
+          );
+
+          if (s.href) {
+            return (
+              <Link
+                key={s.title.join(" ")}
+                href={s.href}
+                aria-label={`En savoir plus : ${s.title.join(" ")}`}
+                style={cardStyle}
+                className={cardClass}
               >
-                {s.desc}
-              </p>
-            </div>
-          </article>
-        ))}
+                {inner}
+              </Link>
+            );
+          }
+
+          return (
+            <article
+              key={s.title.join(" ")}
+              style={cardStyle}
+              className={cardClass}
+            >
+              {inner}
+            </article>
+          );
+        })}
       </div>
     </section>
     </>

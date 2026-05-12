@@ -17,6 +17,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   /** Chemins statiques hors racine ; la racine est listée séparément. */
   const staticPaths = ["/contact"] as const;
 
+  /** Pages services dédiées — chacune accessible depuis sa carte dans la home. */
+  const servicePaths = [
+    "/services/site-internet",
+    "/services/identite-visuelle",
+    "/services/maintenance",
+    "/services/apps-saas",
+  ] as const;
+
   const entries: MetadataRoute.Sitemap = [
     {
       url: `${origin}/`,
@@ -25,6 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     ...staticPaths.map((path) => ({
+      url: `${origin}${path}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
+    ...servicePaths.map((path) => ({
       url: `${origin}${path}`,
       lastModified,
       changeFrequency: "monthly" as const,

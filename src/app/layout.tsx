@@ -10,6 +10,7 @@ import "./hero-arrow.css";
 import "./hero-letters.css";
 import "./hero-words.css";
 import "./services-anim.css";
+import "./service-page-anim.css";
 import "./approche-anim.css";
 import "./intro-anim.css";
 import "./section-transition-anim.css";
