@@ -4,7 +4,7 @@
   --services-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* État initial */
+/* ── État initial ─────────────────────────────────── */
 
 .services-title {
   opacity: 0;
@@ -28,7 +28,21 @@
   will-change: opacity, transform;
 }
 
-/* État révélé */
+/* ── Grain texture (premium) ──────────────────────── */
+
+.services-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+/* ── État révélé ──────────────────────────────────── */
 
 .is-revealed .services-title {
   opacity: 1;
@@ -54,16 +68,71 @@
   transition-delay: calc(0.45s + var(--i, 0) * 0.12s);
 }
 
-/* Hover (uniquement après l'apparition) */
+/* ── Hover ────────────────────────────────────────── */
+
 .is-revealed .services-card:hover {
-  transform: translate3d(0, -6px, 0);
+  transform: translate3d(0, -4px, 0);
   transition:
     transform 0.7s var(--services-ease),
     opacity 0.7s var(--services-ease);
   transition-delay: 0s;
 }
 
-/* Reduced motion */
+/* Titre : décalage subtil */
+.services-card-title {
+  transition: transform 0.85s var(--services-ease);
+}
+.is-revealed .services-card:hover .services-card-title {
+  transform: translate3d(-2px, -2px, 0);
+}
+
+/* Rule : extension de la ligne */
+.services-card-rule {
+  transform: scaleX(1);
+  transition: transform 0.85s var(--services-ease);
+}
+
+/* ── CTA pill : signature awwwards (fill invert au hover) ── */
+
+.services-card-cta {
+  color: var(--svc-fg);
+  border: 1px solid color-mix(in srgb, var(--svc-fg) 32%, transparent);
+  transition:
+    border-color 0.45s var(--services-ease),
+    transform 0.6s var(--services-ease);
+}
+
+.services-card-cta-fill {
+  background: var(--svc-fg);
+  border-radius: 9999px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.7s var(--services-ease);
+  will-change: transform;
+}
+
+.services-card-cta-label,
+.services-card-cta-icon {
+  color: var(--svc-fg);
+  transition: color 0.35s var(--services-ease);
+  transition-delay: 0.05s;
+}
+
+.is-revealed .services-card:hover .services-card-cta {
+  border-color: var(--svc-fg);
+}
+
+.is-revealed .services-card:hover .services-card-cta-fill {
+  transform: scaleX(1);
+}
+
+.is-revealed .services-card:hover .services-card-cta-label,
+.is-revealed .services-card:hover .services-card-cta-icon {
+  color: var(--svc-bg);
+  transition-delay: 0.22s;
+}
+
+/* ── Reduced motion ───────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   .services-title,

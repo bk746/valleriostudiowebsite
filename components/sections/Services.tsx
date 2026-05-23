@@ -12,8 +12,10 @@ const bebas = Bebas_Neue({
 
 type Service = {
   title: ReadonlyArray<string>;
-  label: string;
-  desc: string;
+  category: string;
+  tags: ReadonlyArray<string>;
+  price: string;
+  num: string;
   bg: string;
   fg: string;
   span: string;
@@ -24,8 +26,10 @@ type Service = {
 const SERVICES: ReadonlyArray<Service> = [
   {
     title: ["Site", "Internet"],
-    label: "Web · Conversion",
-    desc: "Vitrines, landing pages, e-commerces. Pensés pour convertir, pas pour décorer.",
+    category: "Web / Conversion",
+    tags: ["Vitrine", "Landing", "E-commerce", "SEO"],
+    price: "À partir de 1 500 €",
+    num: "01",
     bg: "#CFE9D6",
     fg: "#0C4323",
     span: "sm:col-span-6 md:col-span-7",
@@ -33,8 +37,10 @@ const SERVICES: ReadonlyArray<Service> = [
   },
   {
     title: ["Identité", "Visuelle"],
-    label: "Branding · DA",
-    desc: "Logo, charte, direction artistique. Une marque reconnaissable au premier regard.",
+    category: "Branding / DA",
+    tags: ["Logo", "Charte", "Guidelines", "Direction Art."],
+    price: "À partir de 800 €",
+    num: "02",
     bg: "#156332",
     fg: "#FDF6EC",
     span: "sm:col-span-6 md:col-span-5",
@@ -42,8 +48,10 @@ const SERVICES: ReadonlyArray<Service> = [
   },
   {
     title: ["Maintenance"],
-    label: "Run · Performance",
-    desc: "Mises à jour, vitesse, contenus. Un site vivant, jamais à l'abandon.",
+    category: "Run / Performance",
+    tags: ["Updates", "Performance", "Hosting", "Évolutions"],
+    price: "À partir de 150 €/mois",
+    num: "03",
     bg: "#2D8C4E",
     fg: "#FDF6EC",
     span: "sm:col-span-6 md:col-span-5",
@@ -51,8 +59,10 @@ const SERVICES: ReadonlyArray<Service> = [
   },
   {
     title: ["Apps", "Saas"],
-    label: "Produit sur-mesure",
-    desc: "Tableaux de bord, plateformes, outils internes sur-mesure pour vos opérations.",
+    category: "Produit sur-mesure",
+    tags: ["Dashboards", "Plateformes", "Outils internes", "API"],
+    price: "À partir de 5 000 €",
+    num: "04",
     bg: "#0C4323",
     fg: "#FDF6EC",
     span: "sm:col-span-6 md:col-span-7",
@@ -128,53 +138,59 @@ export default function Services() {
           const isLink = Boolean(s.href);
           const cardClass =
             s.span +
-            " services-card group relative flex min-h-[58vw] flex-col overflow-hidden rounded-2xl p-6" +
-            " sm:min-h-0 sm:rounded-none sm:p-7 md:p-9" +
+            " services-card group relative flex min-h-[72vw] flex-col overflow-hidden rounded-2xl p-4" +
+            " sm:min-h-0 sm:rounded-2xl sm:p-5 md:p-6 lg:p-7" +
             (isLink
-              ? " cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC]"
+              ? " cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC] active:scale-[0.985]"
               : "");
           const cardStyle = {
             background: s.bg,
             color: s.fg,
+            "--svc-fg": s.fg,
+            "--svc-bg": s.bg,
             "--i": idx,
-          } as CSSProperties & { "--i"?: number };
+          } as CSSProperties & {
+            "--svc-fg"?: string;
+            "--svc-bg"?: string;
+            "--i"?: number;
+          };
           const inner = (
             <>
-              {/* Voile lumineux subtil au hover */}
+              {/* Numéro watermark éditorial */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100"
+                className="pointer-events-none absolute select-none font-sans font-black leading-none"
                 style={{
-                  background:
-                    "radial-gradient(120% 80% at 100% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0) 60%)",
+                  fontSize: "clamp(4.5rem,15vw,11rem)",
+                  bottom: "-0.15em",
+                  right: "-0.04em",
+                  color: s.fg,
+                  opacity: 0.055,
+                  letterSpacing: "-0.05em",
                 }}
-              />
+              >
+                {s.num}
+              </span>
 
-              {/* TOP : label + flèche */}
-              <header className="relative z-10 flex items-start justify-between gap-2">
+              {/* ── TOP : coordonnée | catégorie ─────────────── */}
+              <header className="relative z-10 flex items-center justify-between gap-3">
                 <span
-                  className="font-sans text-[0.6rem] font-medium uppercase leading-tight tracking-[0.22em] sm:text-[0.62rem] sm:tracking-[0.24em]"
+                  className="font-mono text-[0.6rem] leading-none tracking-[0.04em] sm:text-[0.62rem]"
                   style={{ color: s.fg, opacity: 0.55 }}
                 >
-                  {s.label}
+                  ({s.num})
                 </span>
                 <span
-                  aria-hidden
-                  className="font-mono text-base transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5 group-hover:-translate-y-1.5 sm:text-lg"
-                  style={{ color: s.fg, opacity: 0.85 }}
+                  className="font-mono text-[0.6rem] uppercase leading-none tracking-[0.1em] sm:text-[0.62rem]"
+                  style={{ color: s.fg, opacity: 0.55 }}
                 >
-                  →
+                  {s.category}
                 </span>
               </header>
 
-              {/* BOTTOM : titre + description */}
-              <div className="relative z-10 mt-auto flex flex-col gap-3 sm:gap-4">
-                <h3
-                  className={
-                    "m-0 text-[clamp(2.2rem,9vw,4.6rem)] font-normal leading-[0.92] tracking-[-0.015em]" +
-                    " transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1 sm:leading-[0.9]"
-                  }
-                >
+              {/* ── MIDDLE : titre + meta ─────────────────────── */}
+              <div className="relative z-10 mt-auto flex min-h-0 flex-col gap-2.5 sm:gap-3">
+                <h3 className="services-card-title m-0 text-[clamp(1.9rem,6.8vw,3.9rem)] font-normal leading-[0.92] tracking-[-0.022em] sm:leading-[0.9]">
                   {s.title.map((line, i) => (
                     <span key={i} className="block">
                       {line}
@@ -182,12 +198,69 @@ export default function Services() {
                   ))}
                 </h3>
 
-                <p
-                  className="m-0 max-w-[26rem] font-sans text-[0.85rem] font-normal normal-case leading-relaxed opacity-70 transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-90 sm:hidden sm:text-[0.78rem] sm:opacity-65 lg:block"
+                {/* Tags inline éditoriaux */}
+                <ul
+                  className="m-0 flex flex-wrap items-center gap-x-1.5 gap-y-1 p-0 font-mono text-[0.58rem] uppercase leading-none tracking-[0.08em] sm:text-[0.6rem]"
                   style={{ color: s.fg }}
                 >
-                  {s.desc}
-                </p>
+                  {s.tags.map((tag, i) => (
+                    <li key={tag} className="flex items-center gap-x-1.5">
+                      <span style={{ opacity: 0.72 }}>{tag}</span>
+                      {i < s.tags.length - 1 && (
+                        <span
+                          aria-hidden
+                          className="inline-block size-[3px] rounded-full"
+                          style={{ background: s.fg, opacity: 0.35 }}
+                        />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Rule */}
+                <div
+                  aria-hidden
+                  className="services-card-rule mt-1 h-px w-full origin-left sm:mt-1.5"
+                  style={{ background: `color-mix(in srgb, ${s.fg} 22%, transparent)` }}
+                />
+
+                {/* ── FOOTER : prix · CTA pill ─────────────── */}
+                <div className="mt-1 flex items-center justify-between gap-3 sm:mt-1.5">
+                  <span
+                    className="font-mono text-[0.62rem] leading-none tracking-[0.04em] sm:text-[0.64rem]"
+                    style={{ color: s.fg, opacity: 0.75 }}
+                  >
+                    {s.price}
+                  </span>
+
+                  {isLink && (
+                    <span
+                      aria-hidden
+                      className="services-card-cta relative inline-flex shrink-0 items-center gap-1.5 overflow-hidden rounded-full px-3 py-1.5 sm:gap-2 sm:px-3.5 sm:py-2"
+                    >
+                      <span
+                        aria-hidden
+                        className="services-card-cta-fill pointer-events-none absolute inset-0"
+                      />
+                      <span className="services-card-cta-label relative z-10 font-mono text-[0.56rem] font-medium uppercase leading-none tracking-[0.14em] sm:text-[0.6rem]">
+                        En savoir plus
+                      </span>
+                      <svg
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        className="services-card-cta-icon relative z-10 size-[11px] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-[2px] group-hover:-translate-y-[2px] sm:size-3"
+                      >
+                        <path
+                          d="M2 10 L10 2 M4.5 2 H10 V7.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  )}
+                </div>
               </div>
             </>
           );
