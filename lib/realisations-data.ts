@@ -1,18 +1,12 @@
 import type { StaticImageData } from "next/image";
-import vitrineNuitCarte from "@/src/images/vitrine-nuit-carte.png";
-import vitrineNuitHero from "@/src/images/vitrine-nuit-hero.png";
-import vitrineNuit01 from "@/src/images/vitrine-nuit-01.png";
-import vitrineNuit02 from "@/src/images/vitrine-nuit-02.png";
-import vitrineNuit03 from "@/src/images/vitrine-nuit-03.png";
-import vitrineNuit04 from "@/src/images/vitrine-nuit-04.png";
-import vitrineNuit05 from "@/src/images/vitrine-nuit-05.png";
+import nexusCaptureHero from "@/src/images/nexus-capture-hero.png";
+import nexusCaptureAbout from "@/src/images/nexus-capture-01.png";
+import nexusCaptureServices from "@/src/images/nexus-capture-02.png";
+import nexusCaptureProjects from "@/src/images/nexus-capture-03.png";
 import realisations2 from "@/src/images/réalisations2.png";
-import vitrineChaleurCarte from "@/src/images/vitrine-chaleur-carte.png";
-import vitrineChaleurHero from "@/src/images/vitrine-chaleur-hero.png";
-import vitrineChaleur01 from "@/src/images/vitrine-chaleur-01.png";
-import vitrineChaleur02 from "@/src/images/vitrine-chaleur-02.png";
-import vitrineChaleur03 from "@/src/images/vitrine-chaleur-03.png";
-import vitrineChaleur04 from "@/src/images/vitrine-chaleur-04.png";
+import dashboardCaptureOverview from "@/src/images/dashboard-capture-01.png";
+import dashboardCaptureFinance from "@/src/images/dashboard-capture-02.png";
+import dashboardCaptureObjectifs from "@/src/images/dashboard-capture-03.png";
 import valerioShot1 from "@/src/images/valerio-realisation-1.png";
 import valerioShot2 from "@/src/images/valerio-realisation-2.png";
 import valerioShot3 from "@/src/images/valerio-realisation-3.png";
@@ -53,56 +47,44 @@ export type Realisation = {
 
 export const REALISATIONS: ReadonlyArray<Realisation> = [
   {
-    slug: "site-vitrine-nuit",
+    slug: "nexus-tp",
     index: "01",
-    title: "Site vitrine",
-    status: "Vitrine web · livrée",
-    image: vitrineNuitCarte,
+    title: "Nexus TP",
+    status: "Site vitrine · livrée",
+    image: nexusCaptureHero,
     imageAlt:
-      "Aperçu principal de la vitrine (réalisation 1) : mise en page sur fond sombre",
+      "Capture d’écran du site Nexus TP : page d’accueil, hero chantier et appels à l’action",
     visualShell: "dark",
     extraGallery: [
       {
-        src: vitrineNuitHero,
-        alt: "Variante ou vue plein écran de la page d’accueil vitrine",
+        src: nexusCaptureAbout,
+        alt: "Page à propos Nexus TP : photo chantier, chiffres clés et promesse",
       },
       {
-        src: vitrineNuit01,
-        alt: "Section présentation ou hero secondaire de la vitrine",
+        src: nexusCaptureServices,
+        alt: "Page services Nexus TP : grille des prestations en travaux publics",
       },
       {
-        src: vitrineNuit02,
-        alt: "Bloc services ou offres, hiérarchie typographique sur fond nuit",
-      },
-      {
-        src: vitrineNuit03,
-        alt: "Détail de mise en page : cartes, repères visuels ou process",
-      },
-      {
-        src: vitrineNuit04,
-        alt: "Vue complémentaire du site : navigation ou pied de section",
-      },
-      {
-        src: vitrineNuit05,
-        alt: "Capture additionnelle : cohérence du thème sombre sur l’ensemble du parcours",
+        src: nexusCaptureProjects,
+        alt: "Page réalisations Nexus TP : projets de terrassement et galerie chantiers",
       },
     ],
     caseStudy: {
       summary:
-        "Conception d’une vitrine « nuit » pour un positionnement premium : fond bleu-gris profond, contrastes maîtrisés et promesse lisible dès l’arrivée — pensée pour un décideur qui scanne la page en quelques secondes avant de prendre contact.",
+        "Vitrine pour Nexus TP, entreprise de travaux publics : thème sombre, orange signature et grille de services lisible en un scroll — pensée pour rassurer particuliers et pros avant la prise de contact.",
       context:
-        "Activité de services ou de création digitale avec besoin de crédibilité en ligne. Les échanges partent souvent de recommandations ; le site doit prolonger cette confiance et expliquer l’offre sans surcharge, y compris sur mobile où une partie du trafic arrive déjà.",
+        "Terrassement, VRD et aménagement extérieur sur toute la région. Le site doit valoriser l’expérience terrain (chantiers, flotte, sécurité) et structurer six prestations clés sans noyer le visiteur dans le jargon.",
       problem:
-        "Avant la refonte, la vitrine peinait à ordonner les messages : témoignages, offres et appels à l’action coexistaient sans ordre de lecture clair. Sur fond clair ou brouillon, l’identité forte ne ressortait pas ; le parcours vers la prise de rendez-vous ou le devis était trop long.",
+        "L’ancienne présence en ligne ne reflétait pas le niveau d’exigence chantier ni la clarté attendue sur mobile. Les offres étaient difficiles à comparer ; le parcours vers le devis ou la discussion projet manquait de repères visuels forts.",
       solution:
-        "Nous avons calibré une ambiance sombre élégante — pas « gadget » — avec une hiérarchie explicite : accroche, preuves courtes, présentation des axes d’intervention puis CTA répété sans agressivité. Les blocs respirent, les dégradés et le vert signature servent le guidage du regard vers l’action.",
+        "Direction sombre premium avec contrastes WCAG, pictos ligne orange et cartes services homogènes. Navigation épurée (Accueil, À propos, Services, Réalisations, Contact) et CTA contact toujours visible pour capter les demandes locales.",
       methodology:
-        "Arborescence validée sur prototypes, puis affinage des contrastes WCAG sur textes longs et boutons. Nous avons priorisé la vitesse perçue (chargement des sections hero, images optimisées) et un comportement homogène entre breakpoints pour éviter les ruptures de grilles au passage mobile.",
+        "Atelier contenu par prestation, maquettes desktop & mobile, puis intégration composants réutilisables (hero, stats, grilles, CTA). Recette sur breakpoints et optimisation des visuels chantier pour un chargement rapide.",
       deliverables: [
-        "Maquettes desktop & mobile des pages clés de la vitrine",
-        "Bibliothèque de composants (titres, cartes, CTA, listes à puces)",
-        "Intégration responsive et recette navigateurs",
-        "Fiches de contenu type pour faciliter les mises à jour post-livraison",
+        "Pages clés : accueil, à propos, services, réalisations, contact",
+        "Grille de 6 prestations avec pictogrammes et descriptions",
+        "Composants UI (navigation, boutons, cartes, chiffres clés)",
+        "Intégration responsive et assets optimisés",
       ],
       stack: [
         "Next.js",
@@ -111,7 +93,7 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
         "Images optimisées & déploiement statique / edge",
       ],
       outcomes:
-        "Une présence en ligne à la hauteur du positionnement : lecture fluide du début à la fin, contact jamais loin, et captures d’écran utilisables telles quelles pour la prospection ou les réseaux — sans reprendre toute la chaîne graphique à chaque campagne.",
+        "Une vitrine alignée sur l’identité Nexus TP : services compris en quelques secondes, crédibilité renforcée sur chantier et formulaire de contact à portée de clic sur tous les écrans.",
     },
   },
   {
@@ -165,56 +147,49 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     },
   },
   {
-    slug: "site-vitrine-chaleur",
+    slug: "dashboard-finance",
     index: "03",
-    title: "Site vitrine",
-    status: "Vitrine web · livrée",
-    image: vitrineChaleurCarte,
+    title: "Dashboard",
+    status: "App métier · livrée",
+    image: dashboardCaptureOverview,
     imageAlt:
-      "Vitrine chaleureuse : accueil avec tons crème et orange, hiérarchie claire",
-    visualShell: "warm",
+      "Tableau de bord : vue d’ensemble CA, clients actifs, objectifs et navigation modules",
+    visualShell: "cream",
     extraGallery: [
       {
-        src: vitrineChaleurHero,
-        alt: "Hero plein écran : promesse et ambiance lumineuse du site",
+        src: dashboardCaptureFinance,
+        alt: "Module finance : synthèse encaissé, dépenses, factures et liste des dépenses",
       },
       {
-        src: vitrineChaleur01,
-        alt: "Section intermédiaire : mise en avant d’offre ou de bénéfices",
-      },
-      {
-        src: vitrineChaleur02,
-        alt: "Bloc contenu : textes, visuels et respiration entre les sections",
-      },
-      {
-        src: vitrineChaleur03,
-        alt: "Détail de mise en page : cartes, listes ou appels à l’action",
-      },
-      {
-        src: vitrineChaleur04,
-        alt: "Vue complémentaire : cohérence de la palette sur tout le parcours",
+        src: dashboardCaptureObjectifs,
+        alt: "Module objectifs : progression globale, cartes par cible et liste détaillée",
       },
     ],
     caseStudy: {
       summary:
-        "Identité chaleureuse traduite dans une vitrine digitale : tons crème et orange, sections généreuses et mises en avant produit / offre pour un rendu à la fois humain et structuré.",
+        "Tableau de bord sur-mesure pour piloter l’activité : CA, facturation, dépenses, clients et objectifs annuels — une interface claire qui remplace les tableurs et les allers-retours entre outils.",
       context:
-        "Marque orientée bien-être / lifestyle avec une offre claire mais un site trop neutre. Le trafic venait en partie des réseaux ; il fallait que la page d’accueil prolonge immédiatement l’univers des publications et renforce la confiance avant la conversion.",
+        "Structure en croissance (freelance, studio ou TPE) avec besoin de visibilité financière et commerciale. Les données étaient éclatées entre factures, fichiers et notes ; il manquait une vue unique pour décider vite.",
       problem:
-        "Palette et illustrations ne correspondaient pas à la tonalité des contenus sociaux. Les sections étaient uniformes, sans point de focalisation ; l’utilisateur ne distinguait pas les bénéfices clés ni l’ordre de lecture souhaité par la marque.",
+        "Pas de lecture immédiate du chiffre d’affaires encaissé, des impayés ou de la progression vers les objectifs CA et clients. Les relances et le suivi des dépenses demandaient trop de manipulations manuelles.",
       solution:
-        "Construction par blocs thématiques : accroche émotionnelle, preuves courtes, offres mises en avant avec pictos légers et CTA visibles sans agressivité. Les oranges signature encadrent les zones d’action ; les fonds clairs gardent une impression premium et lisible.",
+        "Dashboard modulaire : accueil synthétique (évolution du CA, encaissements, clients actifs), espaces Finance et Objectifs dédiés, cartes KPI colorées et tableaux filtrables. Navigation latérale stable et parcours « ajouter une dépense » / factures explicites.",
       methodology:
-        "Alignement avec les guidelines print & réseaux existantes, puis variation contrôlée pour le web (contrastes, tailles de touche). Atelier mots-clés et tests de lecture sur mobile pour valider la longueur des paragraphes et la hiérarchie des titres.",
+        "Atelier des indicateurs prioritaires, wireframes des vues Accueil / Finance / Objectifs, puis design system (violet & rose, cartes arrondies, badges d’état). Intégration composants data-viz et formulaires, tests de lisibilité des montants et des progress bars.",
       deliverables: [
-        "Adaptation UI de la marque au format web",
-        "Page d’accueil et gabarits sectionnels réutilisables",
-        "Formulaire et rappels de contact intégrés au design system",
-        "Recommandations SEO on-page de base",
+        "Vue d’ensemble : graphique CA 12 mois, KPI encaissé et clients",
+        "Module Finance : synthèse, dépenses, factures et recherche",
+        "Module Objectifs : progression globale, cartes par cible, liste détaillée",
+        "Navigation latérale et raccourcis vers clients, deals et paramètres",
       ],
-      stack: ["Next.js", "Composants accessibles", "Formulaires sécurisés"],
+      stack: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Graphiques & tableaux interactifs",
+      ],
       outcomes:
-        "Cohérence visuelle bout en bout : un visiteur qui arrive d’Instagram reconnaît la marque en quelques secondes et dispose d’un fil clair vers la prise de contact ou la découverte de l’offre phare.",
+        "Pilotage en un coup d’œil : objectifs financiers et clients suivis en temps réel, facturation et dépenses centralisées — moins de friction opérationnelle au quotidien.",
     },
   },
 ];
