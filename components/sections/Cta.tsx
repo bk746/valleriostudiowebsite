@@ -11,7 +11,7 @@ export default function Cta() {
   return (
     <section
       data-nav-theme="dark"
-      className="cta-overlap sticky top-0 z-50 flex h-[100svh] w-full flex-col overflow-hidden bg-[#343d33] px-5 text-[#FDF6EC] sm:px-10 sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:px-12"
+      className="cta-overlap sticky top-0 z-50 flex h-[100svh] w-full flex-col overflow-hidden bg-[#0071E3] px-5 text-[#FFFFFF] sm:px-10 sm:shadow-[0_-18px_60px_-12px_rgba(0,113,227,0.35)] md:px-12"
       aria-label="Discutons de votre projet"
     >
       {/* ── Bloc central ─────────────────────────────────── */}
@@ -24,7 +24,7 @@ export default function Cta() {
 
         <Link
           href="/contact"
-          className={`${bebas.className} group mt-9 inline-flex items-center gap-2.5 rounded-full bg-[#FDF6EC] px-7 py-3 text-[0.85rem] uppercase tracking-[0.2em] text-[#0C4323] transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-transparent hover:text-[#FDF6EC] hover:shadow-[0_0_0_2px_#FDF6EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FDF6EC]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#343d33] sm:mt-14 sm:gap-3 sm:px-11 sm:py-4 sm:text-[1rem] sm:tracking-[0.22em]`}
+          className={`${bebas.className} group mt-9 inline-flex items-center gap-2.5 rounded-full bg-[#FFFFFF] px-7 py-3 text-[0.85rem] uppercase tracking-[0.2em] text-[#0071E3] transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-transparent hover:text-[#FFFFFF] hover:shadow-[0_0_0_2px_#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFFFF]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0071E3] sm:mt-14 sm:gap-3 sm:px-11 sm:py-4 sm:text-[1rem] sm:tracking-[0.22em]`}
         >
           Discutons de votre projet
           <span

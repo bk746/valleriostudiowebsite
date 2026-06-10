@@ -19,10 +19,10 @@ const BUDGETS = [
 ] as const;
 
 const labelClass =
-  "block text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#0C4323]/65";
+  "block text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#1D1D1F]/65";
 
 const fieldBase =
-  "mt-3 w-full bg-transparent border-0 border-b border-[#0C4323]/20 px-0 py-3 text-[1rem] leading-[1.4] text-[#0C4323] placeholder:text-[#0C4323]/35 focus:border-[#0C4323] focus:outline-none transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]";
+  "mt-3 w-full bg-transparent border-0 border-b border-[#1D1D1F]/20 px-0 py-3 text-[1rem] leading-[1.4] text-[#1D1D1F] placeholder:text-[#1D1D1F]/35 focus:border-[#1D1D1F] focus:outline-none transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]";
 
 export default function ContactForm() {
   const [sent, setSent] = useState(false);
@@ -58,7 +58,7 @@ export default function ContactForm() {
 
   return (
     <section
-      className="w-full bg-[#FDF6EC] px-5 pb-24 pt-12 text-[#0C4323] sm:px-10 sm:pb-40 sm:pt-20 md:pb-48"
+      className="w-full bg-[#FFFFFF] px-5 pb-24 pt-12 text-[#1D1D1F] sm:px-10 sm:pb-40 sm:pt-20 md:pb-48"
       aria-label="Formulaire de contact"
     >
       <div className="mx-auto w-full max-w-[42rem]">
@@ -126,7 +126,7 @@ export default function ContactForm() {
             <div className="mt-2 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="submit"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-[#0C4323] px-8 py-3.5 text-[0.92rem] font-medium tracking-[0.02em] text-[#FDF6EC] transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-transparent hover:text-[#0C4323] hover:shadow-[0_0_0_1.5px_#0C4323] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C4323]/30 focus-visible:ring-offset-4 focus-visible:ring-offset-[#FDF6EC]"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-[#0071E3] px-8 py-3.5 text-[0.92rem] font-medium tracking-[0.02em] text-[#FFFFFF] transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[#0066CC] hover:shadow-[0_8px_24px_-8px_rgba(0,113,227,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-[#FFFFFF]"
               >
                 Envoyer
                 <span
@@ -137,7 +137,7 @@ export default function ContactForm() {
                 </span>
               </button>
 
-              <p className="text-[0.78rem] text-[#0C4323]/55">
+              <p className="text-[0.78rem] text-[#1D1D1F]/55">
                 Réponse sous 24 h.
               </p>
             </div>
@@ -184,7 +184,7 @@ function SelectField({
         id={id}
         name={name}
         defaultValue=""
-        className={`${fieldBase} appearance-none bg-[#FDF6EC] pr-9`}
+        className={`${fieldBase} appearance-none bg-[#FFFFFF] pr-9`}
       >
         <option value="" disabled>
           Sélectionner…
@@ -197,7 +197,7 @@ function SelectField({
       </select>
       <span
         aria-hidden
-        className="pointer-events-none absolute right-1 top-[calc(50%+6px)] -translate-y-1/2 text-[#0C4323]/55"
+        className="pointer-events-none absolute right-1 top-[calc(50%+6px)] -translate-y-1/2 text-[#1D1D1F]/55"
       >
         <svg
           width="12"
@@ -219,18 +219,18 @@ function SelectField({
 function SuccessPanel({ onReset }: { onReset: () => void }) {
   return (
     <div className="flex flex-col items-start gap-5 py-12">
-      <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#0C4323]/55">
+      <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#1D1D1F]/55">
         Message prêt à partir
       </p>
       <h3 className="m-0 max-w-[28rem] text-[clamp(1.6rem,3vw,2.4rem)] font-medium leading-[1.1] tracking-[-0.01em]">
         Votre client mail est ouvert.
       </h3>
-      <p className="max-w-[32rem] text-[0.95rem] leading-[1.55] text-[#0C4323]/70">
+      <p className="max-w-[32rem] text-[0.95rem] leading-[1.55] text-[#1D1D1F]/70">
         Vérifiez les détails et envoyez — on revient vers vous sous 24 h. Vous
         pouvez aussi nous écrire directement à{" "}
         <a
           href="mailto:hello@valleriostudio.fr"
-          className="underline decoration-[#0C4323]/30 underline-offset-4 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:decoration-[#0C4323]"
+          className="underline decoration-[#1D1D1F]/30 underline-offset-4 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:decoration-[#1D1D1F]"
         >
           hello@valleriostudio.fr
         </a>
@@ -239,7 +239,7 @@ function SuccessPanel({ onReset }: { onReset: () => void }) {
       <button
         type="button"
         onClick={onReset}
-        className="mt-3 inline-flex items-center gap-2 text-[0.85rem] text-[#0C4323]/80 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#0C4323]"
+        className="mt-3 inline-flex items-center gap-2 text-[0.85rem] text-[#1D1D1F]/80 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#1D1D1F]"
       >
         ← Modifier ma demande
       </button>

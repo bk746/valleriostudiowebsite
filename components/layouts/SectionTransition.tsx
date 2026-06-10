@@ -157,8 +157,8 @@ export default function SectionTransition() {
       aria-hidden
       role="presentation"
     >
-      <div className="section-transition-panel absolute inset-0 flex items-center justify-center bg-[#156332]">
-        <h2 className="section-transition-label m-0 px-5 text-center text-[clamp(2.6rem,18vw,18rem)] font-normal uppercase leading-[0.92] tracking-[-0.015em] text-[#FDF6EC] sm:leading-[0.9]">
+      <div className="section-transition-panel absolute inset-0 flex items-center justify-center bg-[#1D1D1F]">
+        <h2 className="section-transition-label m-0 px-5 text-center text-[clamp(2.6rem,18vw,18rem)] font-normal uppercase leading-[0.92] tracking-[-0.015em] text-[#FFFFFF] sm:leading-[0.9]">
           {label}
         </h2>
       </div>

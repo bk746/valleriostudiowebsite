@@ -14,98 +14,85 @@ const bebas = Bebas_Neue({
   display: "swap",
 });
 
-function resolveVisualShell(p: Realisation): "dark" | "cream" | "warm" {
-  return p.visualShell ?? "dark";
-}
-
-function VisualProjectCaption({
-  title,
-  status,
-  bebasClassName,
-}: {
-  title: string;
-  status: string;
-  bebasClassName: string;
-}) {
-  return (
-    <figcaption className="absolute bottom-3 left-3 z-10 w-fit max-w-[calc(100%-1.5rem)] rounded-xl border border-white/12 bg-[rgba(8,10,14,0.87)] px-3.5 py-3 text-left backdrop-blur-md sm:bottom-4 sm:left-4 sm:max-w-[min(26rem,calc(100%-2rem))] sm:px-5 sm:py-4">
-      <h3
-        className={`${bebasClassName} m-0 text-[clamp(1.15rem,4.2vw,2.65rem)] font-normal uppercase leading-[0.96] tracking-[-0.02em] text-white`}
-      >
-        {title}
-      </h3>
-      <p className="mt-1 max-w-[28rem] font-sans text-[0.58rem] font-medium uppercase leading-relaxed tracking-[0.2em] text-white/92 sm:mt-1.5 sm:text-[0.64rem] sm:tracking-[0.22em]">
-        {status}
-      </p>
-      <p className="mt-2 m-0 font-sans text-[0.52rem] font-medium uppercase tracking-[0.24em] text-white/55">
-        Voir l’étude de cas →
-      </p>
-    </figcaption>
-  );
-}
-
-/** Carte cliquable : aperçu + lien vers `/realisations/[slug]`. */
-function VisualProjectFigure({
+function ProjectCard({
   project,
   sizes,
   priority,
-  bebasClassName,
-  shell = "dark",
+  layout,
 }: {
   project: Realisation;
   sizes: string;
   priority?: boolean;
-  bebasClassName: string;
-  shell?: "dark" | "cream" | "warm";
+  layout: "mobile" | "desktop";
 }) {
-  const insetRing =
-    shell === "cream"
-      ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
-      : shell === "warm"
-        ? ""
-        : "shadow-[inset_0_0_0_1px_rgba(192,96,45,0.45)]";
+  const widthClass =
+    layout === "mobile"
+      ? "w-[88vw] max-w-[420px] shrink-0 snap-start"
+      : "h-full w-[min(78vw,920px)] shrink-0";
 
   return (
-    <figure
-      className={`relative m-0 flex min-h-0 h-full w-full min-w-0 flex-1 overflow-hidden rounded-[1.1rem] sm:rounded-[1.6rem] ${insetRing}`}
+    <Link
+      href={`/realisations/${project.slug}`}
+      className={
+        `realisation-card group flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-[#1D1D1F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF] ${widthClass}` +
+        (layout === "desktop" ? " min-h-0" : "")
+      }
+      aria-label={`Voir le projet : ${project.title}`}
     >
-      <Image
-        src={project.image}
-        alt={project.imageAlt}
-        fill
-        className="object-cover object-top motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-[1.02]"
-        sizes={sizes}
-        quality={NEXT_IMAGE_QUALITY_RASTER}
-        priority={priority}
-      />
-      <VisualProjectCaption
-        title={project.title}
-        status={project.status}
-        bebasClassName={bebasClassName}
-      />
-    </figure>
+      <figure
+        className={
+          "relative m-0 w-full overflow-hidden rounded-[1.25rem] bg-[#1D1D1F]/[0.04] shadow-[0_2px_8px_rgba(0,0,0,0.06)] motion-safe:transition-[box-shadow,transform] motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:shadow-[0_20px_48px_-16px_rgba(0,0,0,0.18)] group-hover:-translate-y-0.5" +
+          (layout === "desktop"
+            ? " min-h-0 flex-1"
+            : " aspect-[4/3]")
+        }
+      >
+        <div
+          className={
+            layout === "desktop" ? "relative h-full min-h-[280px] w-full" : "relative h-full w-full"
+          }
+        >
+          <Image
+            src={project.image}
+            alt={project.imageAlt}
+            fill
+            className="object-cover object-top motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+            sizes={sizes}
+            quality={NEXT_IMAGE_QUALITY_RASTER}
+            priority={priority}
+          />
+        </div>
+      </figure>
+
+      <div className="mt-4 flex shrink-0 items-end justify-between gap-4 px-0.5 sm:mt-5">
+        <div className="min-w-0">
+          <p className="m-0 font-sans text-[0.66rem] font-medium uppercase leading-none tracking-[0.14em] text-[#1D1D1F]/50 sm:text-[0.68rem]">
+            {project.index} · {project.status}
+          </p>
+          <h3
+            className={`${bebas.className} m-0 mt-2 text-[clamp(1.6rem,4vw,2.75rem)] font-normal uppercase leading-[0.92] tracking-[-0.02em] text-[#1D1D1F]`}
+          >
+            {project.title}
+          </h3>
+        </div>
+        <span
+          aria-hidden
+          className="inline-flex shrink-0 items-center gap-1 font-sans text-[0.8rem] font-medium leading-none text-[#0071E3] motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 sm:text-[0.82rem]"
+        >
+          Voir
+          <svg viewBox="0 0 12 12" fill="none" className="size-[0.75em]">
+            <path
+              d="M2.5 1.5 L7 6 L2.5 10.5"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </div>
+    </Link>
   );
-}
-
-function cardShellClasses(shell: "dark" | "cream" | "warm", desktop: boolean): string {
-  const h = desktop
-    ? ""
-    : "h-[min(92svh,840px)] w-[92vw]";
-  const w = desktop ? "w-[86vw] p-1.5 sm:w-[88vw] sm:rounded-3xl sm:p-2" : "p-1.5 sm:rounded-3xl";
-
-  if (shell === "cream") {
-    return desktop
-      ? `bg-[#EDEAE4] text-[#141414] shadow-[0_28px_56px_-28px_rgba(0,0,0,0.16)] ${w}`
-      : `bg-[#EDEAE4] text-[#141414] shadow-[0_28px_55px_-28px_rgba(0,0,0,0.14)] ${h} w-[92vw] p-1.5 sm:rounded-3xl`;
-  }
-  if (shell === "warm") {
-    return desktop
-      ? `bg-[#FFE8D4] text-[#3d1f12] shadow-none ${w}`
-      : `bg-[#FFE8D4] text-[#3d1f12] shadow-none ${h} w-[92vw] p-1.5 sm:rounded-3xl`;
-  }
-  return desktop
-    ? `bg-[#1a222d] text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)] ${w}`
-    : `bg-[#1a222d] text-white shadow-[0_28px_70px_-28px_rgba(0,0,0,0.55)] ${h} w-[92vw] p-1.5 sm:rounded-3xl`;
 }
 
 export default function Realisations() {
@@ -150,11 +137,6 @@ export default function Realisations() {
     };
   }, [isMobile]);
 
-  /**
-   * Effet parallaxe horizontal : on écrit le `transform` directement sur le
-   * DOM via la ref, sans `setState`. Cela évite des re-renders React à chaque
-   * frame de scroll (qui causaient des saccades visibles sur desktop).
-   */
   useEffect(() => {
     if (typeof window === "undefined") return;
     const track = trackRef.current;
@@ -208,69 +190,18 @@ export default function Realisations() {
       ? `calc(200dvh + ${maxShift}px)`
       : "100dvh";
 
-  const renderCard = (p: Realisation, layout: "mobile" | "desktop") => {
-    const shell = resolveVisualShell(p);
-    const shellCls = cardShellClasses(shell, layout === "desktop");
-    const sizes =
-      layout === "mobile"
-        ? "(max-width: 430px) 100vw, 92vw"
-        : "(max-width: 1536px) 90vw, 1400px";
-
-    const inner = (
-      <>
-        <VisualProjectFigure
-          project={p}
-          sizes={sizes}
-          priority={p.index === "01"}
-          bebasClassName={bebas.className}
-          shell={shell}
-        />
-        <span className="sr-only">Ouvrir la page projet : {p.title}</span>
-      </>
-    );
-
-    const baseArticle =
-      "relative flex min-h-0 flex-col overflow-hidden rounded-2xl ";
-
-    if (layout === "mobile") {
-      return (
-        <Link
-          key={p.slug}
-          href={`/realisations/${p.slug}`}
-          className={`group ${baseArticle} ${shellCls} shrink-0 snap-start outline-none focus-visible:ring-2 focus-visible:ring-[#0C4323] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC]`}
-          aria-label={`Voir le projet : ${p.title}`}
-        >
-          {inner}
-        </Link>
-      );
-    }
-
-    return (
-      <Link
-        key={p.slug}
-        href={`/realisations/${p.slug}`}
-        className={`group ${baseArticle} ${shellCls} h-full min-h-0 shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#0C4323] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC]`}
-        aria-label={`Voir le projet : ${p.title}`}
-      >
-        {inner}
-      </Link>
-    );
-  };
-
   return (
     <section
       id="realisations"
       ref={sectionRef}
-      className="relative z-30 w-full bg-[#FDF6EC]"
+      className="relative z-30 w-full bg-[#FFFFFF]"
       style={{ minHeight }}
       aria-label="Réalisations"
     >
       <div
         className={
-          "flex w-full flex-col text-[#0C4323]" +
-          (isMobile
-            ? " py-12"
-            : " sticky top-0 h-[100svh] overflow-hidden")
+          "flex w-full flex-col text-[#1D1D1F]" +
+          (isMobile ? " py-12" : " sticky top-0 h-[100svh] overflow-hidden")
         }
       >
         <header
@@ -284,24 +215,40 @@ export default function Realisations() {
               Projets sélectionnés
             </span>
           </div>
-          <div className="h-[2px] bg-[#0C4323]" />
+          <div className="h-[2px] bg-[#1D1D1F]" />
         </header>
 
         {isMobile ? (
           <div
-            className="realisations-track-mobile flex w-full snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-5 py-8"
+            className="realisations-track-mobile flex w-full snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-5 py-8"
             style={{ scrollPaddingLeft: "1.25rem" }}
           >
-            {REALISATIONS.map((p) => renderCard(p, "mobile"))}
+            {REALISATIONS.map((p) => (
+              <ProjectCard
+                key={p.slug}
+                project={p}
+                layout="mobile"
+                priority={p.index === "01"}
+                sizes="(max-width: 430px) 100vw, 88vw"
+              />
+            ))}
           </div>
         ) : (
           <div className="relative flex-1 overflow-hidden">
             <div
               ref={trackRef}
-              className="flex h-full items-stretch gap-[3vw] px-5 py-6 will-change-transform sm:gap-[2.5vw] sm:px-[4vw] sm:py-10 md:py-12"
+              className="flex h-full items-stretch gap-[4vw] px-5 py-6 will-change-transform sm:gap-[3vw] sm:px-[4vw] sm:py-8 md:py-10"
               style={{ transform: "translate3d(0,0,0)" }}
             >
-              {REALISATIONS.map((p) => renderCard(p, "desktop"))}
+              {REALISATIONS.map((p) => (
+                <ProjectCard
+                  key={p.slug}
+                  project={p}
+                  layout="desktop"
+                  priority={p.index === "01"}
+                  sizes="(max-width: 1536px) 78vw, 920px"
+                />
+              ))}
             </div>
           </div>
         )}

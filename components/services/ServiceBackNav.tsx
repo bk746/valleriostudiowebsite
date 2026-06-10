@@ -3,7 +3,7 @@
 import TransitionLink from "@/components/layouts/TransitionLink";
 
 const DEFAULT_LINK_CLASS =
-  "group inline-flex items-center gap-2 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#0C4323] opacity-80 transition-opacity hover:opacity-100";
+  "group inline-flex items-center gap-2 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#1D1D1F] opacity-80 transition-opacity hover:opacity-100";
 
 /**
  * Retour discret en haut des pages services (`/services/[…]`) — pendant

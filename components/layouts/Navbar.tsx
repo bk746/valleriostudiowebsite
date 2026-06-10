@@ -111,13 +111,13 @@ export default function Navbar() {
   }, [menuOpen]);
 
   // Quand le menu est ouvert sur mobile, on force le thème sombre des liens
-  // (overlay vert) et l'icône burger en cream.
+  // (overlay noir) et l'icône burger en blanc.
   const effectiveDark = onDark || menuOpen;
-  const linkColor = effectiveDark ? "text-[#FDF6EC]" : "text-black";
+  const linkColor = effectiveDark ? "text-[#FFFFFF]" : "text-[#1D1D1F]";
 
   const buttonClass = effectiveDark
-    ? "relative z-10 shrink-0 rounded-full border-2 border-[#FDF6EC] bg-[#FDF6EC] px-5 py-1.5 text-sm text-[#343d33] transition-colors duration-300 ease-out hover:bg-transparent hover:text-[#FDF6EC] sm:px-8 sm:text-base"
-    : "relative z-10 shrink-0 rounded-full border-2 border-black bg-black px-5 py-1.5 text-sm text-white transition-colors duration-300 ease-out hover:bg-white hover:text-black sm:px-8 sm:text-base";
+    ? "relative z-10 shrink-0 rounded-full border-2 border-[#FFFFFF] bg-[#FFFFFF] px-5 py-1.5 text-sm text-[#1D1D1F] transition-colors duration-300 ease-out hover:bg-transparent hover:text-[#FFFFFF] sm:px-8 sm:text-base"
+    : "relative z-10 shrink-0 rounded-full border-2 border-[#0071E3] bg-[#0071E3] px-5 py-1.5 text-sm text-[#FFFFFF] transition-colors duration-300 ease-out hover:bg-[#FFFFFF] hover:text-[#0071E3] sm:px-8 sm:text-base";
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -202,7 +202,7 @@ export default function Navbar() {
             <span
               className={
                 "absolute left-0 right-0 h-[2px] origin-center transition-all duration-300 ease-out " +
-                (effectiveDark ? "bg-[#FDF6EC]" : "bg-black") +
+                (effectiveDark ? "bg-[#FFFFFF]" : "bg-[#1D1D1F]") +
                 (menuOpen
                   ? " top-1/2 -translate-y-1/2 rotate-45"
                   : " top-0")
@@ -211,7 +211,7 @@ export default function Navbar() {
             <span
               className={
                 "absolute left-0 right-0 h-[2px] origin-center transition-all duration-300 ease-out " +
-                (effectiveDark ? "bg-[#FDF6EC]" : "bg-black") +
+                (effectiveDark ? "bg-[#FFFFFF]" : "bg-[#1D1D1F]") +
                 (menuOpen
                   ? " bottom-1/2 translate-y-1/2 -rotate-45"
                   : " bottom-0")
@@ -229,7 +229,7 @@ export default function Navbar() {
         aria-hidden={!menuOpen}
         className={
           bebas.className +
-          " fixed inset-0 z-[95] flex flex-col bg-[#343d33] text-[#FDF6EC] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden" +
+          " fixed inset-0 z-[95] flex flex-col bg-[#1D1D1F] text-[#FFFFFF] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden" +
           (menuOpen
             ? " pointer-events-auto translate-y-0 opacity-100"
             : " pointer-events-none -translate-y-2 opacity-0")
@@ -251,7 +251,7 @@ export default function Navbar() {
                   href={l.href}
                   targetId={l.id}
                   label={l.label}
-                  className="block py-2 text-[clamp(2.6rem,12vw,4rem)] uppercase leading-none tracking-[-0.005em] text-[#FDF6EC] transition-opacity duration-300 ease-out hover:opacity-70"
+                  className="block py-2 text-[clamp(2.6rem,12vw,4rem)] uppercase leading-none tracking-[-0.005em] text-[#FFFFFF] transition-opacity duration-300 ease-out hover:opacity-70"
                   onClick={closeMenu}
                 >
                   {l.label}
@@ -261,7 +261,7 @@ export default function Navbar() {
             <li>
               <Link
                 href="/contact"
-                className="block py-2 text-[clamp(2.6rem,12vw,4rem)] uppercase leading-none tracking-[-0.005em] text-[#FDF6EC] transition-opacity duration-300 ease-out hover:opacity-70"
+                className="block py-2 text-[clamp(2.6rem,12vw,4rem)] uppercase leading-none tracking-[-0.005em] text-[#FFFFFF] transition-opacity duration-300 ease-out hover:opacity-70"
                 onClick={closeMenu}
               >
                 Contact
@@ -269,10 +269,10 @@ export default function Navbar() {
             </li>
           </ul>
 
-          <div className="flex flex-col gap-3 border-t border-[#FDF6EC]/20 pt-6 text-[0.78rem] uppercase tracking-[0.24em] text-[#FDF6EC]/70">
+          <div className="flex flex-col gap-3 border-t border-[#FFFFFF]/20 pt-6 text-[0.78rem] uppercase tracking-[0.24em] text-[#FFFFFF]/70">
             <a
               href="mailto:hello@valleriostudio.fr"
-              className="text-[#FDF6EC]"
+              className="text-[#FFFFFF]"
             >
               hello@valleriostudio.fr
             </a>

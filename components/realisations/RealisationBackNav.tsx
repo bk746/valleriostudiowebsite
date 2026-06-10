@@ -9,7 +9,7 @@ export default function RealisationBackNav() {
         label="Réalisations"
         targetId="realisations"
         href="/#realisations"
-        className="group inline-flex items-center gap-2 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#0C4323] opacity-80 transition-opacity hover:opacity-100"
+        className="group inline-flex items-center gap-2 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#1D1D1F] opacity-80 transition-opacity hover:opacity-100"
       >
         <span className="transition-transform group-hover:-translate-x-0.5" aria-hidden>
           ←

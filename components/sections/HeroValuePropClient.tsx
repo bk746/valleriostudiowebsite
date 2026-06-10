@@ -118,7 +118,7 @@ export function HeroValuePropClient({
       className={
         bebasClassName +
         " hero-stage sticky top-0 z-10 flex h-[100svh] w-full flex-col overflow-hidden" +
-        " bg-[#343d33] text-[#FDF6EC]" +
+        " bg-[#1D1D1F] text-[#FFFFFF]" +
         " sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]" +
         (revealed ? " is-revealed" : "")
       }
@@ -157,7 +157,7 @@ export function HeroValuePropClient({
           <p
             className={
               cormorantClassName +
-              " m-0 italic text-[clamp(1.2rem,4.6vw,3.6rem)] font-normal leading-[1.05] text-[#FDF6EC]/85"
+              " m-0 italic text-[clamp(1.2rem,4.6vw,3.6rem)] font-normal leading-[1.05] text-[#FFFFFF]/85"
             }
           >
             {renderWords(
@@ -177,7 +177,7 @@ export function HeroValuePropClient({
           <p
             className={
               cormorantClassName +
-              " m-0 self-start pl-[3vw] italic text-[clamp(1.2rem,4.6vw,3.6rem)] font-normal leading-[1.05] text-[#FDF6EC]/85 sm:pl-[8vw]"
+              " m-0 self-start pl-[3vw] italic text-[clamp(1.2rem,4.6vw,3.6rem)] font-normal leading-[1.05] text-[#FFFFFF]/85 sm:pl-[8vw]"
             }
           >
             {renderWords(

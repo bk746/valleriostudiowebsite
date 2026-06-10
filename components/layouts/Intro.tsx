@@ -104,11 +104,11 @@ export default function Intro() {
     >
       {/* ── Rideaux ──────────────────────────────────────── */}
       <div
-        className="intro-curtain intro-curtain--top absolute inset-x-0 top-0 h-1/2 bg-[#343d33]"
+        className="intro-curtain intro-curtain--top absolute inset-x-0 top-0 h-1/2 bg-[#1D1D1F]"
         aria-hidden
       />
       <div
-        className="intro-curtain intro-curtain--bottom absolute inset-x-0 bottom-0 h-1/2 bg-[#343d33]"
+        className="intro-curtain intro-curtain--bottom absolute inset-x-0 bottom-0 h-1/2 bg-[#1D1D1F]"
         aria-hidden
       />
 
@@ -116,7 +116,7 @@ export default function Intro() {
       <div className="intro-grain pointer-events-none absolute inset-0" aria-hidden />
 
       {/* ── Contenu ──────────────────────────────────────── */}
-      <div className="intro-content relative z-10 flex h-full flex-col items-stretch justify-between px-5 py-7 text-[#FDF6EC] sm:px-10 sm:py-10 md:px-14 md:py-12">
+      <div className="intro-content relative z-10 flex h-full flex-col items-stretch justify-between px-5 py-7 text-[#FFFFFF] sm:px-10 sm:py-10 md:px-14 md:py-12">
         {/* Top bar */}
         <div className="flex items-start justify-between text-[0.65rem] uppercase tracking-[0.24em] sm:text-[0.78rem] sm:tracking-[0.28em]">
           <span className="opacity-80">Vallerio</span>
@@ -145,10 +145,10 @@ export default function Intro() {
           <span className="text-[0.65rem] uppercase tracking-[0.24em] opacity-70 sm:text-[0.78rem] sm:tracking-[0.28em]">
             Chargement
           </span>
-          <div className="relative h-[2px] w-[45vw] max-w-[460px] overflow-hidden bg-[#FDF6EC]/15 sm:w-[40vw]">
+          <div className="relative h-[2px] w-[45vw] max-w-[460px] overflow-hidden bg-[#FFFFFF]/15 sm:w-[40vw]">
             <span
               aria-hidden
-              className="intro-progress absolute inset-y-0 left-0 origin-left bg-[#FDF6EC]"
+              className="intro-progress absolute inset-y-0 left-0 origin-left bg-[#FFFFFF]"
               style={{ transform: `scaleX(${count / 100})`, width: "100%" }}
             />
           </div>

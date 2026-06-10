@@ -192,7 +192,7 @@ export default function Approche() {
 
   return (
     <section
-      className="relative z-30 w-full overflow-hidden bg-[#FDF6EC] text-[#0C4323] sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]"
+      className="relative z-30 w-full overflow-hidden bg-[#FFFFFF] text-[#1D1D1F] sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)]"
       aria-label="Notre approche"
     >
       {/* ── HEADER ───────────────────────────────────────── */}
@@ -205,7 +205,7 @@ export default function Approche() {
             Cinq étapes · une exécution sur-mesure
           </span>
         </div>
-        <div className="h-[2px] bg-[#0C4323]" />
+        <div className="h-[2px] bg-[#1D1D1F]" />
       </header>
 
       {/* ── FRISE ────────────────────────────────────────── */}
@@ -222,7 +222,7 @@ export default function Approche() {
           aria-hidden
           className="pointer-events-none absolute top-0 h-full w-[2px] left-[1.25rem] sm:left-[2.25rem] md:left-1/2 md:-translate-x-1/2"
         >
-          <span className="absolute inset-0 bg-[#0C4323] opacity-15" />
+          <span className="absolute inset-0 bg-[#1D1D1F] opacity-15" />
           {/*
             La barre remplie est rendue en `transform: scaleY` (GPU composited)
             plutôt qu'en `height: %` (qui repeindrait à chaque tick de scroll).
@@ -232,13 +232,13 @@ export default function Approche() {
           */}
           <span
             ref={barFillRef}
-            className="absolute inset-0 origin-top bg-[#0C4323] will-change-transform"
+            className="absolute inset-0 origin-top bg-[#1D1D1F] will-change-transform"
             style={{ transform: "scaleY(0)" }}
           />
           {/* Curseur qui descend — translate3d est aussi compositée GPU */}
           <span
             ref={cursorRef}
-            className="absolute left-1/2 top-0 size-3 rounded-full bg-[#0C4323] ring-4 ring-[#FDF6EC] will-change-transform"
+            className="absolute left-1/2 top-0 size-3 rounded-full bg-[#1D1D1F] ring-4 ring-[#FFFFFF] will-change-transform"
             style={{
               transform: "translate3d(-50%, 0, 0)",
               opacity: 0,
@@ -271,7 +271,7 @@ export default function Approche() {
               >
                 <div className="step-meta">
                   <div className={`${bebas.className} flex flex-wrap items-baseline gap-x-4 gap-y-1 sm:gap-x-5`}>
-                    <span className="text-[clamp(2.4rem,5.6vw,6rem)] leading-none text-[#156332]">
+                    <span className="text-[clamp(2.4rem,5.6vw,6rem)] leading-none text-[#0071E3]">
                       {step.n}
                     </span>
                     <span className="text-[clamp(1.7rem,3.8vw,3.8rem)] uppercase leading-none tracking-[0.01em]">
@@ -295,7 +295,7 @@ export default function Approche() {
                   gridRow: i + 1,
                 }}
                 className={
-                  "approche-illus relative hidden items-center justify-center px-4 text-[#156332] sm:px-8 md:flex md:px-12 " +
+                  "approche-illus relative hidden items-center justify-center px-4 text-[#0071E3] sm:px-8 md:flex md:px-12 " +
                   (isLeft ? "md:col-start-2" : "md:col-start-1") +
                   (isRev ? " is-revealed" : "")
                 }

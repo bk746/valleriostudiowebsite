@@ -168,15 +168,15 @@ function NumberedSection({
   children: React.ReactNode;
 }) {
   return (
-    <section data-reveal className="svc-reveal grid gap-6 lg:grid-cols-[8.5rem_1fr] lg:gap-12 xl:gap-16">
+    <section data-reveal className="svc-reveal grid gap-6 lg:grid-cols-[11rem_1fr] lg:gap-16 xl:gap-24">
       <header className="flex items-baseline gap-4 lg:flex-col lg:items-start lg:gap-3">
         <span
-          className={`${bebas.className} text-[clamp(2rem,4.6vw,3.4rem)] leading-none text-[#156332]`}
+          className={`${bebas.className} text-[clamp(2rem,4.6vw,3.4rem)] leading-none text-[#0071E3]`}
           aria-hidden
         >
           {num}
         </span>
-        <h2 className="m-0 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#0C4323]/65 sm:text-[0.8rem]">
+        <h2 className="m-0 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#1D1D1F]/65 sm:text-[0.8rem]">
           {title}
         </h2>
       </header>
@@ -187,49 +187,129 @@ function NumberedSection({
 
 export default function ServiceSiteInternetPage() {
   return (
-    <main className="min-h-svh bg-[#FDF6EC] pb-32 pt-28 text-[#0C4323] sm:pb-44 sm:pt-32 md:pb-52 md:pt-40">
-      <div className="mx-auto max-w-5xl px-5 sm:px-10 md:px-16">
+    <main className="min-h-svh bg-[#FFFFFF] pb-32 pt-28 text-[#1D1D1F] sm:pb-44 sm:pt-32 md:pb-52 md:pt-40">
+      <div className="mx-auto max-w-[88rem] px-5 sm:px-10 md:px-14 lg:px-20">
         <ServiceBackNav />
         <ServiceRevealClient />
 
         {/* ── HERO ───────────────────────────────────────────── */}
         <header data-reveal className="svc-reveal mt-2 mb-16 sm:mt-0 sm:mb-24 md:mb-28">
-          <p className="mb-5 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#0C4323]/55 sm:mb-7 sm:text-[0.7rem]">
+          <p className="mb-5 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#1D1D1F]/55 sm:mb-7 sm:text-[0.7rem]">
             Service · Web — Conversion
           </p>
           <h1
-            className={`${bebas.className} m-0 text-[clamp(2.6rem,9vw,6rem)] font-normal uppercase leading-[0.92] tracking-[-0.02em]`}
+            className={`${bebas.className} m-0 text-[clamp(2.6rem,10vw,8.5rem)] font-normal uppercase leading-[0.92] tracking-[-0.02em]`}
           >
             Site Internet
           </h1>
           <p
-            className={`${cormorant.className} mt-8 max-w-[44rem] text-[clamp(1.1rem,1.7vw,1.5rem)] italic leading-[1.5] text-[#0C4323]/90 sm:mt-10`}
+            className={`${cormorant.className} mt-8 max-w-[54rem] text-[clamp(1.1rem,1.9vw,1.75rem)] italic leading-[1.5] text-[#1D1D1F]/90 sm:mt-10`}
           >
             Votre site n’est pas une vitrine décorative. C’est un commercial
             disponible <span className="not-italic font-medium">24h/24</span>{" "}
             qui rassure, qualifie et transforme un visiteur en demande de
             devis.
           </p>
+
+          {/* CTA visibles dès l'arrivée — appel direct + preuve sociale */}
+          <div className="mt-9 flex flex-wrap items-center gap-5 sm:mt-11 sm:gap-7">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] px-6 py-3 font-sans text-[0.92rem] font-medium text-white transition-[transform,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#0066CC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3]/40 focus-visible:ring-offset-2 sm:px-7 sm:py-3.5"
+            >
+              Demander un devis gratuit
+              <span aria-hidden>→</span>
+            </Link>
+            <a
+              href="#preuves"
+              className="font-sans text-[0.92rem] font-medium text-[#0071E3] transition-opacity hover:opacity-70"
+            >
+              Voir nos réalisations →
+            </a>
+          </div>
         </header>
 
-        {/* ── BANDEAU INDICATEURS ──────────────────────────── */}
-        <ul data-reveal className="svc-stagger m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3 sm:gap-4">
-          {[
-            { k: "< 2 s", v: "au premier rendu mesuré" },
-            { k: "100 %", v: "responsive, testé sur vrais appareils" },
-            { k: "SEO", v: "technique inclus dès la livraison" },
-          ].map((kpi) => (
-            <li
-              key={kpi.k}
-              className="rounded-2xl border border-[#0C4323]/14 bg-white/55 p-5 sm:p-6"
-            >
-              <p
-                className={`${bebas.className} m-0 text-[clamp(1.6rem,3.4vw,2.4rem)] leading-none text-[#156332]`}
+        {/* ── BANDEAU INDICATEURS — bloc unifié façon fiche specs ── */}
+        <div
+          data-reveal
+          className="svc-reveal overflow-hidden rounded-[1.75rem] bg-[#F5F5F7]"
+        >
+          <ul className="m-0 grid list-none grid-cols-2 p-0 md:grid-cols-4">
+            {[
+              { k: "< 2 s", v: "au premier rendu, mesuré à la livraison" },
+              { k: "100 %", v: "responsive, testé sur vrais appareils" },
+              { k: "SEO", v: "technique inclus dès la mise en ligne" },
+              { k: "30 j", v: "de suivi offert après le lancement" },
+            ].map((kpi, i) => (
+              <li
+                key={kpi.k}
+                className={
+                  "flex flex-col gap-2.5 p-6 sm:p-9 lg:p-10" +
+                  (i % 2 === 1 ? " border-l border-[#1D1D1F]/8" : "") +
+                  (i >= 2 ? " border-t border-[#1D1D1F]/8 md:border-t-0" : "") +
+                  (i === 2 ? " md:border-l" : "")
+                }
               >
-                {kpi.k}
+                <p
+                  className={`${bebas.className} m-0 text-[clamp(2.1rem,4.5vw,3.6rem)] leading-none text-[#0071E3]`}
+                >
+                  {kpi.k}
+                </p>
+                <p className="m-0 font-sans text-[0.82rem] leading-[1.5] text-[#1D1D1F]/65 sm:text-[0.88rem]">
+                  {kpi.v}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ── ENGAGEMENTS — bande de réassurance ───────────── */}
+        <ul
+          data-reveal
+          className="svc-stagger m-0 mt-5 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4"
+        >
+          {[
+            {
+              t: "Devis fixe",
+              d: "Le prix annoncé est le prix payé. Pas de surprise en fin de projet.",
+            },
+            {
+              t: "Jalons écrits",
+              d: "Des dates posées dès le cadrage — tenues, ou annoncées avant qu'elles glissent.",
+            },
+            {
+              t: "Vous êtes propriétaire",
+              d: "Code, domaine, contenus : tout vous appartient, sans abonnement caché.",
+            },
+            {
+              t: "Réponse sous 24 h",
+              d: "Un seul interlocuteur, joignable, du premier appel à la mise en ligne.",
+            },
+          ].map((g) => (
+            <li
+              key={g.t}
+              className="rounded-[1.25rem] bg-[#F5F5F7] p-5 sm:p-6"
+            >
+              <p className="m-0 flex items-center gap-2 font-sans text-[0.9rem] font-semibold text-[#1D1D1F]">
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="size-4 shrink-0 text-[#0071E3]"
+                  aria-hidden
+                >
+                  <circle cx="8" cy="8" r="8" fill="currentColor" opacity="0.12" />
+                  <path
+                    d="M4.5 8.2 7 10.6l4.5-5"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {g.t}
               </p>
-              <p className="mt-2 font-sans text-[0.86rem] leading-[1.5] text-[#0C4323]/80 sm:text-[0.92rem]">
-                {kpi.v}
+              <p className="mt-2 m-0 font-sans text-[0.82rem] leading-[1.55] text-[#1D1D1F]/60">
+                {g.d}
               </p>
             </li>
           ))}
@@ -237,8 +317,8 @@ export default function ServiceSiteInternetPage() {
 
         {/* ── POUR QUI / CE QUE ÇA PEUT VOUS APPORTER ──────── */}
         <div data-reveal className="svc-stagger mt-20 grid gap-5 md:grid-cols-2 md:gap-6">
-          <article className="rounded-2xl border border-[#0C4323]/14 bg-white/65 p-6 sm:p-8 md:p-9">
-            <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#0C4323]/55 sm:text-[0.7rem]">
+          <article className="rounded-[1.75rem] bg-[#F5F5F7] p-6 sm:p-8 md:p-9">
+            <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#1D1D1F]/55 sm:text-[0.7rem]">
               Pour qui c’est
             </p>
             <ul className="mt-5 m-0 list-none space-y-3 p-0 sm:mt-6 sm:space-y-3.5">
@@ -250,17 +330,17 @@ export default function ServiceSiteInternetPage() {
               ].map((line) => (
                 <li
                   key={line}
-                  className="flex gap-3 font-sans text-[0.96rem] leading-[1.6] text-[#0C4323]/92 sm:text-[1rem]"
+                  className="flex gap-3 font-sans text-[0.96rem] leading-[1.6] text-[#1D1D1F]/92 sm:text-[1rem]"
                 >
-                  <span className="mt-[0.55rem] inline-block size-1.5 shrink-0 rounded-full bg-[#156332]" aria-hidden />
+                  <span className="mt-[0.55rem] inline-block size-1.5 shrink-0 rounded-full bg-[#0071E3]" aria-hidden />
                   <span>{line}</span>
                 </li>
               ))}
             </ul>
           </article>
 
-          <article className="rounded-2xl bg-[#0C4323] p-6 text-[#FDF6EC] shadow-[0_24px_60px_-30px_rgba(12,67,35,0.4)] sm:p-8 md:p-9">
-            <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#FDF6EC]/65 sm:text-[0.7rem]">
+          <article className="rounded-[1.75rem] bg-[#1D1D1F] p-6 text-[#FFFFFF] sm:p-8 md:p-9">
+            <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#FFFFFF]/65 sm:text-[0.7rem]">
               Ce que ça peut vous apporter
             </p>
             <ul className="mt-5 m-0 list-none space-y-3 p-0 sm:mt-6 sm:space-y-3.5">
@@ -272,9 +352,9 @@ export default function ServiceSiteInternetPage() {
               ].map((line) => (
                 <li
                   key={line}
-                  className="flex gap-3 font-sans text-[0.96rem] leading-[1.6] text-[#FDF6EC]/92 sm:text-[1rem]"
+                  className="flex gap-3 font-sans text-[0.96rem] leading-[1.6] text-[#FFFFFF]/92 sm:text-[1rem]"
                 >
-                  <span className="mt-[0.55rem] inline-block size-1.5 shrink-0 rounded-full bg-[#FDF6EC]/55" aria-hidden />
+                  <span className="mt-[0.55rem] inline-block size-1.5 shrink-0 rounded-full bg-[#FFFFFF]/55" aria-hidden />
                   <span>{line}</span>
                 </li>
               ))}
@@ -285,58 +365,70 @@ export default function ServiceSiteInternetPage() {
         {/* ── FORMATS ──────────────────────────────────────── */}
         <div className="mt-24 sm:mt-28 md:mt-32">
           <NumberedSection num="01" title="Trois formats, une exigence">
-            <p className="max-w-[44rem] font-sans text-[1rem] leading-[1.7] text-[#0C4323]/92 sm:text-[1.05rem] sm:leading-[1.78]">
+            <p className="max-w-[44rem] font-sans text-[1rem] leading-[1.7] text-[#1D1D1F]/92 sm:text-[1.05rem] sm:leading-[1.78]">
               Selon votre objectif — crédibiliser, lancer ou vendre — on
               calibre le périmètre. Tous les formats partagent la même
               exigence : design soigné, performance mesurée, SEO technique
               inclus.
             </p>
-            <ul className="mt-10 m-0 grid list-none grid-cols-1 gap-4 p-0 lg:grid-cols-3 lg:gap-5">
+            {/* Liste éditoriale façon « carte des prix » d'un studio —
+                rangées pleine largeur, hairlines, typographie qui respire. */}
+            <div className="mt-12 sm:mt-14">
               {FORMATS.map((f, i) => (
-                <li
+                <article
                   key={f.name}
-                  className="flex flex-col rounded-2xl border border-[#0C4323]/14 bg-white/55 p-6 sm:p-7"
+                  className="group grid gap-7 border-t border-[#1D1D1F]/10 py-10 last:border-b last:border-[#1D1D1F]/10 sm:py-12 md:grid-cols-[1.15fr_1fr] md:gap-14 lg:py-16 lg:gap-24"
                 >
-                  <p
-                    className={`${bebas.className} m-0 text-[0.78rem] uppercase tracking-[0.24em] text-[#156332]`}
-                  >
-                    Format 0{i + 1}
-                  </p>
-                  <h3
-                    className={`${bebas.className} m-0 mt-4 text-[clamp(1.4rem,2.4vw,1.85rem)] uppercase leading-[1] tracking-[-0.005em]`}
-                  >
-                    {f.name}
-                  </h3>
-                  <dl className="mt-5 grid grid-cols-1 gap-y-3 font-sans text-[0.85rem] leading-[1.5] text-[#0C4323]/85 sm:text-[0.9rem]">
-                    <div className="flex flex-col">
-                      <dt className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[#0C4323]/55">
-                        Durée
-                      </dt>
-                      <dd className="m-0 mt-1">{f.duree}</dd>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                      <span
+                        className={`${bebas.className} text-[0.95rem] leading-none tracking-[0.2em] text-[#0071E3]`}
+                        aria-hidden
+                      >
+                        0{i + 1}
+                      </span>
+                      <span className="rounded-full bg-[#F5F5F7] px-3.5 py-1.5 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#1D1D1F]/60">
+                        {f.duree}
+                      </span>
                     </div>
-                    <div className="flex flex-col">
-                      <dt className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[#0C4323]/55">
-                        Cible type
-                      </dt>
-                      <dd className="m-0 mt-1">{f.cible}</dd>
-                    </div>
-                  </dl>
-                  <ul className="mt-5 m-0 list-none space-y-2 border-t border-[#0C4323]/12 p-0 pt-4 font-sans text-[0.88rem] leading-[1.55] text-[#0C4323]/90 sm:text-[0.92rem]">
+                    <h3
+                      className={`${bebas.className} m-0 mt-5 text-[clamp(2.1rem,5.5vw,4.8rem)] font-normal uppercase leading-[0.95] tracking-[-0.015em] transition-colors duration-300 ease-out group-hover:text-[#0071E3] sm:mt-6`}
+                    >
+                      {f.name}
+                    </h3>
+                    <p className="mt-4 m-0 max-w-[30rem] font-sans text-[0.95rem] leading-[1.6] text-[#1D1D1F]/55 sm:mt-5 sm:text-[1rem]">
+                      Pensé pour : {f.cible.toLowerCase()}.
+                    </p>
+                  </div>
+
+                  <ul className="m-0 list-none space-y-3.5 self-center p-0 sm:space-y-4">
                     {f.inclus.map((it) => (
-                      <li key={it} className="flex gap-2.5">
-                        <span
-                          className={`${bebas.className} mt-[0.05em] shrink-0 text-[0.95rem] leading-none text-[#156332]`}
+                      <li
+                        key={it}
+                        className="flex gap-3 font-sans text-[0.92rem] leading-[1.55] text-[#1D1D1F]/85 sm:text-[0.95rem]"
+                      >
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="mt-[0.2em] size-4 shrink-0 text-[#0071E3]"
                           aria-hidden
                         >
-                          →
-                        </span>
-                        <span>{it}</span>
+                          <circle cx="8" cy="8" r="8" fill="currentColor" opacity="0.12" />
+                          <path
+                            d="M4.5 8.2 7 10.6l4.5-5"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        <span className="min-w-0">{it}</span>
                       </li>
                     ))}
                   </ul>
-                </li>
+                </article>
               ))}
-            </ul>
+            </div>
           </NumberedSection>
         </div>
 
@@ -344,18 +436,18 @@ export default function ServiceSiteInternetPage() {
         <div className="mt-24 sm:mt-28 md:mt-32">
           <NumberedSection num="02" title="Inclus & hors périmètre">
             <div className="grid gap-5 md:grid-cols-2 md:gap-6">
-              <article className="rounded-2xl border border-[#0C4323]/14 bg-white/65 p-6 sm:p-8 md:p-9">
-                <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#0C4323]/55 sm:text-[0.7rem]">
+              <article className="rounded-[1.75rem] bg-[#F5F5F7] p-6 sm:p-8 md:p-9">
+                <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#1D1D1F]/55 sm:text-[0.7rem]">
                   Toujours inclus
                 </p>
                 <ul className="mt-5 m-0 list-none space-y-3.5 p-0 sm:mt-6">
                   {INCLUS.map((item, i) => (
                     <li
                       key={item}
-                      className="flex gap-4 border-b border-[#0C4323]/10 pb-3.5 font-sans text-[0.95rem] leading-[1.6] text-[#0C4323]/92 last:border-b-0 last:pb-0 sm:text-[1rem]"
+                      className="flex gap-4 border-b border-[#1D1D1F]/10 pb-3.5 font-sans text-[0.95rem] leading-[1.6] text-[#1D1D1F]/92 last:border-b-0 last:pb-0 sm:text-[1rem]"
                     >
                       <span
-                        className={`${bebas.className} mt-[0.05em] shrink-0 text-[1rem] leading-none text-[#156332] sm:text-[1.1rem]`}
+                        className={`${bebas.className} mt-[0.05em] shrink-0 text-[1rem] leading-none text-[#0071E3] sm:text-[1.1rem]`}
                         aria-hidden
                       >
                         {String(i + 1).padStart(2, "0")}
@@ -366,25 +458,25 @@ export default function ServiceSiteInternetPage() {
                 </ul>
               </article>
 
-              <article className="rounded-2xl bg-[#0C4323] p-6 text-[#FDF6EC] shadow-[0_24px_60px_-30px_rgba(12,67,35,0.4)] sm:p-8 md:p-9">
-                <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#FDF6EC]/65 sm:text-[0.7rem]">
+              <article className="rounded-[1.75rem] bg-[#1D1D1F] p-6 text-[#FFFFFF] sm:p-8 md:p-9">
+                <p className="m-0 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#FFFFFF]/65 sm:text-[0.7rem]">
                   Hors périmètre
                 </p>
                 <ul className="mt-5 m-0 list-none space-y-3.5 p-0 sm:mt-6">
                   {HORS_PERIMETRE.map((item) => (
                     <li
                       key={item}
-                      className="flex gap-3 border-b border-[#FDF6EC]/15 pb-3.5 font-sans text-[0.95rem] leading-[1.6] text-[#FDF6EC]/90 last:border-b-0 last:pb-0 sm:text-[1rem]"
+                      className="flex gap-3 border-b border-[#FFFFFF]/15 pb-3.5 font-sans text-[0.95rem] leading-[1.6] text-[#FFFFFF]/90 last:border-b-0 last:pb-0 sm:text-[1rem]"
                     >
                       <span
-                        className="mt-[0.65rem] inline-block h-[1.5px] w-3 shrink-0 bg-[#FDF6EC]/55"
+                        className="mt-[0.65rem] inline-block h-[1.5px] w-3 shrink-0 bg-[#FFFFFF]/55"
                         aria-hidden
                       />
                       <span className="min-w-0">{item}</span>
                     </li>
                   ))}
                 </ul>
-                <p className="mt-6 font-sans text-[0.78rem] leading-[1.55] text-[#FDF6EC]/70 sm:text-[0.82rem]">
+                <p className="mt-6 font-sans text-[0.78rem] leading-[1.55] text-[#FFFFFF]/70 sm:text-[0.82rem]">
                   Tout ce qui est hors périmètre peut être ajouté en option,
                   avec un devis dédié — on préfère être clair dès le départ.
                 </p>
@@ -396,7 +488,7 @@ export default function ServiceSiteInternetPage() {
         {/* ── PROCESS ──────────────────────────────────────── */}
         <div className="mt-24 sm:mt-28 md:mt-32">
           <NumberedSection num="03" title="Comment on travaille">
-            <p className="max-w-[44rem] font-sans text-[1rem] leading-[1.7] text-[#0C4323]/92 sm:text-[1.05rem] sm:leading-[1.78]">
+            <p className="max-w-[44rem] font-sans text-[1rem] leading-[1.7] text-[#1D1D1F]/92 sm:text-[1.05rem] sm:leading-[1.78]">
               Cinq étapes, validées une par une. À chaque jalon, vous savez
               exactement où on en est et ce qui reste à faire — pas de zone
               grise, pas de surprise en fin de projet.
@@ -405,10 +497,10 @@ export default function ServiceSiteInternetPage() {
               {STEPS.map((s) => (
                 <li
                   key={s.n}
-                  className="grid gap-3 rounded-2xl border border-[#0C4323]/12 bg-white/55 p-6 sm:grid-cols-[5rem_1fr] sm:items-start sm:gap-6 sm:p-7 md:p-8"
+                  className="grid gap-3 rounded-[1.75rem] bg-[#F5F5F7] p-6 sm:grid-cols-[5rem_1fr] sm:items-start sm:gap-6 sm:p-7 md:p-8"
                 >
                   <span
-                    className={`${bebas.className} text-[clamp(2rem,3.6vw,2.8rem)] leading-none text-[#156332]`}
+                    className={`${bebas.className} text-[clamp(2rem,3.6vw,2.8rem)] leading-none text-[#0071E3]`}
                     aria-hidden
                   >
                     {s.n}
@@ -419,7 +511,7 @@ export default function ServiceSiteInternetPage() {
                     >
                       {s.title}
                     </h3>
-                    <p className="mt-3 m-0 font-sans text-[0.96rem] leading-[1.65] text-[#0C4323]/90 sm:text-[1rem] sm:leading-[1.7]">
+                    <p className="mt-3 m-0 font-sans text-[0.96rem] leading-[1.65] text-[#1D1D1F]/90 sm:text-[1rem] sm:leading-[1.7]">
                       {s.desc}
                     </p>
                   </div>
@@ -430,9 +522,9 @@ export default function ServiceSiteInternetPage() {
         </div>
 
         {/* ── PREUVES ──────────────────────────────────────── */}
-        <div className="mt-24 sm:mt-28 md:mt-32">
+        <div id="preuves" className="mt-24 scroll-mt-28 sm:mt-28 md:mt-32">
           <NumberedSection num="04" title="Ils l’ont déjà fait">
-            <p className="max-w-[44rem] font-sans text-[1rem] leading-[1.7] text-[#0C4323]/92 sm:text-[1.05rem] sm:leading-[1.78]">
+            <p className="max-w-[44rem] font-sans text-[1rem] leading-[1.7] text-[#1D1D1F]/92 sm:text-[1.05rem] sm:leading-[1.78]">
               Trois projets récents, trois ambiances. Cliquez pour ouvrir
               l’étude de cas complète — contexte, problématique, livrables et
               bilan.
@@ -442,10 +534,10 @@ export default function ServiceSiteInternetPage() {
                 <li key={r.slug} className="m-0">
                   <Link
                     href={`/realisations/${r.slug}`}
-                    className="group block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-[#0C4323]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC]"
+                    className="group block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-[#1D1D1F]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF]"
                     aria-label={`Voir l’étude de cas : ${r.title}`}
                   >
-                    <figure className="relative m-0 overflow-hidden rounded-2xl border border-[#0C4323]/10 bg-[#0C4323]/[0.03] shadow-[0_20px_50px_-28px_rgba(12,67,35,0.25)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5">
+                    <figure className="relative m-0 overflow-hidden rounded-2xl border border-[#1D1D1F]/10 bg-[#1D1D1F]/[0.03] shadow-[0_20px_50px_-28px_rgba(0,0,0,0.25)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5">
                       <div className="relative aspect-[16/10] w-full">
                         <Image
                           src={r.image}
@@ -459,18 +551,18 @@ export default function ServiceSiteInternetPage() {
                     </figure>
                     <div className="mt-4 flex items-baseline justify-between gap-3">
                       <h3
-                        className={`${bebas.className} m-0 text-[clamp(1.15rem,1.7vw,1.45rem)] uppercase leading-[1] tracking-[-0.005em] text-[#0C4323] transition-colors group-hover:text-[#156332]`}
+                        className={`${bebas.className} m-0 text-[clamp(1.15rem,1.7vw,1.45rem)] uppercase leading-[1] tracking-[-0.005em] text-[#1D1D1F] transition-colors group-hover:text-[#0071E3]`}
                       >
                         {r.title}
                       </h3>
                       <span
-                        className={`${bebas.className} text-[0.95rem] uppercase tracking-[0.18em] text-[#0C4323]/55 transition-transform group-hover:translate-x-1`}
+                        className={`${bebas.className} text-[0.95rem] uppercase tracking-[0.18em] text-[#1D1D1F]/55 transition-transform group-hover:translate-x-1`}
                         aria-hidden
                       >
                         →
                       </span>
                     </div>
-                    <p className="mt-1 m-0 font-sans text-[0.74rem] font-medium uppercase tracking-[0.22em] text-[#0C4323]/55">
+                    <p className="mt-1 m-0 font-sans text-[0.74rem] font-medium uppercase tracking-[0.22em] text-[#1D1D1F]/55">
                       {r.status}
                     </p>
                   </Link>
@@ -487,16 +579,16 @@ export default function ServiceSiteInternetPage() {
               {FAQ.map((item, i) => (
                 <li
                   key={item.q}
-                  className="border-t border-[#0C4323]/30 last:border-b last:border-[#0C4323]/30"
+                  className="border-t border-[#1D1D1F]/12 last:border-b last:border-[#1D1D1F]/12"
                 >
                   {/* `<details>` natif — pas besoin de client component, accessible par défaut. */}
                   <details className="group">
                     <summary
-                      className={`${bebas.className} flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-[clamp(1.05rem,1.7vw,1.65rem)] uppercase tracking-[0.005em] outline-none transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#156332] focus-visible:ring-2 focus-visible:ring-[#0C4323]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC] sm:gap-6 sm:py-7 [&::-webkit-details-marker]:hidden`}
+                      className={`${bebas.className} flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-[clamp(1.05rem,1.7vw,1.65rem)] uppercase tracking-[0.005em] outline-none transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#0071E3] focus-visible:ring-2 focus-visible:ring-[#1D1D1F]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF] sm:gap-6 sm:py-7 [&::-webkit-details-marker]:hidden`}
                     >
                       <span className="flex-1 leading-[1.15] sm:leading-[1.05]">
                         <span
-                          className="mr-3 font-sans text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#156332]"
+                          className="mr-3 font-sans text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#86868B]"
                           aria-hidden
                         >
                           {String(i + 1).padStart(2, "0")}
@@ -512,7 +604,7 @@ export default function ServiceSiteInternetPage() {
                       </span>
                     </summary>
                     <p
-                      className={`${cormorant.className} m-0 max-w-[42rem] pb-6 pr-2 text-[clamp(1rem,1.35vw,1.4rem)] leading-[1.5] text-[#0C4323]/85 sm:pb-7 sm:pr-16`}
+                      className={`${cormorant.className} m-0 max-w-[42rem] pb-6 pr-2 text-[clamp(1rem,1.35vw,1.4rem)] leading-[1.5] text-[#1D1D1F]/85 sm:pb-7 sm:pr-16`}
                     >
                       {item.a}
                     </p>
@@ -528,11 +620,11 @@ export default function ServiceSiteInternetPage() {
           <section
             data-nav-theme="dark"
             data-reveal
-            className="svc-reveal relative overflow-hidden rounded-3xl bg-[#343d33] px-6 py-14 text-[#FDF6EC] shadow-[0_28px_80px_-30px_rgba(0,0,0,0.45)] sm:px-10 sm:py-20 md:px-14 md:py-24"
+            className="svc-reveal relative overflow-hidden rounded-3xl bg-[#1D1D1F] px-6 py-14 text-[#FFFFFF] shadow-[0_28px_80px_-30px_rgba(0,0,0,0.45)] sm:px-10 sm:py-20 md:px-14 md:py-24"
             aria-label="Discutons de votre projet de site"
           >
             <div className="relative z-10 flex flex-col items-center text-center">
-              <p className="font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#FDF6EC]/65 sm:text-[0.7rem]">
+              <p className="font-sans text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-[#FFFFFF]/65 sm:text-[0.7rem]">
                 Prochaine étape
               </p>
               <h2
@@ -541,7 +633,7 @@ export default function ServiceSiteInternetPage() {
                 Parlons de votre site
               </h2>
               <p
-                className={`${cormorant.className} mt-6 max-w-[36rem] text-[clamp(1rem,1.4vw,1.4rem)] italic leading-[1.45] text-[#FDF6EC]/85 sm:mt-7`}
+                className={`${cormorant.className} mt-6 max-w-[36rem] text-[clamp(1rem,1.4vw,1.4rem)] italic leading-[1.45] text-[#FFFFFF]/85 sm:mt-7`}
               >
                 Un appel de 30 minutes, gratuit et sans engagement. On
                 clarifie l’objectif, le périmètre et un ordre de grandeur — et
@@ -549,7 +641,7 @@ export default function ServiceSiteInternetPage() {
               </p>
               <Link
                 href="/contact"
-                className={`${bebas.className} group mt-9 inline-flex items-center gap-2.5 rounded-full bg-[#FDF6EC] px-7 py-3 text-[0.85rem] uppercase tracking-[0.2em] text-[#0C4323] transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-transparent hover:text-[#FDF6EC] hover:shadow-[0_0_0_2px_#FDF6EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FDF6EC]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#343d33] sm:mt-12 sm:gap-3 sm:px-11 sm:py-4 sm:text-[1rem] sm:tracking-[0.22em]`}
+                className={`${bebas.className} group mt-9 inline-flex items-center gap-2.5 rounded-full bg-[#0071E3] px-7 py-3 text-[0.85rem] uppercase tracking-[0.2em] text-white transition-[transform,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[#0066CC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3]/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#1D1D1F] sm:mt-12 sm:gap-3 sm:px-11 sm:py-4 sm:text-[1rem] sm:tracking-[0.22em]`}
               >
                 Discutons de votre projet
                 <span
@@ -559,7 +651,7 @@ export default function ServiceSiteInternetPage() {
                   →
                 </span>
               </Link>
-              <p className="mt-6 font-sans text-[0.74rem] uppercase tracking-[0.22em] text-[#FDF6EC]/55 sm:mt-8 sm:text-[0.78rem]">
+              <p className="mt-6 font-sans text-[0.74rem] uppercase tracking-[0.22em] text-[#FFFFFF]/55 sm:mt-8 sm:text-[0.78rem]">
                 Réponse personnalisée sous 24 h · Annecy · à distance
               </p>
             </div>

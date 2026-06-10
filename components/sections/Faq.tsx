@@ -57,7 +57,7 @@ export default function Faq() {
   return (
     <section
       id="faq"
-      className="relative z-[60] w-full bg-[#FDF6EC] px-5 pb-20 pt-20 text-[#0C4323] sm:px-8 sm:pb-28 sm:pt-28 sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:px-12 md:pb-32 md:pt-32"
+      className="relative z-[60] w-full bg-[#FFFFFF] px-5 pb-20 pt-20 text-[#1D1D1F] sm:px-8 sm:pb-28 sm:pt-28 sm:shadow-[0_-18px_60px_-12px_rgba(0,0,0,0.35)] md:px-12 md:pb-32 md:pt-32"
       aria-label="Questions fréquentes"
     >
       <div className="grid grid-cols-1 gap-8 sm:gap-12 md:grid-cols-12 md:gap-16">
@@ -80,7 +80,7 @@ export default function Faq() {
             return (
               <li
                 key={item.q}
-                className="border-t border-[#0C4323]/55 last:border-b last:border-[#0C4323]/55"
+                className="border-t border-[#1D1D1F]/55 last:border-b last:border-[#1D1D1F]/55"
               >
                 <button
                   type="button"
@@ -88,7 +88,7 @@ export default function Faq() {
                   aria-controls={`faq-panel-${i}`}
                   id={`faq-trigger-${i}`}
                   onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className={`${bebas.className} group flex w-full items-center justify-between gap-4 py-5 text-left text-[clamp(1.05rem,1.85vw,1.85rem)] uppercase tracking-[0.005em] transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#156332] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0C4323]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FDF6EC] sm:gap-6 sm:py-8`}
+                  className={`${bebas.className} group flex w-full items-center justify-between gap-4 py-5 text-left text-[clamp(1.05rem,1.85vw,1.85rem)] uppercase tracking-[0.005em] transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#0071E3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF] sm:gap-6 sm:py-8`}
                 >
                   <span className="flex-1 leading-[1.1] sm:leading-[1.05]">{item.q}</span>
                   <span
@@ -117,7 +117,7 @@ export default function Faq() {
                 >
                   <div className="overflow-hidden">
                     <p
-                      className={`${cormorant.className} m-0 max-w-[42rem] pb-6 pr-2 text-[clamp(1rem,1.35vw,1.5rem)] leading-[1.5] text-[#0C4323]/85 sm:pb-8 sm:pr-16`}
+                      className={`${cormorant.className} m-0 max-w-[42rem] pb-6 pr-2 text-[clamp(1rem,1.35vw,1.5rem)] leading-[1.5] text-[#1D1D1F]/85 sm:pb-8 sm:pr-16`}
                     >
                       {item.a}
                     </p>

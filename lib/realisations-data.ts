@@ -1,8 +1,7 @@
 import type { StaticImageData } from "next/image";
-import nexusCaptureHero from "@/src/images/nexus-capture-hero.png";
-import nexusCaptureAbout from "@/src/images/nexus-capture-01.png";
-import nexusCaptureServices from "@/src/images/nexus-capture-02.png";
-import nexusCaptureProjects from "@/src/images/nexus-capture-03.png";
+import elegenciaCaptureHero from "@/src/images/elegencia-capture-hero.png";
+import elegenciaCaptureProperties from "@/src/images/elegencia-capture-properties.png";
+import elegenciaCaptureAgency from "@/src/images/elegencia-capture-agency.png";
 import realisations2 from "@/src/images/réalisations2.png";
 import dashboardCaptureOverview from "@/src/images/dashboard-capture-01.png";
 import dashboardCaptureFinance from "@/src/images/dashboard-capture-02.png";
@@ -41,50 +40,49 @@ export type Realisation = {
   imageAlt: string;
   /** Vues supplémentaires sur la page projet (la une reste `image`). */
   extraGallery?: ReadonlyArray<GallerySlide>;
+  /** Lien vers le site en ligne (démo ou production). */
+  liveUrl?: string;
   caseStudy?: CaseStudy;
   visualShell?: "dark" | "cream" | "warm";
 };
 
 export const REALISATIONS: ReadonlyArray<Realisation> = [
   {
-    slug: "nexus-tp",
+    slug: "elegencia",
     index: "01",
-    title: "Nexus TP",
-    status: "Site vitrine · livrée",
-    image: nexusCaptureHero,
+    title: "Elegencia",
+    status: "Démo agence immo · livrée",
+    image: elegenciaCaptureHero,
     imageAlt:
-      "Capture d’écran du site Nexus TP : page d’accueil, hero chantier et appels à l’action",
+      "Démo Elegencia : page d’accueil, hero panorama et promesse « Découvrez votre bien d’exception »",
+    liveUrl: "https://elegencia-beta.vercel.app",
     visualShell: "dark",
     extraGallery: [
       {
-        src: nexusCaptureAbout,
-        alt: "Page à propos Nexus TP : photo chantier, chiffres clés et promesse",
+        src: elegenciaCaptureProperties,
+        alt: "Page propriétés Elegencia : recherche, filtres et grille de biens d’exception",
       },
       {
-        src: nexusCaptureServices,
-        alt: "Page services Nexus TP : grille des prestations en travaux publics",
-      },
-      {
-        src: nexusCaptureProjects,
-        alt: "Page réalisations Nexus TP : projets de terrassement et galerie chantiers",
+        src: elegenciaCaptureAgency,
+        alt: "Page l’agence Elegencia : équipe, chiffres clés et positionnement luxe",
       },
     ],
     caseStudy: {
       summary:
-        "Vitrine pour Nexus TP, entreprise de travaux publics : thème sombre, orange signature et grille de services lisible en un scroll — pensée pour rassurer particuliers et pros avant la prise de contact.",
+        "Démo de site pour agence immobilière haut de gamme : hero plein écran, catalogue de propriétés filtrable et page agence éditoriale — pensée pour inspirer confiance et désir avant la prise de contact.",
       context:
-        "Terrassement, VRD et aménagement extérieur sur toute la région. Le site doit valoriser l’expérience terrain (chantiers, flotte, sécurité) et structurer six prestations clés sans noyer le visiteur dans le jargon.",
+        "Agence positionnée sur le luxe et l’international (Côte d’Azur, Monaco, Italie, Suisse). La démo doit montrer comment structurer une vitrine premium : promesse claire, parcours vers les biens et preuves d’expertise sans surcharge.",
       problem:
-        "L’ancienne présence en ligne ne reflétait pas le niveau d’exigence chantier ni la clarté attendue sur mobile. Les offres étaient difficiles à comparer ; le parcours vers le devis ou la discussion projet manquait de repères visuels forts.",
+        "Les sites immo génériques noient l’utilisateur sous les annonces sans hiérarchie ni fil d’Ariane émotionnel. Manque de distinction entre catalogue et storytelling agence ; la recherche et les filtres sont souvent mal intégrés au design.",
       solution:
-        "Direction sombre premium avec contrastes WCAG, pictos ligne orange et cartes services homogènes. Navigation épurée (Accueil, À propos, Services, Réalisations, Contact) et CTA contact toujours visible pour capter les demandes locales.",
+        "Accueil cinématique avec CTA « Trouver votre propriété », page Propriétés avec recherche, chips Villas/Appartements, carte et grille de biens avec badges Exclusivité. Page L’agence : photo d’équipe, stats (15+ ans, 120+ transactions, 6 pays) et ton discret haut de gamme.",
       methodology:
-        "Atelier contenu par prestation, maquettes desktop & mobile, puis intégration composants réutilisables (hero, stats, grilles, CTA). Recette sur breakpoints et optimisation des visuels chantier pour un chargement rapide.",
+        "Wireframes des trois vues clés, direction typo uppercase sobre sur hero sombre puis interface claire sur le catalogue. Composants réutilisables (cartes bien, barre de recherche, chips, CTA pill) et recette responsive sur grands écrans et mobile.",
       deliverables: [
-        "Pages clés : accueil, à propos, services, réalisations, contact",
-        "Grille de 6 prestations avec pictogrammes et descriptions",
-        "Composants UI (navigation, boutons, cartes, chiffres clés)",
-        "Intégration responsive et assets optimisés",
+        "Hero accueil : navigation, promesse et CTA principal",
+        "Catalogue propriétés : recherche, filtres, grille et badges",
+        "Page agence : storytelling, chiffres et prise de contact",
+        "Design system UI (boutons, cartes, typographie)",
       ],
       stack: [
         "Next.js",
@@ -93,64 +91,65 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
         "Images optimisées & déploiement statique / edge",
       ],
       outcomes:
-        "Une vitrine alignée sur l’identité Nexus TP : services compris en quelques secondes, crédibilité renforcée sur chantier et formulaire de contact à portée de clic sur tous les écrans.",
+        "Une démo convaincante pour prospects agences immo : positionnement luxe lisible en quelques secondes, parcours propriétés fluide et crédibilité renforcée par la page agence.",
     },
   },
   {
     slug: "portfolio-editorial",
     index: "02",
-    title: "Portfolio éditorial",
-    status: "Direction artistique · site livré",
+    title: "Avero",
+    status: "Démo portfolio · livrée",
     image: realisations2,
     imageAlt:
-      "Portfolio éditorial — plein écran montagne, typo serif et accroche « Les sommets du monde »",
+      "Avero — plein écran montagne, typo serif et accroche « Les sommets du monde »",
+    liveUrl: "https://avero-kappa.vercel.app",
     visualShell: "cream",
     extraGallery: [
       {
         src: valerioShot1,
-        alt: "Accueil du portfolio : plein écran photo et navigation minimaliste",
+        alt: "Page accueil Avero : hero plein écran, navigation discrète et accroche éditoriale",
       },
       {
         src: valerioShot2,
-        alt: "Vue projet : mise en page éditoriale et typographie serif",
+        alt: "Page projet Avero : mise en page magazine, typographie serif et grands visuels",
       },
       {
         src: valerioShot3,
-        alt: "Détail d'une section projet et hiérarchie visuelle",
+        alt: "Section détail Avero : hiérarchie de lecture, crédits et storytelling visuel",
       },
     ],
     caseStudy: {
       summary:
-        "Direction artistique et expérience immersive pour un portfolio haut de gamme : plein écran, rythme de scroll calibré et typo serif comme fil conducteur, pensé pour convaincre des directeurs de création et des marques lifestyle.",
+        "Démo de portfolio éditorial haut de gamme : hero plein écran, pages projets scénarisées et navigation minimaliste — pensée pour inspirer confiance et désir avant la prise de contact avec des marques lifestyle.",
       context:
-        "Portfolio destiné à la prise de contact avec des annonceurs exigeants. Le travail existant était dispersé sur plusieurs supports ; l’enjeu était de présenter des campagnes et des shootings comme une collection cohérente, sans effet « carrousel générique ».",
+        "Créatif positionné sur le luxe et l’outdoor (campagnes, shootings, direction artistique). La démo doit montrer comment structurer une vitrine premium : promesse claire dès l’accueil, parcours vers les projets et preuves de niveau sans surcharge ni effet « carrousel générique ».",
       problem:
-        "Les visuels fort impact perdaient en densité lorsqu’ils étaient traités comme des vignettes. Les textes d’accompagnement manquaient de hiérarchie ; le positionnement « luxe / outdoor » ne se lisait pas immédiatement dans la structure de page.",
+        "Les portfolios génériques traitent les visuels forts comme de simples vignettes : l’impact se perd, la hiérarchie disparaît. Les textes d’accompagnement manquent de rythme ; le positionnement haut de gamme ne se lit pas immédiatement dans la structure de page.",
       solution:
-        "Scénarisation type magazine : grands aplats photo, titres serif affirmés, légendes discrètes et navigation presque invisible pour laisser respirer les images. Chaque projet ouvre sur une séquence hero avant de déployer le détail — le visiteur comprend le niveau de finition avant même de scroller.",
+        "Accueil cinématique plein écran avec accroche serif et navigation discrète, pages projets type magazine avec grands aplats photo et titres affirmés, détail de section avec crédits et hiérarchie lisible. Chaque vue ouvre sur une séquence hero avant de déployer le contenu — le visiteur comprend le niveau de finition avant même de scroller.",
       methodology:
-        "Moodboard et grille éditoriale validés avant le design fini ; définition d’une échelle typographique stricte et de règles de recadrage photo. Tests sur plusieurs formats d’écran pour conserver l’intention « cinéma » sans sacrifier la lisibilité des crédits et des crédits projet.",
+        "Wireframes des trois vues clés, direction typo serif sobre sur hero immersif puis interface épurée sur les pages projets. Composants réutilisables (hero plein écran, blocs éditoriaux, légendes, CTA discret) et recette responsive sur grands écrans et mobile.",
       deliverables: [
-        "Direction artistique web & charte de mise en page",
-        "Composants éditoriaux (hero, collections, pages cas)",
-        "Intégration des médias haute définition et optimisations",
-        "Documentation pour ajouter un nouveau projet sans casser la grille",
+        "Hero accueil : navigation, promesse et mise en scène plein écran",
+        "Pages projets : grilles éditoriales, titres serif et crédits",
+        "Sections détail : storytelling visuel et hiérarchie de lecture",
+        "Design system UI (typographie, espacements, composants éditoriaux)",
       ],
       stack: [
         "Next.js",
-        "Gestion d’images responsive & formats modernes",
-        "Animations CSS ciblées",
-        "CI / déploiement continu",
+        "TypeScript",
+        "Tailwind CSS",
+        "Images optimisées & déploiement statique / edge",
       ],
       outcomes:
-        "Une vitrine à la hauteur du créatif présenté : premier contact mémorable, crédibilité renforcée auprès des marques premium et base solide pour montrer de nouveaux travaux en quelques heures plutôt qu’en plusieurs jours de mise en page manuelle.",
+        "Une démo convaincante pour prospects créatifs et marques premium : positionnement haut de gamme lisible en quelques secondes, parcours projets fluide et crédibilité renforcée par une expérience type magazine.",
     },
   },
   {
     slug: "dashboard-finance",
     index: "03",
     title: "Dashboard",
-    status: "App métier · livrée",
+    status: "Démo app métier · livrée",
     image: dashboardCaptureOverview,
     imageAlt:
       "Tableau de bord : vue d’ensemble CA, clients actifs, objectifs et navigation modules",
@@ -158,29 +157,29 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     extraGallery: [
       {
         src: dashboardCaptureFinance,
-        alt: "Module finance : synthèse encaissé, dépenses, factures et liste des dépenses",
+        alt: "Module Finance : synthèse encaissé, dépenses, factures et liste filtrable",
       },
       {
         src: dashboardCaptureObjectifs,
-        alt: "Module objectifs : progression globale, cartes par cible et liste détaillée",
+        alt: "Module Objectifs : progression globale, cartes par cible et barres de suivi",
       },
     ],
     caseStudy: {
       summary:
-        "Tableau de bord sur-mesure pour piloter l’activité : CA, facturation, dépenses, clients et objectifs annuels — une interface claire qui remplace les tableurs et les allers-retours entre outils.",
+        "Démo de tableau de bord métier : vue d’ensemble, module finance et suivi des objectifs — pensée pour remplacer les tableurs et donner une lecture immédiate de l’activité avant chaque décision.",
       context:
-        "Structure en croissance (freelance, studio ou TPE) avec besoin de visibilité financière et commerciale. Les données étaient éclatées entre factures, fichiers et notes ; il manquait une vue unique pour décider vite.",
+        "Structure en croissance (freelance, studio ou TPE) avec besoin de visibilité financière et commerciale. La démo doit montrer comment centraliser CA, facturation, dépenses et objectifs annuels dans une interface claire, sans surcharge ni allers-retours entre fichiers.",
       problem:
-        "Pas de lecture immédiate du chiffre d’affaires encaissé, des impayés ou de la progression vers les objectifs CA et clients. Les relances et le suivi des dépenses demandaient trop de manipulations manuelles.",
+        "Les outils génériques éclatent les données entre tableurs, factures et notes : pas de vue unique, pas de lecture immédiate des impayés ni de la progression vers les objectifs. Les relances et le suivi des dépenses demandent trop de manipulations manuelles.",
       solution:
-        "Dashboard modulaire : accueil synthétique (évolution du CA, encaissements, clients actifs), espaces Finance et Objectifs dédiés, cartes KPI colorées et tableaux filtrables. Navigation latérale stable et parcours « ajouter une dépense » / factures explicites.",
+        "Accueil synthétique avec graphique CA 12 mois, KPI encaissé et clients actifs, module Finance avec synthèse encaissé/dépenses, factures et liste filtrable, module Objectifs avec progression globale, cartes par cible et barres de suivi. Navigation latérale stable et parcours « ajouter une dépense » explicites.",
       methodology:
-        "Atelier des indicateurs prioritaires, wireframes des vues Accueil / Finance / Objectifs, puis design system (violet & rose, cartes arrondies, badges d’état). Intégration composants data-viz et formulaires, tests de lisibilité des montants et des progress bars.",
+        "Wireframes des trois vues clés, direction UI sobre sur fond clair avec cartes KPI et badges d’état. Composants réutilisables (graphiques, tableaux, progress bars, formulaires) et recette responsive sur desktop et tablette.",
       deliverables: [
-        "Vue d’ensemble : graphique CA 12 mois, KPI encaissé et clients",
+        "Vue d’ensemble : graphique CA, KPI encaissé et clients actifs",
         "Module Finance : synthèse, dépenses, factures et recherche",
-        "Module Objectifs : progression globale, cartes par cible, liste détaillée",
-        "Navigation latérale et raccourcis vers clients, deals et paramètres",
+        "Module Objectifs : progression globale, cartes par cible et liste détaillée",
+        "Design system UI (cartes, badges, navigation latérale, formulaires)",
       ],
       stack: [
         "Next.js",
@@ -189,7 +188,7 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
         "Graphiques & tableaux interactifs",
       ],
       outcomes:
-        "Pilotage en un coup d’œil : objectifs financiers et clients suivis en temps réel, facturation et dépenses centralisées — moins de friction opérationnelle au quotidien.",
+        "Une démo convaincante pour prospects TPE et indépendants : pilotage lisible en quelques secondes, finance et objectifs centralisés — moins de friction opérationnelle au quotidien.",
     },
   },
 ];

@@ -19,7 +19,7 @@ const TITLE = "Contact";
 export default function ContactHero() {
   return (
     <section
-      className={`${bebas.className} relative flex min-h-[100svh] w-full flex-col bg-[#FDF6EC] px-5 pb-6 pt-28 text-[#0C4323] sm:px-12 sm:pb-7 sm:pt-40 md:pt-48`}
+      className={`${bebas.className} relative flex min-h-[100svh] w-full flex-col bg-[#FFFFFF] px-5 pb-6 pt-28 text-[#1D1D1F] sm:px-12 sm:pb-7 sm:pt-40 md:pt-48`}
       aria-label="Contact — hero"
     >
       <div className="flex flex-1 flex-col items-center justify-center gap-5 sm:gap-7">
@@ -28,7 +28,7 @@ export default function ContactHero() {
         </p>
 
         <h1
-          className="text-center text-[clamp(3.5rem,17vw,15rem)] font-normal leading-[0.95] text-black sm:leading-none"
+          className="text-center text-[clamp(3.5rem,17vw,15rem)] font-normal leading-[0.95] text-[#1D1D1F] sm:leading-none"
           aria-label={TITLE}
         >
           <HeroTitleLetters text={TITLE} />
@@ -46,7 +46,7 @@ export default function ContactHero() {
         <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:gap-10">
           <a
             href="mailto:hello@valleriostudio.fr"
-            className="underline decoration-[#0C4323]/30 underline-offset-4 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:decoration-[#0C4323]"
+            className="underline decoration-[#1D1D1F]/30 underline-offset-4 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:decoration-[#1D1D1F]"
           >
             hello@valleriostudio.fr
           </a>
