@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
-import { startLenis, stopLenis } from "@/lib/lenis-control";
+import { pauseLenis, resumeLenis } from "@/lib/lenis-control";
+
+const TRANSITION_PAUSE_REASON = "section-transition";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -112,7 +114,7 @@ export default function SectionTransition() {
 
       setLabel(lbl);
       setPhase("entering");
-      stopLenis();
+      pauseLenis(TRANSITION_PAUSE_REASON);
 
       // 1. Une fois le rideau en place → scroll vers la section (sticky-safe)
       timeouts.push(
@@ -134,7 +136,7 @@ export default function SectionTransition() {
         window.setTimeout(() => {
           scrollToAnchorAfterLayout(targetId);
           setPhase("idle");
-          startLenis();
+          resumeLenis(TRANSITION_PAUSE_REASON);
         }, ENTER_DURATION + HOLD_DURATION + EXIT_DURATION)
       );
     };
@@ -143,6 +145,7 @@ export default function SectionTransition() {
     return () => {
       window.removeEventListener(SECTION_TRANSITION_EVENT, handler);
       timeouts.forEach(window.clearTimeout);
+      resumeLenis(TRANSITION_PAUSE_REASON);
     };
   }, []);
 

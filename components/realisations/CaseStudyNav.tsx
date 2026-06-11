@@ -69,7 +69,7 @@ export default function CaseStudyNav({ items }: { items: ReadonlyArray<Item> }) 
     const top = Math.max(0, y - 110);
     const lenis = window.__lenis;
     if (lenis) {
-      lenis.scrollTo(top, { duration: 1.1 });
+      lenis.scrollTo(top, { duration: 1.1, force: true });
     } else {
       window.scrollTo({ top, behavior: "smooth" });
     }

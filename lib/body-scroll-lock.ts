@@ -1,4 +1,6 @@
-import { startLenis, stopLenis } from "@/lib/lenis-control";
+import { pauseLenis, resumeLenis } from "@/lib/lenis-control";
+
+const SCROLL_LOCK_REASON = "body-scroll-lock";
 
 /**
  * Compteur de verrous pour `body.style.overflow` — plusieurs sources
@@ -11,10 +13,10 @@ function apply(): void {
   if (typeof document === "undefined") return;
   if (locks > 0) {
     document.body.style.overflow = "hidden";
-    stopLenis();
+    pauseLenis(SCROLL_LOCK_REASON);
   } else {
     document.body.style.removeProperty("overflow");
-    startLenis();
+    resumeLenis(SCROLL_LOCK_REASON);
   }
 }
 
@@ -40,5 +42,5 @@ export function resetBodyScrollLocks(): void {
   if (typeof document === "undefined") return;
   locks = 0;
   document.body.style.removeProperty("overflow");
-  startLenis();
+  resumeLenis(SCROLL_LOCK_REASON);
 }

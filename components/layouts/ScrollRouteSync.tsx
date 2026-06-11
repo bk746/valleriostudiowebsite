@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import type Lenis from "lenis";
 import { resetBodyScrollLocks } from "@/lib/body-scroll-lock";
+import { resumeLenis } from "@/lib/lenis-control";
+
+const TRANSITION_PAUSE_REASON = "section-transition";
 
 function reconcileLenis(lenis: Lenis): void {
   lenis.resize();
@@ -33,6 +36,7 @@ export default function ScrollRouteSync() {
     const id = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (cancelled) return;
+        resumeLenis(TRANSITION_PAUSE_REASON);
         const lenis = window.__lenis;
         if (lenis) reconcileLenis(lenis);
       });

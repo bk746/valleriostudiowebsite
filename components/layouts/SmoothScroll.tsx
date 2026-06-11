@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { syncLenisAfterInit } from "@/lib/lenis-control";
 
 /*
   Smooth scroll inertiel global (style agence Awwwards).
@@ -55,6 +56,7 @@ export default function SmoothScroll() {
     });
 
     window.__lenis = lenis;
+    syncLenisAfterInit();
 
     let raf = 0;
     const update = (time: number) => {

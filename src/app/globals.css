@@ -90,7 +90,10 @@ body {
 
 /* Réalisations : layout mobile/desktop sans bascule JS (évite le CLS). */
 .realisations-desktop-only {
-  display: block;
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
 }
 .realisations-mobile-only {
   display: none;
@@ -112,6 +115,7 @@ body {
     position: static;
     height: auto;
     overflow: visible;
+    padding-bottom: 3rem;
   }
   .realisations-section {
     min-height: auto !important;
