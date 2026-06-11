@@ -34,6 +34,8 @@ export default function Navbar() {
   useEffect(() => {
     let lastY = window.scrollY;
     let raf = 0;
+    let hiddenState = false;
+    let onDarkState = false;
 
     /*
       On cache la liste des sections au montage et on la rafraîchit lors d'un
@@ -52,9 +54,15 @@ export default function Navbar() {
       const y = window.scrollY;
       const delta = y - lastY;
 
-      if (y < 60) setHidden(false);
-      else if (delta > 6) setHidden(true);
-      else if (delta < -6) setHidden(false);
+      let nextHidden = hiddenState;
+      if (y < 60) nextHidden = false;
+      else if (delta > 6) nextHidden = true;
+      else if (delta < -6) nextHidden = false;
+
+      if (nextHidden !== hiddenState) {
+        hiddenState = nextHidden;
+        setHidden(nextHidden);
+      }
 
       lastY = y;
 
@@ -66,7 +74,11 @@ export default function Navbar() {
           break;
         }
       }
-      setOnDark(topMost?.dataset.navTheme === "dark");
+      const nextOnDark = topMost?.dataset.navTheme === "dark";
+      if (nextOnDark !== onDarkState) {
+        onDarkState = nextOnDark;
+        setOnDark(nextOnDark);
+      }
     };
 
     const onScroll = () => {
@@ -141,6 +153,7 @@ export default function Navbar() {
             src={logo}
             alt=""
             fill
+            sizes="96px"
             className={
               "object-contain transition-[filter] duration-300 ease-out " +
               (effectiveDark ? "invert" : "")

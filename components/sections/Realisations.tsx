@@ -159,34 +159,33 @@ function ProjectCard({
   );
 }
 
+function isCoarsePointer(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(pointer: coarse)").matches;
+}
+
 export default function Realisations() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [maxShift, setMaxShift] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mql = window.matchMedia("(pointer: coarse)");
-    const apply = () => setIsMobile(mql.matches);
-    apply();
-    mql.addEventListener("change", apply);
-    return () => mql.removeEventListener("change", apply);
-  }, []);
-
-  useEffect(() => {
-    if (isMobile) {
+    if (isCoarsePointer()) {
       setMaxShift(0);
       return;
     }
+
     let raf = 0;
     const measure = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         const track = trackRef.current;
-        if (!track) return;
+        const section = sectionRef.current;
+        if (!track || !section) return;
         const ms = Math.max(0, track.scrollWidth - window.innerWidth);
         setMaxShift(ms);
+        section.style.minHeight =
+          ms > 0 ? `calc(200dvh + ${ms}px)` : "100dvh";
       });
     };
 
@@ -199,17 +198,11 @@ export default function Realisations() {
       ro.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, [isMobile]);
+  }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
     const track = trackRef.current;
-    if (!track) return;
-
-    if (isMobile) {
-      track.style.transform = "translate3d(0,0,0)";
-      return;
-    }
+    if (!track || isCoarsePointer()) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || maxShift === 0) {
@@ -246,28 +239,17 @@ export default function Realisations() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [maxShift, isMobile]);
-
-  const minHeight = isMobile
-    ? "auto"
-    : maxShift > 0
-      ? `calc(200dvh + ${maxShift}px)`
-      : "100dvh";
+  }, [maxShift]);
 
   return (
     <section
       id="realisations"
       ref={sectionRef}
-      className="relative z-30 w-full bg-[#FFFFFF]"
-      style={{ minHeight }}
+      className="realisations-section relative z-30 w-full bg-[#FFFFFF]"
+      style={{ minHeight: "100dvh" }}
       aria-label="Réalisations"
     >
-      <div
-        className={
-          "flex w-full flex-col text-[#1D1D1F]" +
-          (isMobile ? " py-12" : " sticky top-0 h-[100svh] overflow-hidden")
-        }
-      >
+      <div className="realisations-inner--desktop flex w-full flex-col text-[#1D1D1F]">
         <header
           className={`${bebas.className} px-5 pt-24 sm:px-8 sm:pt-28 md:px-12 md:pt-32`}
         >
@@ -282,40 +264,38 @@ export default function Realisations() {
           <div className="h-[2px] bg-[#1D1D1F]" />
         </header>
 
-        {isMobile ? (
+        <div
+          className="realisations-mobile-only realisations-track-mobile w-full snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-5 py-8"
+          style={{ scrollPaddingLeft: "1.25rem" }}
+        >
+          {REALISATIONS.map((p) => (
+            <ProjectCard
+              key={`mobile-${p.slug}`}
+              project={p}
+              layout="mobile"
+              priority={p.index === "01"}
+              sizes="(max-width: 500px) 78vw, 390px"
+            />
+          ))}
+        </div>
+
+        <div className="realisations-desktop-only relative flex-1 overflow-hidden">
           <div
-            className="realisations-track-mobile flex w-full snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-5 py-8"
-            style={{ scrollPaddingLeft: "1.25rem" }}
+            ref={trackRef}
+            className="flex h-full items-stretch gap-[4vw] px-5 py-6 will-change-transform sm:gap-[3vw] sm:px-[4vw] sm:py-8 md:py-10"
+            style={{ transform: "translate3d(0,0,0)" }}
           >
             {REALISATIONS.map((p) => (
               <ProjectCard
-                key={p.slug}
+                key={`desktop-${p.slug}`}
                 project={p}
-                layout="mobile"
+                layout="desktop"
                 priority={p.index === "01"}
-                sizes="(max-width: 500px) 78vw, 390px"
+                sizes="(max-width: 1536px) 60vw, 740px"
               />
             ))}
           </div>
-        ) : (
-          <div className="relative flex-1 overflow-hidden">
-            <div
-              ref={trackRef}
-              className="flex h-full items-stretch gap-[4vw] px-5 py-6 will-change-transform sm:gap-[3vw] sm:px-[4vw] sm:py-8 md:py-10"
-              style={{ transform: "translate3d(0,0,0)" }}
-            >
-              {REALISATIONS.map((p) => (
-                <ProjectCard
-                  key={p.slug}
-                  project={p}
-                  layout="desktop"
-                  priority={p.index === "01"}
-                  sizes="(max-width: 1536px) 60vw, 740px"
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </section>
   );

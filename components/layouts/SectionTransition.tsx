@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
+import { startLenis, stopLenis } from "@/lib/lenis-control";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -111,11 +112,7 @@ export default function SectionTransition() {
 
       setLabel(lbl);
       setPhase("entering");
-      /* NB: pas de body.style.overflow = "hidden" ici. Le rideau plein écran
-         (z-[110], pointer-events auto) bloque déjà toute interaction
-         utilisateur avec la page sous-jacente, et un overflow:hidden sur le
-         body empêcherait le scrollIntoView programmatique de fonctionner —
-         on n'atterrirait jamais sur la section cible. */
+      stopLenis();
 
       // 1. Une fois le rideau en place → scroll vers la section (sticky-safe)
       timeouts.push(
@@ -132,11 +129,12 @@ export default function SectionTransition() {
         }, ENTER_DURATION + HOLD_DURATION)
       );
 
-      // 3. Retour à l'état initial — recale le scroll (Safari / sticky peuvent dévier)
+      // 3. Retour à l'état initial — un seul recalage final
       timeouts.push(
         window.setTimeout(() => {
-          setPhase("idle");
           scrollToAnchorAfterLayout(targetId);
+          setPhase("idle");
+          startLenis();
         }, ENTER_DURATION + HOLD_DURATION + EXIT_DURATION)
       );
     };

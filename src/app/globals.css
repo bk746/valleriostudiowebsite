@@ -87,3 +87,33 @@ body {
     margin-top: 0;
   }
 }
+
+/* Réalisations : layout mobile/desktop sans bascule JS (évite le CLS). */
+.realisations-desktop-only {
+  display: block;
+}
+.realisations-mobile-only {
+  display: none;
+}
+.realisations-inner--desktop {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+@media (pointer: coarse) {
+  .realisations-desktop-only {
+    display: none;
+  }
+  .realisations-mobile-only {
+    display: flex;
+  }
+  .realisations-inner--desktop {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .realisations-section {
+    min-height: auto !important;
+  }
+}

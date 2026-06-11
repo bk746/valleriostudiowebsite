@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import "@/lib/lenis-control";
 
 type Item = { id: string; label: string; num: string };
 
@@ -58,8 +59,20 @@ export default function CaseStudyNav({ items }: { items: ReadonlyArray<Item> }) 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 110;
-    window.scrollTo({ top, behavior: "smooth" });
+
+    let y = 0;
+    let node: HTMLElement | null = el;
+    while (node) {
+      y += node.offsetTop;
+      node = node.offsetParent as HTMLElement | null;
+    }
+    const top = Math.max(0, y - 110);
+    const lenis = window.__lenis;
+    if (lenis) {
+      lenis.scrollTo(top, { duration: 1.1 });
+    } else {
+      window.scrollTo({ top, behavior: "smooth" });
+    }
   };
 
   return (

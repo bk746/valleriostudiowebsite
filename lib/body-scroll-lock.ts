@@ -1,3 +1,5 @@
+import { startLenis, stopLenis } from "@/lib/lenis-control";
+
 /**
  * Compteur de verrous pour `body.style.overflow` — plusieurs sources
  * (intro, menu mobile) peuvent demander de bloquer le scroll sans s’écraser
@@ -9,8 +11,10 @@ function apply(): void {
   if (typeof document === "undefined") return;
   if (locks > 0) {
     document.body.style.overflow = "hidden";
+    stopLenis();
   } else {
     document.body.style.removeProperty("overflow");
+    startLenis();
   }
 }
 
@@ -36,4 +40,5 @@ export function resetBodyScrollLocks(): void {
   if (typeof document === "undefined") return;
   locks = 0;
   document.body.style.removeProperty("overflow");
+  startLenis();
 }

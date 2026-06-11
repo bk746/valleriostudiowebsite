@@ -2,7 +2,7 @@ import type { StaticImageData } from "next/image";
 import elegenciaCaptureHero from "@/src/images/elegencia-capture-hero.png";
 import elegenciaCaptureProperties from "@/src/images/elegencia-capture-properties.png";
 import elegenciaCaptureAgency from "@/src/images/elegencia-capture-agency.png";
-import realisations2 from "@/src/images/réalisations2.png";
+import averoCaptureHero from "@/src/images/avero-capture-hero.png";
 import bkArchitectureCaptureHero from "@/src/images/bk-architecture-capture-hero.png";
 import bkArchitectureCaptureDesign from "@/src/images/bk-architecture-capture-design.png";
 import bkArchitectureCaptureRealisations from "@/src/images/bk-architecture-capture-realisations.png";
@@ -116,7 +116,7 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     index: "02",
     title: "Avero",
     status: "Démo portfolio · livrée",
-    image: realisations2,
+    image: averoCaptureHero,
     imageAlt:
       "Avero — plein écran montagne, typo serif et accroche « Les sommets du monde »",
     liveUrl: "https://avero-kappa.vercel.app",
