@@ -3,9 +3,10 @@ import elegenciaCaptureHero from "@/src/images/elegencia-capture-hero.png";
 import elegenciaCaptureProperties from "@/src/images/elegencia-capture-properties.png";
 import elegenciaCaptureAgency from "@/src/images/elegencia-capture-agency.png";
 import realisations2 from "@/src/images/réalisations2.png";
-import dashboardCaptureOverview from "@/src/images/dashboard-capture-01.png";
-import dashboardCaptureFinance from "@/src/images/dashboard-capture-02.png";
-import dashboardCaptureObjectifs from "@/src/images/dashboard-capture-03.png";
+import bkArchitectureCaptureHero from "@/src/images/bk-architecture-capture-hero.png";
+import bkArchitectureCaptureDesign from "@/src/images/bk-architecture-capture-design.png";
+import bkArchitectureCaptureRealisations from "@/src/images/bk-architecture-capture-realisations.png";
+import bkArchitectureCaptureProcess from "@/src/images/bk-architecture-capture-process.png";
 import valerioShot1 from "@/src/images/valerio-realisation-1.png";
 import valerioShot2 from "@/src/images/valerio-realisation-2.png";
 import valerioShot3 from "@/src/images/valerio-realisation-3.png";
@@ -31,6 +32,14 @@ export type GallerySlide = {
   alt: string;
 };
 
+export type RealisationCard = {
+  /** Fond teinté de la vignette (gradient CSS), accordé à l’identité du projet. */
+  backdrop: string;
+  /** Couleur d’encre lisible sur le fond teinté. */
+  ink: "light" | "dark";
+  tags: ReadonlyArray<string>;
+};
+
 export type Realisation = {
   slug: string;
   index: string;
@@ -44,6 +53,8 @@ export type Realisation = {
   liveUrl?: string;
   caseStudy?: CaseStudy;
   visualShell?: "dark" | "cream" | "warm";
+  /** Habillage de la carte vitrine sur la home. */
+  card: RealisationCard;
 };
 
 export const REALISATIONS: ReadonlyArray<Realisation> = [
@@ -57,6 +68,12 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
       "Démo Elegencia : page d’accueil, hero panorama et promesse « Découvrez votre bien d’exception »",
     liveUrl: "https://elegencia-beta.vercel.app",
     visualShell: "dark",
+    card: {
+      backdrop:
+        "linear-gradient(140deg, #14202E 0%, #243A52 52%, #3E5E80 100%)",
+      ink: "light",
+      tags: ["Immobilier", "Site vitrine", "Next.js"],
+    },
     extraGallery: [
       {
         src: elegenciaCaptureProperties,
@@ -104,6 +121,12 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
       "Avero — plein écran montagne, typo serif et accroche « Les sommets du monde »",
     liveUrl: "https://avero-kappa.vercel.app",
     visualShell: "cream",
+    card: {
+      backdrop:
+        "linear-gradient(140deg, #EFE9DE 0%, #DED3C1 55%, #C5B49B 100%)",
+      ink: "dark",
+      tags: ["Portfolio", "Éditorial", "Direction artistique"],
+    },
     extraGallery: [
       {
         src: valerioShot1,
@@ -146,49 +169,60 @@ export const REALISATIONS: ReadonlyArray<Realisation> = [
     },
   },
   {
-    slug: "dashboard-finance",
+    slug: "bk-architecture",
     index: "03",
-    title: "Dashboard",
-    status: "Démo app métier · livrée",
-    image: dashboardCaptureOverview,
+    title: "BK Architecture",
+    status: "Démo vitrine architecture · livrée",
+    image: bkArchitectureCaptureHero,
     imageAlt:
-      "Tableau de bord : vue d’ensemble CA, clients actifs, objectifs et navigation modules",
-    visualShell: "cream",
+      "BK Architecture — hero plein écran, atrium bois et promesse « formes fortes, élégance subtile »",
+    liveUrl: "https://bk-architecture-eight.vercel.app",
+    visualShell: "dark",
+    card: {
+      backdrop:
+        "linear-gradient(140deg, #1F1812 0%, #413327 52%, #6C5640 100%)",
+      ink: "light",
+      tags: ["Architecture", "Site vitrine", "Branding"],
+    },
     extraGallery: [
       {
-        src: dashboardCaptureFinance,
-        alt: "Module Finance : synthèse encaissé, dépenses, factures et liste filtrable",
+        src: bkArchitectureCaptureDesign,
+        alt: "Section « Basé sur le design » : intérieur bois, texte éditorial et CTA En savoir plus",
       },
       {
-        src: dashboardCaptureObjectifs,
-        alt: "Module Objectifs : progression globale, cartes par cible et barres de suivi",
+        src: bkArchitectureCaptureRealisations,
+        alt: "Page Réalisations : grille photographique noir et blanc, typographie monumentale",
+      },
+      {
+        src: bkArchitectureCaptureProcess,
+        alt: "Parcours client en cinq étapes : découverte, concept, développement, permis et livraison",
       },
     ],
     caseStudy: {
       summary:
-        "Démo de tableau de bord métier : vue d’ensemble, module finance et suivi des objectifs — pensée pour remplacer les tableurs et donner une lecture immédiate de l’activité avant chaque décision.",
+        "Démo de site vitrine pour cabinet d’architecture : hero immersif, section positionnement éditoriale, portfolio photographique et parcours client en cinq étapes — pensée pour inspirer confiance et désir avant la prise de contact.",
       context:
-        "Structure en croissance (freelance, studio ou TPE) avec besoin de visibilité financière et commerciale. La démo doit montrer comment centraliser CA, facturation, dépenses et objectifs annuels dans une interface claire, sans surcharge ni allers-retours entre fichiers.",
+        "Cabinet positionné sur la conception et la restauration de projets haut de gamme. La démo doit montrer comment structurer une vitrine premium : promesse claire dès l’accueil, preuves visuelles fortes et méthode lisible sans surcharge ni effet « catalogue générique ».",
       problem:
-        "Les outils génériques éclatent les données entre tableurs, factures et notes : pas de vue unique, pas de lecture immédiate des impayés ni de la progression vers les objectifs. Les relances et le suivi des dépenses demandent trop de manipulations manuelles.",
+        "Les sites d’architecture génériques alignent des photos sans hiérarchie ni fil narratif : l’impact se perd, le positionnement ne se lit pas. Le parcours client et la méthode sont souvent absents ou noyés dans des pages trop denses.",
       solution:
-        "Accueil synthétique avec graphique CA 12 mois, KPI encaissé et clients actifs, module Finance avec synthèse encaissé/dépenses, factures et liste filtrable, module Objectifs avec progression globale, cartes par cible et barres de suivi. Navigation latérale stable et parcours « ajouter une dépense » explicites.",
+        "Accueil cinématique plein écran avec navigation Services / Réalisations / L’entreprise et accroche sur l’identité BK, section « Basé sur le design » avec visuel intérieur et texte d’accompagnement expert, page Réalisations en grille éditoriale noir et blanc, parcours en cinq étapes numérotées de la découverte à la livraison.",
       methodology:
-        "Wireframes des trois vues clés, direction UI sobre sur fond clair avec cartes KPI et badges d’état. Composants réutilisables (graphiques, tableaux, progress bars, formulaires) et recette responsive sur desktop et tablette.",
+        "Wireframes des quatre vues clés, direction typo uppercase sobre sur hero sombre puis interface claire et monumentale sur le portfolio. Composants réutilisables (hero plein écran, blocs éditoriaux, grille photo, liste numérotée) et recette responsive sur grands écrans et mobile.",
       deliverables: [
-        "Vue d’ensemble : graphique CA, KPI encaissé et clients actifs",
-        "Module Finance : synthèse, dépenses, factures et recherche",
-        "Module Objectifs : progression globale, cartes par cible et liste détaillée",
-        "Design system UI (cartes, badges, navigation latérale, formulaires)",
+        "Hero accueil : navigation, promesse et mise en scène architecturale",
+        "Section positionnement : storytelling, visuel fort et CTA discret",
+        "Page réalisations : grille photographique et hiérarchie typographique",
+        "Parcours client : cinq étapes de la découverte à la livraison",
       ],
       stack: [
         "Next.js",
         "TypeScript",
         "Tailwind CSS",
-        "Graphiques & tableaux interactifs",
+        "Images optimisées & déploiement statique / edge",
       ],
       outcomes:
-        "Une démo convaincante pour prospects TPE et indépendants : pilotage lisible en quelques secondes, finance et objectifs centralisés — moins de friction opérationnelle au quotidien.",
+        "Une démo convaincante pour prospects cabinets d’architecture : positionnement haut de gamme lisible en quelques secondes, portfolio percutant et méthode rassurante avant le premier échange.",
     },
   },
 ];

@@ -24,6 +24,7 @@ import Footer from "@/components/layouts/Footer";
 import SmoothScroll from "@/components/layouts/SmoothScroll";
 import ScrollRouteSync from "@/components/layouts/ScrollRouteSync";
 import Cursor from "@/components/layouts/Cursor";
+import WhatsAppFloat from "@/components/layouts/WhatsAppFloat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -97,6 +98,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <WhatsAppFloat />
       </body>
     </html>
   );
